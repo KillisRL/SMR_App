@@ -1,0 +1,76 @@
+# Arquivos de Build/Compilação
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.dll
+*.exe
+*.pdb
+*.suo
+*.user
+*.bak
+*.cache
+*.obj
+*.o
+*.lo
+*.lib
+*.so
+*.a
+*.ilk
+*.aps
+*.bsc
+*.sbr
+*.res
+*.pch
+*.ipch
+*.log
+
+# Visual Studio / IDE
+.vs/                   # Diretório de cache do Visual Studio (muito importante ignorar)
+*.sln.docstates        # Estados de documentos da solução
+*.user                 # Arquivos de configurações do usuário
+*.log                  # Arquivos de log
+*.code-workspace       # VS Code workspace (se não for compartilhado)
+
+# Pacotes NuGet
+packages/              # Pastas de pacotes NuGet (se você não usar PackageReference)
+*.nupkg                # Pacotes NuGet gerados
+.nuget/                # Pasta de configurações NuGet
+*.props                # Arquivos de propriedades NuGet
+*.targets              # Arquivos de targets NuGet
+
+# Configurações de Ferramentas
+.editorconfig          # Se você tem configurações de editor específicas que não quer versionar
+.idea/                 # Arquivos do IntelliJ/Rider
+npm-debug.log          # Logs do npm (se o projeto tiver frontend)
+
+# Testes
+TestResults/           # Diretório de resultados de testes
+*.trx                  # Arquivos de resultados de testes
+
+# Publicação/Deployment
+Publish/
+*.publishproj
+**/*.publish.xml
+
+# Git
+.gitattributes
+.gitkeep
+
+# Outros Arquivos Temporários
+*~                     # Backup files
+*.tmp                  # Arquivos temporários genéricos
+# Arquivos gerados por ferramentas de CI/CD
+*.ci.yml
+*.cd.yml
+
+# Arquivos de Dados e Cache específicos do usuário
+# Se você tiver arquivos de banco de dados locais, logs de desenvolvimento, etc.
+# Exemplo:
+# Data/
+# Logs/
+
+# Dependências e Ferramentas de Frontend (se aplicável, para projetos .NET com SPA/JS)
+node_modules/
+dist/
+build/

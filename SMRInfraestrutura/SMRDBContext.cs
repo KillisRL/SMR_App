@@ -1,0 +1,33 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
+
+namespace SMRInfraestrutura
+{
+    public  class SMRDBContext : DbContext
+    {
+        public readonly IConfiguration _configuracao;
+    
+        public DbSet<SMRDominio.ClassePessoa.Pessoa> Pessoa {  get; set; }
+           
+        public SMRDBContext(IConfiguration configuracao, DbContextOptions<SMRDBContext> options): base(options)
+        {
+            _configuracao = configuracao ?? throw new ArgumentNullException(nameof(configuracao));
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var typeDatabase = _configuracao["TypeDatabase"];
+            var connectionString = _configuracao.GetConnectionString(typeDatabase);
+
+            if (typeDatabase == "SqlServer")
+            {
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+            else if (typeDatabase == "MariaDB")
+            {
+              //  optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            }
+        }
+    }
+}
