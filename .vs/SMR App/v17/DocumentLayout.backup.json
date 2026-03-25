@@ -1,7 +1,35 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\views\\pgloginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\pgloginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\views\\pgloginview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\pgloginview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +37,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +50,101 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\AppShell.xaml",
+              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\AppShell.xaml",
+              "RelativeToolTip": "SMR App\\AppShell.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-25T00:01:45.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "SMR App\\MauiProgram.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\MauiProgram.cs",
+              "RelativeToolTip": "SMR App\\MauiProgram.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T00:01:19.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\AppShell.xaml.cs",
+              "RelativeToolTip": "SMR App\\AppShell.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-25T00:01:04.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PessoaViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PessoaViewModel.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\PessoaViewModel.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAYwGcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-24T23:51:02.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "pgLoginView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Views\\pgLoginView.xaml.cs",
+              "RelativeDocumentMoniker": "SMR App\\Views\\pgLoginView.xaml.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Views\\pgLoginView.xaml.cs",
+              "RelativeToolTip": "SMR App\\Views\\pgLoginView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-24T23:49:41.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.ImportWorkloads.targets",
+              "ViewState": "AgIAABEAAAAAAAAAAAAwwCUAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-03-24T23:48:12.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "pgLoginView.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Views\\pgLoginView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\pgLoginView.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Views\\pgLoginView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\pgLoginView.xaml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACAAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-24T23:46:31.885Z",
+              "EditorCaption": ""
             }
           ]
         }
