@@ -9,7 +9,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate views:PessoaCadastroView}"
+        ContentTemplate="{DataTemplate views:pgLoginView}"
         Route="MainPage" />
 
 </Shell>

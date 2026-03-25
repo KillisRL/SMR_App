@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SMRInfraestrutura;
-using SMRDominio.ClassePessoa;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SMRApi.Services;
+using SMRDominio.ClassePessoa;
+using SMRInfraestrutura;
 
 namespace SMRApi.Controllers
 {
@@ -15,7 +17,8 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        [HttpPost("cadastro")]
+        [HttpPost("cadastrar")]
+        [AllowAnonymous]
         public async Task<IActionResult> CriarPessoa(Pessoa pessoa)
         {
             var criarpessoa = new Pessoa
@@ -25,7 +28,7 @@ namespace SMRApi.Controllers
                 documento = pessoa.documento,
                 telefone = pessoa.telefone,
                 email = pessoa.email,
-                senha_hash = pessoa.senha_hash,
+                senha_hash = BCrypt.Net.BCrypt.HashPassword(pessoa.senha_hash),
                 login = pessoa.login,
                 data_cadastro = pessoa.data_cadastro
             };
@@ -34,7 +37,38 @@ namespace SMRApi.Controllers
             await _dbContext.SaveChangesAsync();
 
             return Ok(criarpessoa);
+        }
+    
 
+        [HttpPut ("alterar")]
+        [Authorize]
+        public async Task<IActionResult> AlterarPessoa([FromBody]Pessoa pessoa)
+        {
+           _dbContext.Update(pessoa);
+
+           await _dbContext.SaveChangesAsync();
+
+           return Ok(pessoa);        
+        }
+
+        [HttpPost ("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] PessoaLogin pessoalogin)
+        {
+            var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(u => u.login == pessoalogin.login);
+
+            if (pessoa == null || !BCrypt.Net.BCrypt.Verify(pessoalogin.senha_hash, pessoa.senha_hash))
+            {
+                return Unauthorized(new { Message = "Login ou senha inválidos!" });
+            }
+
+            var token = TokenService.GenerateToken(pessoa);
+
+            return Ok(new
+            {
+                User = pessoa.nome,
+                Token = token
+            });
         }
     }
 }

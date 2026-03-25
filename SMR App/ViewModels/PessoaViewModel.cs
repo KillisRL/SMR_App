@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using SMR_App.Extensions;
 using SMR_App.Services;
+using SMR_App.Views;
 using SMRDominio.ClasseBase;
 using SMRDominio.ClassePessoa;
 using System.Collections.ObjectModel;
@@ -11,9 +12,11 @@ using System.Runtime.CompilerServices;
 
 namespace SMR_App.ViewModels
 {
-   
+    [QueryProperty(nameof(PessoaRecebida), "PessoaParaAlterar")]
     public partial class PessoaViewModel : BaseViewModel
     {
+
+        [ObservableProperty] private Pessoa? _pessoaRecebida;
         public readonly ApiServicesPessoa _api;
 
         [ObservableProperty]
@@ -43,8 +46,29 @@ namespace SMR_App.ViewModels
         {
             _api = api;
             pessoaTiposDisponiveis = new ObservableCollection<PessoaTipo>(Enum.GetValues(typeof(PessoaTipo)).Cast<PessoaTipo>());
+
+            bool ehValido = (AcaoTela == AcaoTela.Cadastro)
+                ? (Id_pessoatipo == PessoaTipo.PessoaFisica)
+                : (Id_pessoatipo == PessoaTipo.PessoaJuridica);
         }
 
+        [RelayCommand]
+        private async Task Logar()
+        {
+            if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(Senha_hash))
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos.", "OK");
+                return;
+            }
+
+            await LogarPessoa();
+        }
+
+        [RelayCommand]
+        private async Task IrParaCadastro()
+        {
+            await Shell.Current.GoToAsync(nameof(PessoaCadastroView));
+        }
 
         [RelayCommand]
         private async Task Salvar()
@@ -52,7 +76,7 @@ namespace SMR_App.ViewModels
             if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(documento) || string.IsNullOrEmpty(telefone) || string.IsNullOrEmpty(email)
                 || string.IsNullOrEmpty(senha_hash) || string.IsNullOrEmpty(login))
             {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos", "OK");
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "OK");
                 return;
             }
             if(Id_pessoatipo == PessoaTipo.PessoaFisica)
@@ -76,6 +100,8 @@ namespace SMR_App.ViewModels
             if (AcaoTela == AcaoTela.Cadastro)
             {
                 await CadastrarPessoa();
+
+                await Shell.Current.GoToAsync(nameof(pgLoginView));
             }
         }
 
@@ -104,6 +130,32 @@ namespace SMR_App.ViewModels
                 {
                     // O serviço já deve ter logado o erro, avise o usuário.
                     await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível realizar o cadastro. Verifique os dados.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
+            }
+        }
+
+        private async Task LogarPessoa()
+        {
+            try
+            {
+                var login = new PessoaLogin
+                {
+                    login = Login,
+                    senha_hash = Senha_hash
+                };
+
+                bool sucesso = await _api.Login(login);
+                if(sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert($"Sucesso", $"Seja bem-vindo!", "OK");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível realizar o login", "Ok");
                 }
             }
             catch (Exception ex)

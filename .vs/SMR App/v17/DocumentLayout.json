@@ -1,44 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\services\\apiservicespessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\services\\apiservicespessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\extensions\\extensionsvalidadorcnpj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\extensions\\extensionsvalidadorcnpj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\extensions\\extensionsvalidadorcpf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\extensions\\extensionsvalidadorcpf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smr app\\services\\apiservicessessaopessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\services\\apiservicessessaopessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -46,86 +9,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Pessoa.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "RelativeToolTip": "SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-21T00:15:40.384Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PessoaViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PessoaViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\PessoaViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-21T00:05:44.744Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ExtensionsValidadorCPF.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Extensions\\ExtensionsValidadorCPF.cs",
-              "RelativeDocumentMoniker": "SMR App\\Extensions\\ExtensionsValidadorCPF.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Extensions\\ExtensionsValidadorCPF.cs",
-              "RelativeToolTip": "SMR App\\Extensions\\ExtensionsValidadorCPF.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwCsAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T23:28:28.506Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ExtensionsValidadorCNPJ.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Extensions\\ExtensionsValidadorCNPJ.cs",
-              "RelativeDocumentMoniker": "SMR App\\Extensions\\ExtensionsValidadorCNPJ.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Extensions\\ExtensionsValidadorCNPJ.cs",
-              "RelativeToolTip": "SMR App\\Extensions\\ExtensionsValidadorCNPJ.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T23:28:09.24Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BaseViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\BaseViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\BaseViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\ViewModels\\BaseViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\BaseViewModel.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAYwHMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T22:47:31.547Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ApiServicesSessaoPessoa.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Services\\ApiServicesSessaoPessoa.cs",
-              "RelativeDocumentMoniker": "SMR App\\Services\\ApiServicesSessaoPessoa.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Services\\ApiServicesSessaoPessoa.cs",
-              "RelativeToolTip": "SMR App\\Services\\ApiServicesSessaoPessoa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T22:39:14.879Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -139,43 +24,8 @@
               "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PessoaController.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Controllers\\PessoaController.cs",
-              "RelativeDocumentMoniker": "SMRApi\\Controllers\\PessoaController.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Controllers\\PessoaController.cs",
-              "RelativeToolTip": "SMRApi\\Controllers\\PessoaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T00:05:55.871Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "SMRApi\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Properties\\launchSettings.json",
-              "RelativeToolTip": "SMRApi\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-20T22:34:41.642Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApiServicesPessoa.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Services\\ApiServicesPessoa.cs",
-              "RelativeDocumentMoniker": "SMR App\\Services\\ApiServicesPessoa.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMR App\\Services\\ApiServicesPessoa.cs",
-              "RelativeToolTip": "SMR App\\Services\\ApiServicesPessoa.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAswBgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T00:04:13.373Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             }
           ]
         }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SMR_App.Services;
 using SMR_App.ViewModels;
+using SMR_App.Views;
 
 namespace SMR_App
 {
@@ -28,6 +29,7 @@ namespace SMR_App
 
             //Views
             builder.Services.AddTransient<PessoaViewModel>();
+            builder.Services.AddTransient<pgLoginView>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
