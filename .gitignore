@@ -74,3 +74,6 @@ Publish/
 node_modules/
 dist/
 build/
+/.vs/ProjectEvaluation/smr app.metadata.v9.bin
+/.vs/ProjectEvaluation/smr app.projects.v9.bin
+/.vs/ProjectEvaluation/smr app.strings.v9.bin
