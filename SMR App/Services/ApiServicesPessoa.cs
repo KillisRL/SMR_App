@@ -50,28 +50,29 @@ namespace SMR_App.Services
             }
         }
 
-        public async Task<bool> Login(PessoaLogin login)
+        public async Task<Pessoa?> Login(PessoaLogin login)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("pessoa/login", login);
 
-                if (response.IsSuccessStatusCode)//Aqui é quando temos sucesso no login
+                if (response.IsSuccessStatusCode) // Sucesso durante processo de Login
                 {
-                    var entrar = await response.Content.ReadFromJsonAsync<PessoaLogin>();
-                    return true;
+                    // resultado = Usuario+Token
+                    var resultado = await response.Content.ReadFromJsonAsync<LoginResponse>();
+                    return resultado?.usuario;
                 }
-                else //Aqui é quando temos falha durante o processo de login
+                else // Falha durante processo de login
                 {
                     var errorMessage = await response.Content.ReadAsStringAsync();
                     Debug.WriteLine($"Falha ao realizar o login. Status: {response.StatusCode}, Erro: {errorMessage}");
-                    return false;
+                    return null;
                 }
             }
-            catch (Exception ex) //falhas inesperadas
+            catch (Exception ex) // Falhas inesperadas
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return false;
+                return null;
             }
         }
     }

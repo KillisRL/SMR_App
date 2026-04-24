@@ -5,6 +5,23 @@
              x:Class="SMR_App.App">
     <Application.Resources>
         <ResourceDictionary>
+            <ControlTemplate x:Key="MainPageTemplate">
+                <Grid RowDefinitions="80, *, 60">
+
+                    <Grid Grid.Row="0" BackgroundColor="#D3D3D3" ColumnDefinitions="Auto, *, Auto" Padding="15,0">
+                        <Image Grid.Column="0" Source="home_icon.png" HeightRequest="30"/>
+                        <Label Grid.Column="1" 
+                               Text="{Binding BindingContext.NomeUsuario, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                               FontAttributes="Bold" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center" 
+                               TextColor="Black"/>
+                        <Image Grid.Column="2" Source="profile_icon.png" HeightRequest="40"/>
+                    </Grid>
+
+                    <ContentPresenter Grid.Row="1" />
+                </Grid>
+            </ControlTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

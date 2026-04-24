@@ -26,10 +26,14 @@ namespace SMR_App
 
             //ViewModels
             builder.Services.AddTransient<PessoaViewModel>();
+            builder.Services.AddTransient<PrincipalViewModel>();
+            builder.Services.AddTransient<ConfigEmpresaViewModel>();
 
             //Views
-            builder.Services.AddTransient<PessoaViewModel>();
-            builder.Services.AddTransient<pgLoginView>();
+            builder.Services.AddTransient<CadastroPessoaView>();
+            builder.Services.AddTransient<LoginView>();
+            builder.Services.AddTransient<PrincipalView>();
+            builder.Services.AddTransient<ConfigEmpresaView>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

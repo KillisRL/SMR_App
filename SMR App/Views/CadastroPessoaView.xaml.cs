@@ -2,12 +2,11 @@ using SMR_App.ViewModels;
 
 namespace SMR_App.Views;
 
-public partial class pgLoginView : ContentPage
+public partial class CadastroPessoaView : ContentPage
 {
-	public pgLoginView(PessoaViewModel viewModel)
+	public CadastroPessoaView(PessoaViewModel viewModel)
 	{
 		InitializeComponent();
-
 		BindingContext = viewModel;
 	}
 }

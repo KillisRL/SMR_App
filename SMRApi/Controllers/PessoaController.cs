@@ -66,7 +66,7 @@ namespace SMRApi.Controllers
 
             return Ok(new
             {
-                User = pessoa.nome,
+                usuario = pessoa,
                 Token = token
             });
         }
