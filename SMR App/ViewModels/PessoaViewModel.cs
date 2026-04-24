@@ -67,7 +67,7 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private async Task IrParaCadastro()
         {
-            await Shell.Current.GoToAsync(nameof(PessoaCadastroView));
+            await Shell.Current.GoToAsync(nameof(CadastroPessoaView));
         }
 
         [RelayCommand]
@@ -101,7 +101,7 @@ namespace SMR_App.ViewModels
             {
                 await CadastrarPessoa();
 
-                await Shell.Current.GoToAsync(nameof(pgLoginView));
+                await Shell.Current.GoToAsync(nameof(LoginView));
             }
         }
 
@@ -148,10 +148,16 @@ namespace SMR_App.ViewModels
                     senha_hash = Senha_hash
                 };
 
-                bool sucesso = await _api.Login(login);
-                if(sucesso)
+                var pessoaRetornada = await _api.Login(login);
+                if(pessoaRetornada != null)
                 {
+                    // Salvar dados na Pessoa Global
+                    ApiServicesSessaoPessoa.IniciarSessao(pessoaRetornada);
+
+                    // Mensagem
                     await Application.Current.MainPage.DisplayAlert($"Sucesso", $"Seja bem-vindo!", "OK");
+                    // Abrir tela
+                    await Shell.Current.GoToAsync("PrincipalView");
                 }
                 else
                 {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SMR_App.Views.PessoaCadastroView"
-             Title="Cadastrar Pessoa">
+             x:Class="SMR_App.Views.CadastroPessoaView">
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">
 
@@ -17,7 +16,7 @@
                       FontAttributes="Bold"
                       HorizontalOptions="Start"
                       WidthRequest="150"
-                      HeightRequest="60"/>  
+                      HeightRequest="60"/>
 
             <Label Text="Nome Completo / Razão Social" FontAttributes="Bold" />
             <Entry Text="{Binding Nome}" 
@@ -48,9 +47,6 @@
             <Entry Text="{Binding Senha_hash}" 
                    Placeholder="Digite sua senha" 
                    IsPassword="True" />
-
-            <Label Text="Data de Cadastro" FontAttributes="Bold" />
-            <DatePicker Date="{Binding Data_cadastro}" IsEnabled="False" />
 
             <Button Text="Salvar Cadastro" 
                     Command="{Binding SalvarCommand}" 

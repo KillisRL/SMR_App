@@ -30,6 +30,8 @@ namespace SMR_App.ViewModels
             ApiServicesSessaoPessoa.OnSessaoChanged += NotificarMudancaDeSessao;
         }
 
+
+
         public async Task VoltarTelaAsync()
         {
             if (Application.Current?.MainPage is Shell shell)

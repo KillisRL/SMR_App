@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMR_App.Views.ConfigEmpresaView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="40" Padding="20" Margin="0,20,0,0">
+
+            <Grid RowDefinitions="Auto, Auto" 
+                  ColumnDefinitions="*, *" 
+                  RowSpacing="20" 
+                  ColumnSpacing="20">
+
+                <Button Text="RECOMPENSAS" 
+                        Grid.Row="0" Grid.Column="0" 
+                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        Command="{Binding AbrirRecompensasCommand}"/>
+
+                <Button Text="GERENCIAR RECOMPENSAS" 
+                        Grid.Row="0" Grid.Column="1" 
+                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        Command="{Binding GerenciarRecompensasCommand}"/>
+
+                <Button Text="BONIFICAÇÕES" 
+                        Grid.Row="1" Grid.Column="0" 
+                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        Command="{Binding AbrirBonificacoesCommand}"/>
+
+                <Button Text="GERENCIAR BONIFICAÇÕES" 
+                        Grid.Row="1" Grid.Column="1" 
+                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        Command="{Binding GerenciarBonificacoesCommand}"/>
+            </Grid>
+
+            <Button Text="RELATÓRIOS" 
+                    BackgroundColor="#E0E0E0" TextColor="Black"
+                    CornerRadius="15" HeightRequest="60" WidthRequest="200" HorizontalOptions="Center"
+                    Command="{Binding AbrirRelatoriosCommand}"/>
+
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,30">
+                <Label Text="IMPORTAR CLIENTES" FontAttributes="Bold" FontSize="18" TextColor="Black" HorizontalOptions="Center"/>
+                <Image Source="import_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ImportarClientesCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

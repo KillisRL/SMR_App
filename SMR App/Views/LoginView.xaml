@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SMR_App.Views.pgLoginView"
-             Title="pgLoginView">
-    
-    
+             x:Class="SMR_App.Views.LoginView"
+             Title="LoginView">
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,60,30,30" VerticalOptions="Center">
 
@@ -59,7 +57,7 @@
                         <Span Text="Cadastre-se"
                       FontAttributes="Bold"
                       TextColor="LightBlue"
-                      TextDecorations="Underline"/> 
+                      TextDecorations="Underline"/>
                     </FormattedString>
                 </Label.FormattedText>
                 <Label.GestureRecognizers>
