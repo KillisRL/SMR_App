@@ -6,8 +6,6 @@ using SMR_App.Views;
 using SMRDominio.ClasseBase;
 using SMRDominio.ClassePessoa;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
 
 
 namespace SMR_App.ViewModels

@@ -5,17 +5,17 @@ namespace SMR_App.ViewModels
 {
     public class PrincipalViewModel : BaseViewModel
     {
-        // Variável privada
+        // VARIAVEIS
         private bool _visualizarConfiguracoesEmpresa;
 
-        // Propriedade pública que a View (XAML) vai enxergar
+        // PROPRIEDADES
         public bool VisualizarConfiguracoesEmpresa
         {
             get => _visualizarConfiguracoesEmpresa;
             set
             {
                 _visualizarConfiguracoesEmpresa = value;
-                OnPropertyChanged(); // Avisa a tela que o valor mudou!
+                OnPropertyChanged();
             }
         }
 
@@ -26,7 +26,7 @@ namespace SMR_App.ViewModels
             set
             {
                 _nomeUsuario = value;
-                OnPropertyChanged(); // Avisa a tela para atualizar o texto
+                OnPropertyChanged();
             }
         }
 
