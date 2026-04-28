@@ -18,22 +18,24 @@
                 <Button Text="RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="0" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding AbrirRecompensasCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"/>
 
                 <Button Text="GERENCIAR RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="1" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding GerenciarRecompensasCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"/>
 
                 <Button Text="BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="0" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding AbrirBonificacoesCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"
+                        CommandParameter="RecompensasView"/>
 
                 <Button Text="GERENCIAR BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="1" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding GerenciarBonificacoesCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"
+                        CommandParameter="RecompensasView"/>
             </Grid>
 
             <Button Text="RELATÓRIOS" 

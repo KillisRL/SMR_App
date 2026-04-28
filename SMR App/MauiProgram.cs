@@ -28,12 +28,22 @@ namespace SMR_App
             builder.Services.AddTransient<PessoaViewModel>();
             builder.Services.AddTransient<PrincipalViewModel>();
             builder.Services.AddTransient<ConfigEmpresaViewModel>();
+            builder.Services.AddTransient<BonificacoesViewModel>();
+            builder.Services.AddTransient<GrBonificacoesViewModel>();
+            builder.Services.AddTransient<RecompensasViewModel>();
+            builder.Services.AddTransient<GrRecompensasViewModel>();
+            builder.Services.AddTransient<RelatoriosViewModel>();
 
             //Views
             builder.Services.AddTransient<CadastroPessoaView>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
             builder.Services.AddTransient<ConfigEmpresaView>();
+            builder.Services.AddTransient<BonificacoesView>();
+            builder.Services.AddTransient<GerenciarBonificacoesView>();
+            builder.Services.AddTransient<RecompensasView>();
+            builder.Services.AddTransient<GerenciarRecompensasView>();
+            builder.Services.AddTransient<RelatoriosView>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

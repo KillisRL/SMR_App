@@ -14,16 +14,12 @@ namespace SMR_App.ViewModels
             set
             {
                 _nomeUsuario = value;
-                OnPropertyChanged(); // Avisa a tela para atualizar o texto
+                OnPropertyChanged();
             }
         }
 
-        // Commands para os botões da tela
-        public ICommand AbrirRecompensasCommand { get; }
-        public ICommand GerenciarRecompensasCommand { get; }
-        public ICommand AbrirBonificacoesCommand { get; }
-        public ICommand GerenciarBonificacoesCommand { get; }
-        public ICommand AbrirRelatoriosCommand { get; }
+        // COMMANDS
+        public ICommand AbrirTelaCommand { get; }
         public ICommand ImportarClientesCommand { get; }
 
         public ConfigEmpresaViewModel()
@@ -31,9 +27,10 @@ namespace SMR_App.ViewModels
             // Busca o nome do usuário logado assim que a tela for aberta
             CarregarDadosUsuario();
 
-            // Inicialização dos Commands (Exemplo de como preparar para os cliques)
-            AbrirRecompensasCommand = new Command(ExecuteAbrirRecompensas);
-            // ... (inicialize os outros commands aqui)
+            // Inicialização dos Commands
+            AbrirTelaCommand = new Command<string>(ExecuteAbrirTela);
+
+
         }
 
         private void CarregarDadosUsuario()
@@ -51,9 +48,12 @@ namespace SMR_App.ViewModels
         }
 
         // --- Métodos de Ação dos Botões ---
-        private void ExecuteAbrirRecompensas()
+        private async void ExecuteAbrirTela(string nomeDaRota)
         {
-            // Lógica para ir para a tela de recompensas (ex: Shell.Current.GoToAsync(...))
+            if (!string.IsNullOrWhiteSpace(nomeDaRota))
+            {               
+                await Shell.Current.GoToAsync(nomeDaRota);
+            }
         }
     }
 }
