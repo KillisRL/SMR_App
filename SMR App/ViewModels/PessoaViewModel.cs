@@ -28,13 +28,14 @@ namespace SMR_App.ViewModels
         //propriedades do clientes
         [ObservableProperty] private string nome;
         [ObservableProperty] private string documento;
-        [ObservableProperty] private string telefone;
+        [ObservableProperty] private string celular;
         [ObservableProperty] private string email;
         [ObservableProperty] private string senha_hash;
         [ObservableProperty] private string login;
         [ObservableProperty] private DateTime data_cadastro;
-        [ObservableProperty] private PessoaTipo id_pessoatipo;
+        [ObservableProperty] private PessoaTipo id_pessoa_tipo;
         [ObservableProperty] private int id_pessoa;
+        [ObservableProperty] private bool ativo;
 
         public ObservableCollection<PessoaTipo> pessoaTiposDisponiveis { get; }
 
@@ -46,8 +47,8 @@ namespace SMR_App.ViewModels
             pessoaTiposDisponiveis = new ObservableCollection<PessoaTipo>(Enum.GetValues(typeof(PessoaTipo)).Cast<PessoaTipo>());
 
             bool ehValido = (AcaoTela == AcaoTela.Cadastro)
-                ? (Id_pessoatipo == PessoaTipo.PessoaFisica)
-                : (Id_pessoatipo == PessoaTipo.PessoaJuridica);
+                ? (Id_pessoa_tipo == PessoaTipo.PessoaFisica)
+                : (Id_pessoa_tipo == PessoaTipo.PessoaJuridica);
         }
 
         [RelayCommand]
@@ -71,13 +72,13 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private async Task Salvar()
         {
-            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(documento) || string.IsNullOrEmpty(telefone) || string.IsNullOrEmpty(email)
+            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(documento) || string.IsNullOrEmpty(celular) || string.IsNullOrEmpty(email)
                 || string.IsNullOrEmpty(senha_hash) || string.IsNullOrEmpty(login))
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "OK");
                 return;
             }
-            if(Id_pessoatipo == PessoaTipo.PessoaFisica)
+            if(Id_pessoa_tipo == PessoaTipo.PessoaFisica)
             {
                 if (!ExtensionsValidadorCPF.CPFValido(documento))
                 {
@@ -86,7 +87,7 @@ namespace SMR_App.ViewModels
                 }
             }
 
-            else if (Id_pessoatipo == PessoaTipo.PessoaJuridica)
+            else if (Id_pessoa_tipo == PessoaTipo.PessoaJuridica)
             {
                 if (!ExtensionsValidadorCNPJ.CNPJValido(documento))
                 {
@@ -110,12 +111,12 @@ namespace SMR_App.ViewModels
                 var pessoaNova = new Pessoa
                 {
                     nome = Nome,
-                    documento = Documento,
-                    telefone = Telefone,
+                    celular = Celular,
                     email = Email,
                     login = Login,
                     senha_hash = Senha_hash,
-                    id_pessoatipo = Id_pessoatipo,
+                    id_pessoa_tipo = Id_pessoa_tipo,
+                    ativo = Ativo,
                     data_cadastro = DateTime.Now,
 
                 };

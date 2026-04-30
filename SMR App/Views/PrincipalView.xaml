@@ -35,13 +35,6 @@
                              VerticalOptions="Center"/>
                 </ContentView>
 
-                <Label Text="Relatórios" FontSize="22" TextColor="Black" HorizontalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AbrirTela}"
-                                              CommandParameter="{x:Type TypeName=views:CadastroPessoaView}"/>
-                    </Label.GestureRecognizers>
-                </Label>
-                
                 <Label
                     x:Name="MenuConfigEmpresa"
                     Text="Configurações Empresa" 
@@ -50,8 +43,8 @@
                     HorizontalOptions="Center"
                     IsVisible="{Binding VisualizarConfiguracoesEmpresa}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AbrirTela}"
-                                              CommandParameter="{x:Type TypeName=views:ConfigEmpresaView}"/>
+                        <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
+                                              CommandParameter="ConfigEmpresaView"/>
                     </Label.GestureRecognizers>
                 </Label>
                 

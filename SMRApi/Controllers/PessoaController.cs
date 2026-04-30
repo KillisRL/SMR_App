@@ -24,12 +24,12 @@ namespace SMRApi.Controllers
             var criarpessoa = new Pessoa
             {
                 nome = pessoa.nome,
-                id_pessoatipo = pessoa.id_pessoatipo,
-                documento = pessoa.documento,
-                telefone = pessoa.telefone,
+                id_pessoa_tipo = pessoa.id_pessoa_tipo,
+                celular = pessoa.celular,
                 email = pessoa.email,
                 senha_hash = BCrypt.Net.BCrypt.HashPassword(pessoa.senha_hash),
                 login = pessoa.login,
+                ativo = pessoa.ativo,
                 data_cadastro = pessoa.data_cadastro
             };
 

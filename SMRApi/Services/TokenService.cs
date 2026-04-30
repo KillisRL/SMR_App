@@ -18,7 +18,7 @@ namespace SMRApi.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.Name, pessoa.login),
-                new Claim(ClaimTypes.Role, pessoa.id_pessoatipo.ToString()), 
+                new Claim(ClaimTypes.Role, pessoa.id_pessoa_tipo.ToString()), 
                 new Claim("id_pessoa", pessoa.id_pessoa.ToString())
             }),
                 Expires = DateTime.UtcNow.AddHours(8), 

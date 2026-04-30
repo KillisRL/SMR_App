@@ -18,30 +18,33 @@
                 <Button Text="RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="0" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding AbrirTelaCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"
+                        CommandParameter="RecompensasView"/>
 
                 <Button Text="GERENCIAR RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="1" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
-                        Command="{Binding AbrirTelaCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"
+                        CommandParameter="GerenciarRecompensasView"/>
 
                 <Button Text="BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="0" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
-                        CommandParameter="RecompensasView"/>
+                        CommandParameter="BonificacoesView"/>
 
                 <Button Text="GERENCIAR BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="1" 
                         BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
-                        CommandParameter="RecompensasView"/>
+                        CommandParameter="GerenciarBonificacoesView"/>
             </Grid>
 
             <Button Text="RELATÓRIOS" 
                     BackgroundColor="#E0E0E0" TextColor="Black"
                     CornerRadius="15" HeightRequest="60" WidthRequest="200" HorizontalOptions="Center"
-                    Command="{Binding AbrirRelatoriosCommand}"/>
+                    Command="{Binding AbrirTelaCommand}"
+                    CommandParameter="RelatoriosView"/>
 
             <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,30">
                 <Label Text="IMPORTAR CLIENTES" FontAttributes="Bold" FontSize="18" TextColor="Black" HorizontalOptions="Center"/>
