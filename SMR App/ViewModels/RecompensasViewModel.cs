@@ -8,5 +8,6 @@ namespace SMR_App.ViewModels
 {
     public class RecompensasViewModel : BaseViewModel
     {
+
     }
 }

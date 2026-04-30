@@ -3,16 +3,92 @@
   "WorkspaceRootPath": "C:\\Luiz\\TCC\\SMR_App\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\bonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\bonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\cadastropessoaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\cadastropessoaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\relatoriosviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\relatoriosviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\luiz\\tcc\\smr_app\\smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\luiz\\tcc\\smr_app\\smrdominio\\smrdominio.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\smrdominio.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\smrapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\smrapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|c:\\luiz\\tcc\\smr_app\\smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|solutionrelative:smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\configempresaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\configempresaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\recompensasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\recompensasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\principalview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\principalview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\configempresaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\configempresaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\configempresaview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\configempresaview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\recompensasview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\recompensasview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\recompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\recompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\relatoriosviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\relatoriosviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\grrecompensasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,6 +97,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\grbonificacoesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\grbonificacoesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\bonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\bonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\bonificacoesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -47,26 +127,6 @@
       "RelativeMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|solutionrelative:smrinfraestrutura\\smrinfraestrutura.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\luiz\\tcc\\smr_app\\smrdominio\\smrdominio.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\smrdominio.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\luiz\\tcc\\smr_app\\smrapi\\smrapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\smrapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -85,26 +145,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\gerenciarrecompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\gerenciarrecompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\recompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\recompensasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\views\\configempresaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\configempresaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\configempresaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\configempresaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\pessoaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\luiz\\tcc\\smr_app\\smr app\\viewmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -114,193 +154,76 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AppShell.xaml.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml.cs",
-              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml.cs",
-              "RelativeToolTip": "SMR App\\AppShell.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:30:03.922Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml",
-              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml",
-              "RelativeToolTip": "SMR App\\AppShell.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:27:04.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BonificacoesViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BonificacoesViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\BonificacoesViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BonificacoesViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\BonificacoesViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:25:30.213Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GrBonificacoesViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:25:43.874Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GrRecompensasViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrRecompensasViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\GrRecompensasViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrRecompensasViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\GrRecompensasViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:25:15.32Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RecompensasViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RecompensasViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\RecompensasViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RecompensasViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\RecompensasViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:24:58.463Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RelatoriosViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RelatoriosViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\RelatoriosViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RelatoriosViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\RelatoriosViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:26:48.522Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BonificacoesView.xaml",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\BonificacoesView.xaml",
-              "RelativeDocumentMoniker": "SMR App\\Views\\BonificacoesView.xaml",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\BonificacoesView.xaml",
-              "RelativeToolTip": "SMR App\\Views\\BonificacoesView.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "CadastroPessoaView.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\CadastroPessoaView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\CadastroPessoaView.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\CadastroPessoaView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\CadastroPessoaView.xaml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABYAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:23:32.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "GlobalXmlns.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\GlobalXmlns.cs",
-              "RelativeDocumentMoniker": "SMR App\\GlobalXmlns.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\GlobalXmlns.cs",
-              "RelativeToolTip": "SMR App\\GlobalXmlns.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:27:06.53Z",
+              "WhenOpened": "2026-04-30T00:52:40.205Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "MauiProgram.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\MauiProgram.cs",
-              "RelativeDocumentMoniker": "SMR App\\MauiProgram.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\MauiProgram.cs",
-              "RelativeToolTip": "SMR App\\MauiProgram.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAqwAgAAAAYAAAAAAAAAA==",
+              "Title": "SMRDBContext.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
+              "RelativeDocumentMoniker": "SMRInfraestrutura\\SMRDBContext.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
+              "RelativeToolTip": "SMRInfraestrutura\\SMRDBContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:27:07.818Z",
+              "WhenOpened": "2026-04-30T00:43:50.373Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "SMRInfraestrutura",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRInfraestrutura.csproj",
-              "RelativeDocumentMoniker": "SMRInfraestrutura\\SMRInfraestrutura.csproj",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRInfraestrutura.csproj",
-              "RelativeToolTip": "SMRInfraestrutura\\SMRInfraestrutura.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-28T23:29:50.916Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SMRDominio",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\SMRDominio.csproj",
-              "RelativeDocumentMoniker": "SMRDominio\\SMRDominio.csproj",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\SMRDominio.csproj",
-              "RelativeToolTip": "SMRDominio\\SMRDominio.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-28T23:29:49.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "WeatherForecast.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\WeatherForecast.cs",
-              "RelativeDocumentMoniker": "SMRApi\\WeatherForecast.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\WeatherForecast.cs",
-              "RelativeToolTip": "SMRApi\\WeatherForecast.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "Pessoa.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
+              "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\Pessoa.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
+              "RelativeToolTip": "SMRDominio\\ClassePessoa\\Pessoa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:29:48.402Z",
+              "WhenOpened": "2026-04-30T00:42:33.668Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\appsettings.json",
-              "RelativeDocumentMoniker": "SMRApi\\appsettings.json",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\appsettings.json",
-              "RelativeToolTip": "SMRApi\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-28T23:29:46.795Z",
+              "DocumentIndex": 4,
+              "Title": "PessoaController.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Controllers\\PessoaController.cs",
+              "RelativeDocumentMoniker": "SMRApi\\Controllers\\PessoaController.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Controllers\\PessoaController.cs",
+              "RelativeToolTip": "SMRApi\\Controllers\\PessoaController.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAwwBcAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T00:41:18.34Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 3,
+              "Title": "BaseViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BaseViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\BaseViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BaseViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\BaseViewModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAEwBcAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T00:00:21.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Program.cs",
               "RelativeDocumentMoniker": "SMRApi\\Program.cs",
@@ -313,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 8,
               "Title": "SMRApi.http",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\SMRApi.http",
               "RelativeDocumentMoniker": "SMRApi\\SMRApi.http",
@@ -326,7 +249,314 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\appsettings.json",
+              "RelativeDocumentMoniker": "SMRApi\\appsettings.json",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\appsettings.json",
+              "RelativeToolTip": "SMRApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-28T23:29:46.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "SMRApi\\WeatherForecast.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\WeatherForecast.cs",
+              "RelativeToolTip": "SMRApi\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:29:48.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PessoaViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PessoaViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\PessoaViewModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:03:53.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PrincipalViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PrincipalViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PrincipalViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PrincipalViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\PrincipalViewModel.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAtwCcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:03:44.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SMRApi\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "SMRApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-30T00:44:29.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "SMRApi\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRApi\\Services\\TokenService.cs",
+              "RelativeToolTip": "SMRApi\\Services\\TokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T00:43:56.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SMRDominio.csproj",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\SMRDominio.csproj",
+              "RelativeDocumentMoniker": "SMRDominio\\SMRDominio.csproj",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRDominio\\SMRDominio.csproj",
+              "RelativeToolTip": "SMRDominio\\SMRDominio.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-28T23:29:49.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "RecompensasViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RecompensasViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\RecompensasViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RecompensasViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\RecompensasViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:24:58.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ConfigEmpresaView.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\ConfigEmpresaView.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\ConfigEmpresaView.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-28T23:12:46.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "GrRecompensasViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrRecompensasViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\GrRecompensasViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrRecompensasViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\GrRecompensasViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:25:15.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ConfigEmpresaViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:03:10.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ConfigEmpresaView.xaml.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml.cs",
+              "RelativeDocumentMoniker": "SMR App\\Views\\ConfigEmpresaView.xaml.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml.cs",
+              "RelativeToolTip": "SMR App\\Views\\ConfigEmpresaView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-29T23:56:41.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 16,
+              "Title": "PrincipalView.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\PrincipalView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\PrincipalView.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\PrincipalView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\PrincipalView.xaml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-29T23:47:57.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RelatoriosViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RelatoriosViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\RelatoriosViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\RelatoriosViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\RelatoriosViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:26:48.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RecompensasView.xaml.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml.cs",
+              "RelativeDocumentMoniker": "SMR App\\Views\\RecompensasView.xaml.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml.cs",
+              "RelativeToolTip": "SMR App\\Views\\RecompensasView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-29T23:56:32.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "GrBonificacoesViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\GrBonificacoesViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:25:43.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "RecompensasView.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\RecompensasView.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\RecompensasView.xaml",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAnwFUAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-28T23:22:48.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "BonificacoesView.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\BonificacoesView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\BonificacoesView.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\BonificacoesView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\BonificacoesView.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-28T23:23:32.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "BonificacoesViewModel.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BonificacoesViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\BonificacoesViewModel.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\BonificacoesViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\BonificacoesViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:25:30.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml",
+              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml",
+              "RelativeToolTip": "SMR App\\AppShell.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-28T23:27:04.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "SMR App\\AppShell.xaml.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\AppShell.xaml.cs",
+              "RelativeToolTip": "SMR App\\AppShell.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:30:03.922Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "GlobalXmlns.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\GlobalXmlns.cs",
+              "RelativeDocumentMoniker": "SMR App\\GlobalXmlns.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\GlobalXmlns.cs",
+              "RelativeToolTip": "SMR App\\GlobalXmlns.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:27:06.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "SMR App\\MauiProgram.cs",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\MauiProgram.cs",
+              "RelativeToolTip": "SMR App\\MauiProgram.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwAgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-28T23:27:07.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "SMRInfraestrutura.csproj",
+              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRInfraestrutura.csproj",
+              "RelativeDocumentMoniker": "SMRInfraestrutura\\SMRInfraestrutura.csproj",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMRInfraestrutura\\SMRInfraestrutura.csproj",
+              "RelativeToolTip": "SMRInfraestrutura\\SMRInfraestrutura.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-28T23:29:50.916Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\App.xaml.cs",
               "RelativeDocumentMoniker": "SMR App\\App.xaml.cs",
@@ -334,12 +564,11 @@
               "RelativeToolTip": "SMR App\\App.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:27:01.921Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T23:27:01.921Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 32,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\App.xaml",
               "RelativeDocumentMoniker": "SMR App\\App.xaml",
@@ -347,12 +576,11 @@
               "RelativeToolTip": "SMR App\\App.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:27:00.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T23:27:00.155Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 33,
               "Title": "RelatoriosView.xaml",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RelatoriosView.xaml",
               "RelativeDocumentMoniker": "SMR App\\Views\\RelatoriosView.xaml",
@@ -360,12 +588,11 @@
               "RelativeToolTip": "SMR App\\Views\\RelatoriosView.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:24:27.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T23:24:27.634Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 34,
               "Title": "GerenciarBonificacoesView.xaml",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\GerenciarBonificacoesView.xaml",
               "RelativeDocumentMoniker": "SMR App\\Views\\GerenciarBonificacoesView.xaml",
@@ -378,7 +605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 35,
               "Title": "GerenciarRecompensasView.xaml",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\GerenciarRecompensasView.xaml",
               "RelativeDocumentMoniker": "SMR App\\Views\\GerenciarRecompensasView.xaml",
@@ -386,73 +613,7 @@
               "RelativeToolTip": "SMR App\\Views\\GerenciarRecompensasView.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:23:16.997Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "RecompensasView.xaml",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml",
-              "RelativeDocumentMoniker": "SMR App\\Views\\RecompensasView.xaml",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\RecompensasView.xaml",
-              "RelativeToolTip": "SMR App\\Views\\RecompensasView.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:22:48.099Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "ConfigEmpresaView.xaml",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml",
-              "RelativeDocumentMoniker": "SMR App\\Views\\ConfigEmpresaView.xaml",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\ConfigEmpresaView.xaml",
-              "RelativeToolTip": "SMR App\\Views\\ConfigEmpresaView.xaml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAABoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-28T23:12:46.335Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "PessoaViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PessoaViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PessoaViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\PessoaViewModel.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwAcAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:03:53.072Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "PrincipalViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PrincipalViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\PrincipalViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\PrincipalViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\PrincipalViewModel.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBwAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:03:44.456Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ConfigEmpresaViewModel.cs",
-              "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
-              "RelativeDocumentMoniker": "SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
-              "RelativeToolTip": "SMR App\\ViewModels\\ConfigEmpresaViewModel.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwB4AAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:03:10.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T23:23:16.997Z"
             }
           ]
         }

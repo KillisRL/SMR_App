@@ -14,18 +14,20 @@ namespace SMR_App.ViewModels
 {
     public partial class BaseViewModel : BaseNotifyViewModel
     {
-        public ICommand AbrirTela { get; }
+        public ICommand AbrirTelaCommand { get; }
         public ICommand VoltarTela { get; }
+        public ICommand ImportarClientesCommand { get; }
 
 
-        public bool IsPessoaFisica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoatipo == PessoaTipo.PessoaFisica;
+        public bool IsPessoaFisica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.PessoaFisica;
 
-        public bool IsPessoaJuridica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoatipo == PessoaTipo.PessoaJuridica;
+        public bool IsPessoaJuridica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.PessoaJuridica;
 
         public BaseViewModel()
         {
+            CarregarDadosUsuario();
             VoltarTela = new AsyncRelayCommand(VoltarTelaAsync);
-            AbrirTela = new AsyncRelayCommand<Type>(AbrirTelaAsync);
+            AbrirTelaCommand = new Command<string>(ExecuteAbrirTela);
 
             ApiServicesSessaoPessoa.OnSessaoChanged += NotificarMudancaDeSessao;
         }
@@ -44,43 +46,38 @@ namespace SMR_App.ViewModels
             }
         }
 
-        public async Task AbrirTelaAsync(Type pageType)
+        private string _nomeUsuario;
+        public string NomeUsuario
         {
-            if (pageType == null)
+            get => _nomeUsuario;
+            set
             {
-                Debug.WriteLine("Erro: Tipo de página para navegação é nulo.");
-                return;
+                _nomeUsuario = value;
+                OnPropertyChanged();
             }
+        }     
 
-            try
+
+        private void CarregarDadosUsuario()
+        {
+            var pessoa = ApiServicesSessaoPessoa.PessoaLogada;
+
+            if (pessoa != null)
             {
-                // Verifica se a página atual já é a página de destino (para evitar empilhar a mesma página)
-                // Isso pode ser útil para rotas simples, mas com o Shell você pode usar rotas absolutas
-                // ou verificar o stack do Shell.
-
-                // Melhor usar o Shell para navegação, se você estiver usando Shell
-                if (Application.Current?.MainPage is Shell shell)
-                {
-                    // Usa o nome da rota registrado no AppShell
-                    await shell.GoToAsync(pageType.Name);
-                }
-                else
-                {
-                    // Fallback para navegação tradicional se não for Shell ou em outro contexto
-                    var page = App.Current.Handler.MauiContext.Services.GetService(pageType) as ContentPage;
-                    if (page != null)
-                    {
-                        await Application.Current.MainPage.Navigation.PushAsync(page);
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"Erro: Não foi possível resolver a página do tipo {pageType.Name}. Verifique o registro no MauiProgram.cs.");
-                    }
-                }
+                NomeUsuario = pessoa.nome;
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine($"Erro ao navegar para {pageType.Name}: {ex.Message}");
+                NomeUsuario = "Usuário Desconhecido";
+            }
+        }
+
+        // --- Métodos de Ação dos Botões ---
+        private async void ExecuteAbrirTela(string nomeDaRota)
+        {
+            if (!string.IsNullOrWhiteSpace(nomeDaRota))
+            {
+                await Shell.Current.GoToAsync(nomeDaRota);
             }
         }
         private void NotificarMudancaDeSessao()

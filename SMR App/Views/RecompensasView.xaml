@@ -2,11 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMR_App.Views.RecompensasView"
-             Title="RecompensasView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+    <!-- Grid principal divide a tela: Título/Busca (Auto), Lista (*), Botões Rodapé (Auto) -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <!-- LINHA 0: Título e Pesquisa -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,15">
+            <Label Text="GERENCIAR RECOMPENSAS" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   TextColor="Black" 
+                   HorizontalOptions="Center" />
+
+            <Label Text="Pesquisa" 
+                   FontAttributes="Bold" 
+                   FontSize="18" 
+                   TextColor="Black" />
+
+            <!-- Barra de Pesquisa customizada com fundo cinza -->
+            <Frame BackgroundColor="#E0E0E0" CornerRadius="5" Padding="5,0" HasShadow="False" HeightRequest="45">
+                <SearchBar Placeholder="" 
+                           BackgroundColor="Transparent" 
+                           CancelButtonColor="Black" 
+                           SearchCommand="{Binding PesquisarCommand}" />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- LINHA 1: Lista de Solicitações (Cards dinâmicos) -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaRecompensas}" 
+                        SelectionMode="Single" 
+                        SelectedItem="{Binding RecompensaSelecionada}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <!-- O Card Cinza -->
+                    <Frame BackgroundColor="#E0E0E0" CornerRadius="5" Padding="15" HasShadow="False" Margin="0,0,0,15">
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto">
+
+                            <!-- Coluna Esquerda: Dados -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding TituloCard}" 
+                                       FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding NomePromotor, StringFormat='PROMOTOR: {0}'}" 
+                                       TextColor="Black" FontSize="14" Margin="0,8,0,0" FontAttributes="Bold" />
+                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding NivelPromotor, StringFormat='NÍVEL - {0}'}" 
+                                       TextColor="Black" FontSize="14" Margin="0,4,0,0" FontAttributes="Bold" />
+                            <Label Grid.Row="3" Grid.Column="0" 
+                                       Text="{Binding DataSolicitacao, StringFormat='DATA SOLICITAÇÃO: {0:dd/MM/yyyy}'}" 
+                                       TextColor="Black" FontSize="14" Margin="0,4,0,0" FontAttributes="Bold" />
+
+                            <!-- Coluna Direita: Status e Botão Detalhes -->
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Status}" 
+                                       FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="14"/>
+
+                            <Button Grid.Row="3" Grid.Column="1" 
+                                    Text="DETALHES" 
+                                    BackgroundColor="#333333" 
+                                    TextColor="White" 
+                                    CornerRadius="15" 
+                                    HeightRequest="35" 
+                                    Padding="15,0"
+                                    VerticalOptions="End"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalhesCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- LINHA 2: Botões de Ação Fixos no Rodapé -->
+        <Grid Grid.Row="2" ColumnDefinitions="*, *" ColumnSpacing="20" Margin="0,15,0,0">
+            <Button Grid.Column="0" Text="CANCELAR" BackgroundColor="#D3D3D3" 
+                        TextColor="Black" FontAttributes="Bold" CornerRadius="20" HeightRequest="50" Command="{Binding CancelarCommand}"/>
+            <Button Grid.Column="1" Text="CADASTRAR" BackgroundColor="#D3D3D3" 
+                        TextColor="Black" FontAttributes="Bold" CornerRadius="20" HeightRequest="50" Command="{Binding CadastrarCommand}"/>
+        </Grid>
+
+    </Grid>
 </ContentPage>

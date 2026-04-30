@@ -10,7 +10,7 @@
                       Title="Tipo de Usuário" 
                       TitleColor="White"
                       ItemsSource="{Binding pessoaTiposDisponiveis}"
-                      SelectedItem="{Binding Id_pessoatipo}"
+                      SelectedItem="{Binding Id_pessoa_tipo}"
                       BackgroundColor="White"
                       TextColor="Black"
                       FontAttributes="Bold"
@@ -29,7 +29,7 @@
                    Keyboard="Numeric" />
 
             <Label Text="Telefone" FontAttributes="Bold" />
-            <Entry Text="{Binding Telefone}" 
+            <Entry Text="{Binding Celular}" 
                    Placeholder="(00) 00000-0000" 
                    Keyboard="Telephone" />
 
