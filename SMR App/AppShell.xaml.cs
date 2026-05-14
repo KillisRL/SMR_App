@@ -18,6 +18,7 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(RecompensasView), typeof(RecompensasView));
             Routing.RegisterRoute(nameof(GerenciarRecompensasView), typeof(GerenciarRecompensasView));
             Routing.RegisterRoute(nameof(RelatoriosView), typeof(RelatoriosView));
+            Routing.RegisterRoute(nameof(IndicacoesView), typeof(IndicacoesView));
         }
     }
 }

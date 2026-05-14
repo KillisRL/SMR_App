@@ -4,8 +4,7 @@
              x:Class="SMR_App.Views.ConfigEmpresaView"
              ControlTemplate="{StaticResource MainPageTemplate}"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="White">
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
         <VerticalStackLayout Spacing="40" Padding="20" Margin="0,20,0,0">

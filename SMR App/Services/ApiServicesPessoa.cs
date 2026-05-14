@@ -1,4 +1,5 @@
 ﻿using SMRDominio.ClassePessoa;
+using SMRDominio.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SMR_App.Services
@@ -23,30 +25,41 @@ namespace SMR_App.Services
             };
 
         }
-        public async Task<bool> CadastrarPessoaService(Pessoa pessoa)
+        public async Task<(bool Sucesso, string Mensagem)> CadastrarPessoaService(CadastroPessoaDTO dto)
         {
-            
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("pessoa/cadastrar", pessoa);
+                var response = await _httpClient.PostAsJsonAsync("pessoa/cadastrar", dto);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var pessoaNova = await response.Content.ReadFromJsonAsync<Pessoa>();
-                    return true;
+                    return (true, "Cadastro realizado com sucesso!");
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {response.StatusCode}, Erro: {errorMessage}");
-                    return false;
+                    // Pega o erro que veio da API
+                    var errorJson = await response.Content.ReadAsStringAsync();
+                    try
+                    {
+                        // Tenta extrair aquela propriedade "Message" que criamos no BadRequest da Controller
+                        var jsonDoc = JsonDocument.Parse(errorJson);
+                        if (jsonDoc.RootElement.TryGetProperty("message", out var msg))
+                        {
+                            return (false, msg.GetString()); // Retorna a mensagem amigável (ex: "Este e-mail já está...")
+                        }
+                    }
+                    catch
+                    {
+                        // Se não for JSON, ignora
+                    }
+
+                    return (false, "Falha ao cadastrar. Verifique os dados.");
                 }
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return false;
+                return (false, "Servidor indisponível no momento.");
             }
         }
 
