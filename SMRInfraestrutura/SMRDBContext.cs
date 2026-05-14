@@ -9,7 +9,8 @@ namespace SMRInfraestrutura
         public readonly IConfiguration _configuracao;
     
         public DbSet<SMRDominio.ClassePessoa.Pessoa> Pessoa {  get; set; }
-           
+        public DbSet<SMRDominio.ClassePessoa.Promotor> Promotor { get; set; }
+        public DbSet<SMRDominio.ClassePessoa.Empresa> Empresa { get; set; }            
         public SMRDBContext(IConfiguration configuracao, DbContextOptions<SMRDBContext> options): base(options)
         {
             _configuracao = configuracao ?? throw new ArgumentNullException(nameof(configuracao));

@@ -43,7 +43,7 @@ namespace SMR_App.ViewModels
             // Se for pessoa jurídica aparece o menu de configuração de empresa
             if (pessoa != null)
             {
-                VisualizarConfiguracoesEmpresa = (pessoa.id_pessoa_tipo == PessoaTipo.PessoaJuridica);
+                VisualizarConfiguracoesEmpresa = (pessoa.id_pessoa_tipo == PessoaTipo.Empresa);
 
                 NomeUsuario = pessoa.nome;
             }

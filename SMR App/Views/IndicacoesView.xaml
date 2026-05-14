@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMR_App.Views.IndicacoesView"
+             ControlTemplate="{StaticResource MainPageTemplate}">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Start">
+
+            <Label Text="FAZER INDICAÇÃO" 
+                   FontAttributes="Bold" 
+                   FontSize="22" 
+                   TextColor="Black"
+                   HorizontalOptions="Center" 
+                   Margin="0,10,0,0"/>
+
+            <Label Text="VAMOS INDICAR ALGUÉM?" 
+                   FontAttributes="Bold" 
+                   FontSize="18" 
+                   TextColor="Black"
+                   Margin="0,10,0,0" />
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="NOME:" FontAttributes="Bold" TextColor="Black" />
+                <Frame BackgroundColor="#E0E0E0" Padding="10,0" HasShadow="False" CornerRadius="5" HeightRequest="45">
+                    <Entry Text="{Binding NomeIndicado}" 
+                           Placeholder="Digite o nome do amigo" 
+                           TextColor="Black"
+                           BackgroundColor="Transparent" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="TELEFONE:" FontAttributes="Bold" TextColor="Black" />
+                <Frame BackgroundColor="#E0E0E0" Padding="10,0" HasShadow="False" CornerRadius="5" HeightRequest="45">
+                    <Entry Text="{Binding TelefoneIndicado}" 
+                           Keyboard="Telephone" 
+                           Placeholder="(00) 00000-0000" 
+                           TextColor="Black"
+                           BackgroundColor="Transparent" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <Button Text="AVANÇAR" 
+                    Command="{Binding AvancarCommand}"
+                    BackgroundColor="#D3D3D3" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20" 
+                    WidthRequest="200" 
+                    HeightRequest="50" 
+                    HorizontalOptions="Center" 
+                    Margin="0,30,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

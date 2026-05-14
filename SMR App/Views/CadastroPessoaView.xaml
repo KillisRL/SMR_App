@@ -18,30 +18,57 @@
                       WidthRequest="150"
                       HeightRequest="60"/>
 
-            <Label Text="Nome Completo / Razão Social" FontAttributes="Bold" />
+            <Label Text="Nome (Promotor) ou Nome Fantasia (Empresa)" FontAttributes="Bold" />
             <Entry Text="{Binding Nome}" 
-                   Placeholder="Digite o nome completo" 
+                   Placeholder="Como você quer ser chamado?" 
                    Keyboard="Text" />
 
-            <Label Text="CPF ou CNPJ" FontAttributes="Bold" />
-            <Entry Text="{Binding Documento}" 
-                   Placeholder="Apenas números" 
-                   Keyboard="Numeric" />
-
-            <Label Text="Telefone" FontAttributes="Bold" />
-            <Entry Text="{Binding Celular}" 
-                   Placeholder="(00) 00000-0000" 
-                   Keyboard="Telephone" />
+            <!-- CAMPOS DE CNPJ TELEFONE 1 E 2 CASO FOR EMPRESA -->
+            <VerticalStackLayout IsVisible="{Binding IsEmpresaVisible}"
+                                 Spacing="15">
+                
+                <Label Text="Razão Social" FontAttributes="Bold" />
+                <Entry Text="{Binding Razao_social}" 
+                       Placeholder="Nome Jurídico do CNPJ)" 
+                       Keyboard="Text" />
+                
+                <Label Text="CNPJ" FontAttributes="Bold" />
+                <Entry Text="{Binding Documento}" 
+                       Placeholder="Apenas números (CNPJ)" 
+                       Keyboard="Numeric" />
+                
+                <Label Text="Telefone1" FontAttributes="Bold" />
+                <Entry Text="{Binding Telefone1}"  
+                       Placeholder="(00) 00000-0000"
+                       Keyboard="Telephone" />
+                
+                <Label Text="Telefone 2:" FontAttributes="Bold"/>
+                <Entry Text="{Binding Telefone2}"
+                       Placeholder="(00) 00000-0000"
+                       Keyboard="Telephone"/>
+            </VerticalStackLayout>
+            
+            <!-- CAMPO DE CELULAR CASO FOR PROMOTOR -->
+            <VerticalStackLayout IsVisible="{Binding IsPromotorVisible}"
+                                 Spacing="15">
+                <Label Text="CPF" FontAttributes="Bold" />
+                <Entry Text="{Binding Documento}" 
+                       Placeholder="Apenas números (CPF)" 
+                       Keyboard="Numeric" />
+                <Label Text="Celular:" FontAttributes="Bold"/>
+                <Entry Text="{Binding Celular}"
+                       Placeholder="(00) 00000-0000"/>
+            </VerticalStackLayout>
 
             <Label Text="E-mail" FontAttributes="Bold" />
             <Entry Text="{Binding Email}" 
                    Placeholder="exemplo@email.com" 
                    Keyboard="Email" />
-
+            <!--
             <Label Text="Login" FontAttributes="Bold" />
             <Entry Text="{Binding Login}" 
                    Placeholder="Crie um nome de usuário" 
-                   Keyboard="Text" />
+                   Keyboard="Text" /> -->
 
             <Label Text="Senha" FontAttributes="Bold" />
             <Entry Text="{Binding Senha_hash}" 

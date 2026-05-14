@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SMRDominio.ClassePessoa
+﻿namespace SMRDominio.ClassePessoa
 {
     public enum PessoaTipo
     {
-        PessoaFisica = 1,
-        PessoaJuridica = 2
+        Empresa = 1,
+        Promotor = 2
     }
 }

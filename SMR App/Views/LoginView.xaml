@@ -24,7 +24,7 @@
                    Margin="0,-15,0,10"/>
 
             <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Padding="15,2" HasShadow="False">
-                <Entry Text="{Binding Login}"
+                <Entry Text="{Binding Documento}"
                        Placeholder="Usuário ou CPF"
                        PlaceholderColor="Gray"
                        TextColor="White"

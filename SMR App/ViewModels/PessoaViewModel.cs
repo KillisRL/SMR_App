@@ -6,7 +6,7 @@ using SMR_App.Views;
 using SMRDominio.ClasseBase;
 using SMRDominio.ClassePessoa;
 using System.Collections.ObjectModel;
-
+using SMRDominio.DTOs;
 
 namespace SMR_App.ViewModels
 {
@@ -27,15 +27,22 @@ namespace SMR_App.ViewModels
 
         //propriedades do clientes
         [ObservableProperty] private string nome;
+        [ObservableProperty] private string razao_social;
         [ObservableProperty] private string documento;
         [ObservableProperty] private string celular;
+        [ObservableProperty] private string telefone1;
+        [ObservableProperty] private string telefone2;
         [ObservableProperty] private string email;
         [ObservableProperty] private string senha_hash;
-        [ObservableProperty] private string login;
         [ObservableProperty] private DateTime data_cadastro;
-        [ObservableProperty] private PessoaTipo id_pessoa_tipo;
         [ObservableProperty] private int id_pessoa;
         [ObservableProperty] private bool ativo;
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsEmpresaVisible))]
+        [NotifyPropertyChangedFor(nameof(IsPromotorVisible))]
+        private PessoaTipo id_pessoa_tipo;
+        public bool IsEmpresaVisible => Id_pessoa_tipo == PessoaTipo.Empresa;
+        public bool IsPromotorVisible => Id_pessoa_tipo == PessoaTipo.Promotor;
 
         public ObservableCollection<PessoaTipo> pessoaTiposDisponiveis { get; }
 
@@ -47,14 +54,14 @@ namespace SMR_App.ViewModels
             pessoaTiposDisponiveis = new ObservableCollection<PessoaTipo>(Enum.GetValues(typeof(PessoaTipo)).Cast<PessoaTipo>());
 
             bool ehValido = (AcaoTela == AcaoTela.Cadastro)
-                ? (Id_pessoa_tipo == PessoaTipo.PessoaFisica)
-                : (Id_pessoa_tipo == PessoaTipo.PessoaJuridica);
+                ? (Id_pessoa_tipo == PessoaTipo.Promotor)
+                : (Id_pessoa_tipo == PessoaTipo.Empresa);
         }
 
         [RelayCommand]
         private async Task Logar()
         {
-            if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(Senha_hash))
+            if (string.IsNullOrEmpty(Documento) || string.IsNullOrEmpty(Senha_hash))
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos.", "OK");
                 return;
@@ -72,35 +79,52 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private async Task Salvar()
         {
-            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(documento) || string.IsNullOrEmpty(celular) || string.IsNullOrEmpty(email)
-                || string.IsNullOrEmpty(senha_hash) || string.IsNullOrEmpty(login))
+            // 1.Validações Comuns(Todo mundo tem que preencher)
+            if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
+                || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Senha_hash))
             {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos base.", "OK");
                 return;
             }
-            if(Id_pessoa_tipo == PessoaTipo.PessoaFisica)
+
+            // 2. Validações do Promotor
+            if (Id_pessoa_tipo == PessoaTipo.Promotor)
             {
-                if (!ExtensionsValidadorCPF.CPFValido(documento))
+                if (string.IsNullOrEmpty(Celular))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha o celular.", "OK");
+                    return;
+                }
+                if (!ExtensionsValidadorCPF.CPFValido(Documento))
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "O CPF informado é inválido!", "OK");
-                    return; // Corta a execução aqui para não salvar
+                    return;
                 }
             }
-
-            else if (Id_pessoa_tipo == PessoaTipo.PessoaJuridica)
+            // 3. Validações da Empresa
+            else if (Id_pessoa_tipo == PessoaTipo.Empresa)
             {
-                if (!ExtensionsValidadorCNPJ.CNPJValido(documento))
+                if (string.IsNullOrEmpty(Razao_social))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha a Razão Social.", "OK");
+                    return;
+                }
+                if (string.IsNullOrEmpty(Telefone1))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha o Telefone 1.", "OK");
+                    return;
+                }
+                if (!ExtensionsValidadorCNPJ.CNPJValido(Documento))
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "O CNPJ informado é inválido!", "OK");
-                    return; // Corta a execução aqui para não salvar
+                    return;
                 }
             }
 
             if (AcaoTela == AcaoTela.Cadastro)
             {
                 await CadastrarPessoa();
-
-                await Shell.Current.GoToAsync(nameof(LoginView));
+                //await Shell.Current.GoToAsync(nameof(LoginView));
             }
         }
 
@@ -108,27 +132,33 @@ namespace SMR_App.ViewModels
         {
             try
             {
-                var pessoaNova = new Pessoa
+                var dadosParaCadastro = new CadastroPessoaDTO
                 {
                     nome = Nome,
+                    razao_social = Razao_social,
                     celular = Celular,
                     email = Email,
-                    login = Login,
+                    documento = Documento,
+                    telefone1 = Telefone1,
+                    telefone2 = Telefone2,
                     senha_hash = Senha_hash,
                     id_pessoa_tipo = Id_pessoa_tipo,
                     ativo = Ativo,
                     data_cadastro = DateTime.Now,
-
                 };
-                bool sucesso = await  _api.CadastrarPessoaService(pessoaNova);
-                if (sucesso)
+
+                // Agora recebemos os dois retornos (Sucesso e a Mensagem)
+                var resultado = await _api.CadastrarPessoaService(dadosParaCadastro);
+
+                if (resultado.Sucesso)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Pessoa cadastrada com sucesso!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "OK");
+                    await Shell.Current.GoToAsync(nameof(LoginView)); // Navega para o login só se der sucesso!
                 }
                 else
                 {
-                    // O serviço já deve ter logado o erro, avise o usuário.
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível realizar o cadastro. Verifique os dados.", "OK");
+                    // Exibe exatamente o erro que a API mandou (ex: Email duplicado)
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "OK");
                 }
             }
             catch (Exception ex)
@@ -143,7 +173,7 @@ namespace SMR_App.ViewModels
             {
                 var login = new PessoaLogin
                 {
-                    login = Login,
+                    documento = Documento,
                     senha_hash = Senha_hash
                 };
 

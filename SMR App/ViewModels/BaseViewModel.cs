@@ -19,13 +19,13 @@ namespace SMR_App.ViewModels
         public ICommand ImportarClientesCommand { get; }
 
 
-        public bool IsPessoaFisica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.PessoaFisica;
+        public bool IsPessoaFisica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.Promotor;
 
-        public bool IsPessoaJuridica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.PessoaJuridica;
+        public bool IsPessoaJuridica => ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa_tipo == PessoaTipo.Empresa;
 
         public BaseViewModel()
         {
-            CarregarDadosUsuario();
+            //CarregarDadosUsuario();
             VoltarTela = new AsyncRelayCommand(VoltarTelaAsync);
             AbrirTelaCommand = new Command<string>(ExecuteAbrirTela);
 
@@ -55,7 +55,7 @@ namespace SMR_App.ViewModels
                 _nomeUsuario = value;
                 OnPropertyChanged();
             }
-        }     
+        }
 
 
         private void CarregarDadosUsuario()
