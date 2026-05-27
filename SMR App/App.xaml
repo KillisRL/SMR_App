@@ -16,7 +16,11 @@
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
                                TextColor="Black"/>
-                        <Image Grid.Column="2" Source="profile_icon.png" HeightRequest="40"/>
+                        <ImageButton Grid.Column="2"
+                                     Command="{Binding BindingContext.AbrirTelaCommand, 
+                            Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                     CommandParameter="CadastroPessoaView"
+                                     Source="profile_icon.png" HeightRequest="40"/>
                     </Grid>
 
                     <ContentPresenter Grid.Row="1" />

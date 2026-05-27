@@ -27,6 +27,7 @@ namespace SMR_App.ViewModels
 
         //propriedades do clientes
         [ObservableProperty] private string nome;
+        [ObservableProperty] private string nome_fantasia;
         [ObservableProperty] private string razao_social;
         [ObservableProperty] private string documento;
         [ObservableProperty] private string celular;
@@ -53,6 +54,11 @@ namespace SMR_App.ViewModels
             _api = api;
             pessoaTiposDisponiveis = new ObservableCollection<PessoaTipo>(Enum.GetValues(typeof(PessoaTipo)).Cast<PessoaTipo>());
 
+            // Se não veio nenhuma pessoa por parâmetro, mas a ação for carregar o perfil do utilizador logado:
+            if (AcaoTela == AcaoTela.Alteracao && ApiServicesSessaoPessoa.PessoaLogada != null)
+            {
+                PessoaRecebida = ApiServicesSessaoPessoa.PessoaLogada;
+            }
             bool ehValido = (AcaoTela == AcaoTela.Cadastro)
                 ? (Id_pessoa_tipo == PessoaTipo.Promotor)
                 : (Id_pessoa_tipo == PessoaTipo.Empresa);
@@ -79,7 +85,7 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private async Task Salvar()
         {
-            // 1.Validações Comuns(Todo mundo tem que preencher)
+            // Validações Comuns (Todos precisam preencher)
             if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
                 || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Senha_hash))
             {
@@ -87,7 +93,7 @@ namespace SMR_App.ViewModels
                 return;
             }
 
-            // 2. Validações do Promotor
+            // Validações do Promotor
             if (Id_pessoa_tipo == PessoaTipo.Promotor)
             {
                 if (string.IsNullOrEmpty(Celular))
@@ -101,7 +107,7 @@ namespace SMR_App.ViewModels
                     return;
                 }
             }
-            // 3. Validações da Empresa
+            // Validações da Empresa
             else if (Id_pessoa_tipo == PessoaTipo.Empresa)
             {
                 if (string.IsNullOrEmpty(Razao_social))
@@ -124,7 +130,52 @@ namespace SMR_App.ViewModels
             if (AcaoTela == AcaoTela.Cadastro)
             {
                 await CadastrarPessoa();
-                //await Shell.Current.GoToAsync(nameof(LoginView));
+                await Shell.Current.GoToAsync(nameof(LoginView));
+            }
+            else if (AcaoTela == AcaoTela.Alteracao)
+            {
+                 await AlterarPessoa();
+            }
+        }
+
+        partial void OnPessoaRecebidaChanged(Pessoa? value)
+        {
+            if (value != null)
+            {
+                AcaoTela = AcaoTela.Alteracao;
+                Id_pessoa = value.id_pessoa; // Já guardamos o ID para a futura alteração!
+
+                // Chamamos um método separado para buscar na API sem travar a tela
+                CarregarDadosDoBancoAsync(value.id_pessoa);
+            }
+        }
+
+        private async Task CarregarDadosDoBancoAsync(int id)
+        {
+            var perfilCompleto = await _api.ObterPerfilCompleto(id);
+
+            if (perfilCompleto != null)
+            {
+                // Preenchemos os campos com os dados que vieram do banco
+                Nome = perfilCompleto.nome;
+                Email = perfilCompleto.email;
+                Id_pessoa_tipo = perfilCompleto.id_pessoa_tipo;
+                Ativo = perfilCompleto.ativo ?? true;
+                Senha_hash = string.Empty; // Senha sempre vazia por segurança
+
+                if (Id_pessoa_tipo == PessoaTipo.Promotor)
+                {
+                    Documento = perfilCompleto.documento;
+                    Celular = perfilCompleto.celular;
+                }
+                else if (Id_pessoa_tipo == PessoaTipo.Empresa)
+                {
+                    Nome = perfilCompleto.nome_fantasia;
+                    Razao_social = perfilCompleto.razao_social;
+                    Documento = perfilCompleto.documento;
+                    Telefone1 = perfilCompleto.telefone1;
+                    Telefone2 = perfilCompleto.telefone2;
+                }
             }
         }
 
@@ -164,6 +215,54 @@ namespace SMR_App.ViewModels
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
+            }
+        }
+
+        private async Task AlterarPessoa()
+        {
+            try
+            {
+                var dadosParaAlteracao = new CadastroPessoaDTO
+                {
+                    id_pessoa = Id_pessoa, // Crucial para o UPDATE saber quem atualizar
+                    nome = Nome,
+                    razao_social = Razao_social,
+                    celular = Celular,
+                    email = Email,
+                    documento = Documento,
+                    telefone1 = Telefone1,
+                    telefone2 = Telefone2,
+                    senha_hash = Senha_hash, // Passa o que foi digitado (se vazio, a API ignora)
+                    id_pessoa_tipo = Id_pessoa_tipo,
+                    ativo = Ativo,
+                    data_cadastro = DateTime.Now
+                };
+
+                var resultado = await _api.AlterarPessoaService(dadosParaAlteracao);
+
+                if (resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Perfil atualizado com sucesso!", "OK");
+
+                    // Atualiza a sessão local para refletir o novo nome no cabeçalho do app imediatamente
+                    if (ApiServicesSessaoPessoa.PessoaLogada != null)
+                    {
+                        ApiServicesSessaoPessoa.PessoaLogada.nome = Nome;
+                        ApiServicesSessaoPessoa.PessoaLogada.email = Email;
+                        ApiServicesSessaoPessoa.IniciarSessao(ApiServicesSessaoPessoa.PessoaLogada);
+                    }
+
+                    // Volta para a tela anterior (PrincipalView) automaticamente
+                    await VoltarTelaAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha ao salvar alterações: {ex.Message}", "OK");
             }
         }
 

@@ -4,8 +4,10 @@ namespace SMRDominio.DTOs
 {
     public class CadastroPessoaDTO
     {
+        public int id_pessoa {  get; set; }
         public PessoaTipo id_pessoa_tipo { get; set; }
         public string? nome { get; set; }
+        public string? nome_fantasia { get; set; }
         public string? razao_social { get; set; }
         public string? celular { get; set; }
         public string? email { get; set; }

@@ -25,7 +25,7 @@
 
             <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Padding="15,2" HasShadow="False">
                 <Entry Text="{Binding Documento}"
-                       Placeholder="Usuário ou CPF"
+                       Placeholder="CPF ou CNPJ"
                        PlaceholderColor="Gray"
                        TextColor="White"
                        HeightRequest="50"
