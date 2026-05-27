@@ -77,12 +77,25 @@ namespace SMR_App.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(nomeDaRota))
             {
-                await Shell.Current.GoToAsync(nomeDaRota);
+                // Se a rota for o Cadastro e tiver alguém logado, ele carrega o Perfil
+                if (nomeDaRota == "CadastroPessoaView" && ApiServicesSessaoPessoa.PessoaLogada != null)
+                {
+                    var navigationParameter = new Dictionary<string, object>
+            {
+                { "PessoaParaAlterar", ApiServicesSessaoPessoa.PessoaLogada }
+            };
+
+                    await Shell.Current.GoToAsync(nomeDaRota, navigationParameter);
+                }
+                else
+                {
+                    // Para todas as outras rotas, faz a navegação normal que você já tinha
+                    await Shell.Current.GoToAsync(nomeDaRota);
+                }
             }
         }
         private void NotificarMudancaDeSessao()
         {
-            // Avisa a UI para reavaliar todas as propriedades de permissão
             OnPropertyChanged(nameof(IsPessoaFisica));
             OnPropertyChanged(nameof(IsPessoaJuridica));
         }
@@ -96,19 +109,15 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private async Task FazerLogoutAsync()
         {
-            // 1. Pergunta de confirmação (boa prática de UX)
+            // Confirmação com Usuário
             bool confirmar = await Shell.Current.DisplayAlert("Sair",
                                                               "Deseja realmente sair do sistema?",
                                                               "Sim", "Não");
             if (!confirmar)
                 return;
 
-            // 2. Chama o serviço para limpar os dados
+            // Chama o serviço para limpar os dados
             ApiServicesSessaoPessoa.EncerrarSessao();
-
-            // 3. Navegação Crítica: Usando "//" (Absolute Routing)
-            // Isso é MUITO importante. Usar "//" limpa a pilha de navegação.
-            // O usuário não conseguirá voltar para a tela anterior apertando "Voltar".
             //await Shell.Current.GoToAsync(nameof(pgHomeView));
         }
 

@@ -98,16 +98,111 @@ namespace SMRApi.Controllers
             }
         }
 
+        [HttpGet("perfil/{id}")]
+        [AllowAnonymous] // Considerar [Authorize]
+        public async Task<IActionResult> ObterPerfil(int id)
+        {
+            var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
+            if (pessoa == null) return NotFound(new { Message = "Pessoa não encontrada" });
+
+            var dto = new CadastroPessoaDTO
+            {
+                nome = pessoa.nome,
+                email = pessoa.email,
+                id_pessoa_tipo = pessoa.id_pessoa_tipo,
+                ativo = pessoa.ativo,
+                data_cadastro = pessoa.data_cadastro
+            };
+
+            // Se Promotor
+            if (pessoa.id_pessoa_tipo == PessoaTipo.Promotor)
+            {
+                var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == id);
+                if (promotor != null)
+                {
+                    dto.nome = promotor.nome;
+                    dto.documento = promotor.cpf;
+                    dto.celular = promotor.celular;
+                }
+            }
+            // Se Empresa
+            else if (pessoa.id_pessoa_tipo == PessoaTipo.Empresa)
+            {
+                var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == id);
+                if (empresa != null)
+                {
+                    dto.nome_fantasia = empresa.nome_fantasia;
+                    dto.razao_social = empresa.razao_social;
+                    dto.documento = empresa.cnpj;
+                    dto.telefone1 = empresa.telefone1;
+                    dto.telefone2 = empresa.telefone2;
+                }
+            }
+
+            return Ok(dto);
+        }
+
 
         [HttpPut ("alterar")]
-        [Authorize]
-        public async Task<IActionResult> AlterarPessoa([FromBody]Pessoa pessoa)
+        [AllowAnonymous]
+        public async Task<IActionResult> AlterarPessoa([FromBody] CadastroPessoaDTO dto)
         {
-           _dbContext.Update(pessoa);
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
-           await _dbContext.SaveChangesAsync();
+            try
+            {
+                // Busca a Pessoa base no banco de dados
+                var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == dto.id_pessoa);
+                if (pessoa == null) return NotFound(new { Message = "Usuário não encontrado." });
 
-           return Ok(pessoa);        
+                // Atualiza os dados da tabela base
+                pessoa.nome = dto.nome;
+                pessoa.email = dto.email;
+                pessoa.ativo = dto.ativo;
+
+                // Só faz o hash e altera a senha se o usuário digitou algo no campo
+                if (!string.IsNullOrWhiteSpace(dto.senha_hash))
+                {
+                    pessoa.senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash);
+                }
+
+                _dbContext.Pessoa.Update(pessoa);
+
+                //  Atualiza a tabela filha específica
+                if (dto.id_pessoa_tipo == PessoaTipo.Empresa)
+                {
+                    var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == dto.id_pessoa);
+                    if (empresa != null)
+                    {
+                        empresa.razao_social = dto.razao_social;
+                        empresa.nome_fantasia = dto.nome_fantasia;
+                        empresa.cnpj = dto.documento;
+                        empresa.telefone1 = dto.telefone1;
+                        empresa.telefone2 = dto.telefone2;
+                        _dbContext.Empresa.Update(empresa);
+                    }
+                }
+                else if (dto.id_pessoa_tipo == PessoaTipo.Promotor)
+                {
+                    var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == dto.id_pessoa);
+                    if (promotor != null)
+                    {
+                        promotor.cpf = dto.documento;
+                        promotor.celular = dto.celular;
+                        _dbContext.Promotor.Update(promotor);
+                    }
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return Ok(pessoa);
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Erro ao atualizar o perfil", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
         }
 
         [HttpPost ("login")]

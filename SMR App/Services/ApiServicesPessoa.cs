@@ -1,14 +1,8 @@
 ﻿using SMRDominio.ClassePessoa;
 using SMRDominio.DTOs;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SMR_App.Services
 {
@@ -37,15 +31,14 @@ namespace SMR_App.Services
                 }
                 else
                 {
-                    // Pega o erro que veio da API
+                    // Obter Erro da API
                     var errorJson = await response.Content.ReadAsStringAsync();
                     try
                     {
-                        // Tenta extrair aquela propriedade "Message" que criamos no BadRequest da Controller
                         var jsonDoc = JsonDocument.Parse(errorJson);
                         if (jsonDoc.RootElement.TryGetProperty("message", out var msg))
                         {
-                            return (false, msg.GetString()); // Retorna a mensagem amigável (ex: "Este e-mail já está...")
+                            return (false, msg.GetString()); // Retorna a mensagem amigável
                         }
                     }
                     catch
@@ -59,6 +52,63 @@ namespace SMR_App.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
+                return (false, "Servidor indisponível no momento.");
+            }
+        }
+
+        // 'Read' do CRUD: Consulta os dados completos da API usando GET
+        public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"pessoa/perfil/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<CadastroPessoaDTO>();
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao buscar perfil: {ex.Message}");
+                return null;
+            }
+        }
+
+        // 'Update' do CRUD: Envia a alteração para a API usando PUT
+        public async Task<(bool Sucesso, string Mensagem)> AlterarPessoaService(CadastroPessoaDTO dto)
+        {
+            try
+            {
+                // Atenção aqui: PutAsJsonAsync em vez de Post
+                var response = await _httpClient.PutAsJsonAsync("pessoa/alterar", dto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, "Perfil atualizado com sucesso!");
+                }
+                else
+                {
+                    var errorJson = await response.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var jsonDoc = JsonDocument.Parse(errorJson);
+                        if (jsonDoc.RootElement.TryGetProperty("message", out var msg))
+                        {
+                            return (false, msg.GetString());
+                        }
+                    }
+                    catch
+                    {
+                        // Ignora se falhar o parse
+                    }
+
+                    return (false, "Falha ao atualizar o perfil. Verifique os dados.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao alterar pessoa: {ex.Message}");
                 return (false, "Servidor indisponível no momento.");
             }
         }
