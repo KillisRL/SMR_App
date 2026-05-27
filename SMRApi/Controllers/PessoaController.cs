@@ -120,7 +120,6 @@ namespace SMRApi.Controllers
                 var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == id);
                 if (promotor != null)
                 {
-                    dto.nome = promotor.nome;
                     dto.documento = promotor.cpf;
                     dto.celular = promotor.celular;
                 }
@@ -202,6 +201,31 @@ namespace SMRApi.Controllers
             {
                 await transaction.RollbackAsync();
                 return BadRequest(new { Message = "Erro ao atualizar o perfil", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+
+        [HttpDelete("deletar/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeletarPessoa(int id)
+        {
+            try
+            {
+                var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
+
+                if (pessoa == null)
+                    return NotFound(new { Message = "Usuário não encontrado." });
+
+                // EXCLUSÃO LÓGICA (Soft Delete): Apenas mudamos o status para inativo
+                pessoa.ativo = false;
+
+                _dbContext.Pessoa.Update(pessoa);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { Message = "Conta desativada com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Erro ao desativar a conta.", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
 

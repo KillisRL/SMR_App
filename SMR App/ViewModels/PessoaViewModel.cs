@@ -143,9 +143,8 @@ namespace SMR_App.ViewModels
             if (value != null)
             {
                 AcaoTela = AcaoTela.Alteracao;
-                Id_pessoa = value.id_pessoa; // Já guardamos o ID para a futura alteração!
+                Id_pessoa = value.id_pessoa; 
 
-                // Chamamos um método separado para buscar na API sem travar a tela
                 CarregarDadosDoBancoAsync(value.id_pessoa);
             }
         }
@@ -224,7 +223,7 @@ namespace SMR_App.ViewModels
             {
                 var dadosParaAlteracao = new CadastroPessoaDTO
                 {
-                    id_pessoa = Id_pessoa, // Crucial para o UPDATE saber quem atualizar
+                    id_pessoa = Id_pessoa,
                     nome = Nome,
                     razao_social = Razao_social,
                     celular = Celular,
@@ -232,7 +231,7 @@ namespace SMR_App.ViewModels
                     documento = Documento,
                     telefone1 = Telefone1,
                     telefone2 = Telefone2,
-                    senha_hash = Senha_hash, // Passa o que foi digitado (se vazio, a API ignora)
+                    senha_hash = Senha_hash,
                     id_pessoa_tipo = Id_pessoa_tipo,
                     ativo = Ativo,
                     data_cadastro = DateTime.Now
