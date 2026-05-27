@@ -25,9 +25,10 @@ namespace SMRInfraestrutura
             {
                 optionsBuilder.UseSqlServer(connectionString);
             }
-            else if (typeDatabase == "MariaDB")
+            else if (typeDatabase == "MariaDb") // Dica: garanta que a string bata com o "MariaDb" do seu appsettings.json (case-sensitive em alguns contextos)
             {
-              //  optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                // Descomentado e configurado para o driver Pomelo (MySQL/MariaDB)
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             }
         }
     }
