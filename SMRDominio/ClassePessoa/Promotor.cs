@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace SMRDominio.ClassePessoa
 {
-    [Table("Promotor")]
+    [Table("promotor")]
     public class Promotor
     {
         [Key]

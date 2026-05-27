@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMRDominio.ClassePessoa
 {
-    [Table ("Pessoa")]
+    [Table ("pessoa")]
     public class Pessoa
     {
         [Key]
