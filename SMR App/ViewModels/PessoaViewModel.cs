@@ -20,8 +20,10 @@ namespace SMR_App.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TituloPagina))]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        [NotifyPropertyChangedFor(nameof(IsEdicao))]
         private AcaoTela _acaoTela;
 
+        public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
         public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Nova Pessoa" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Salvar";
 
@@ -135,6 +137,37 @@ namespace SMR_App.ViewModels
             else if (AcaoTela == AcaoTela.Alteracao)
             {
                  await AlterarPessoa();
+            }
+        }
+
+        [RelayCommand]
+        private async Task Excluir()
+        {
+            // A Regra de Ouro: Confirmação!
+            bool confirmacao = await Application.Current.MainPage.DisplayAlert(
+                "Atenção Cuidado!",
+                "Tem certeza que deseja desativar sua conta? Você perderá o acesso ao sistema.",
+                "Sim, Excluir",
+                "Cancelar");
+
+            if (!confirmacao) return; // O usuário clicou em Cancelar
+
+            // Manda o ID para a API desativar
+            var resultado = await _api.DeletarPessoaService(Id_pessoa);
+
+            if (resultado.Sucesso)
+            {
+                await Application.Current.MainPage.DisplayAlert("Despedida", "Sua conta foi desativada com sucesso.", "OK");
+
+                // Limpa a sessão local para não deixar rastro do usuário logado
+                ApiServicesSessaoPessoa.EncerrarSessao();
+
+                // Manda o usuário embora para a tela de Login
+                Application.Current.MainPage = new AppShell(); // Usando "//" limpa o histórico de navegação
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", resultado.Mensagem, "OK");
             }
         }
 

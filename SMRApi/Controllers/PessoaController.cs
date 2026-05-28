@@ -32,7 +32,7 @@ namespace SMRApi.Controllers
                     id_pessoa_tipo = dto.id_pessoa_tipo,
                     email = dto.email,
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
-                    ativo = dto.ativo,
+                    ativo = true,
                     data_cadastro = dto.data_cadastro
                 };
 
@@ -265,20 +265,9 @@ namespace SMRApi.Controllers
                 return Unauthorized(new { Message = "Senha inválida!" });
             }
 
-            var token = TokenService.GenerateToken(pessoa);
-
-            return Ok(new
+            if (pessoa.ativo == false)
             {
-                usuario = pessoa,
-                Token = token
-            });
-
-            /*
-            var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(u => u.login == pessoalogin.documento);
-
-            if (pessoa == null || !BCrypt.Net.BCrypt.Verify(pessoalogin.senha_hash, pessoa.senha_hash))
-            {
-                return Unauthorized(new { Message = "Login ou senha inválidos!" });
+                return Unauthorized(new { Message = "Esta conta foi desativada ou excluída." });
             }
 
             var token = TokenService.GenerateToken(pessoa);
@@ -287,7 +276,8 @@ namespace SMRApi.Controllers
             {
                 usuario = pessoa,
                 Token = token
-            });*/
+            });
+
         }
     }
 }
