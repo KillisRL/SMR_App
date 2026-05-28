@@ -20,8 +20,10 @@ namespace SMR_App.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TituloPagina))]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        [NotifyPropertyChangedFor(nameof(IsEdicao))]
         private AcaoTela _acaoTela;
 
+        public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
         public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Nova Pessoa" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Salvar";
 
@@ -138,14 +140,44 @@ namespace SMR_App.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task Excluir()
+        {
+            // A Regra de Ouro: Confirmação!
+            bool confirmacao = await Application.Current.MainPage.DisplayAlert(
+                "Atenção Cuidado!",
+                "Tem certeza que deseja desativar sua conta? Você perderá o acesso ao sistema.",
+                "Sim, Excluir",
+                "Cancelar");
+
+            if (!confirmacao) return; // O usuário clicou em Cancelar
+
+            // Manda o ID para a API desativar
+            var resultado = await _api.DeletarPessoaService(Id_pessoa);
+
+            if (resultado.Sucesso)
+            {
+                await Application.Current.MainPage.DisplayAlert("Despedida", "Sua conta foi desativada com sucesso.", "OK");
+
+                // Limpa a sessão local para não deixar rastro do usuário logado
+                ApiServicesSessaoPessoa.EncerrarSessao();
+
+                // Manda o usuário embora para a tela de Login
+                Application.Current.MainPage = new AppShell(); // Usando "//" limpa o histórico de navegação
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", resultado.Mensagem, "OK");
+            }
+        }
+
         partial void OnPessoaRecebidaChanged(Pessoa? value)
         {
             if (value != null)
             {
                 AcaoTela = AcaoTela.Alteracao;
-                Id_pessoa = value.id_pessoa; // Já guardamos o ID para a futura alteração!
+                Id_pessoa = value.id_pessoa; 
 
-                // Chamamos um método separado para buscar na API sem travar a tela
                 CarregarDadosDoBancoAsync(value.id_pessoa);
             }
         }
@@ -224,7 +256,7 @@ namespace SMR_App.ViewModels
             {
                 var dadosParaAlteracao = new CadastroPessoaDTO
                 {
-                    id_pessoa = Id_pessoa, // Crucial para o UPDATE saber quem atualizar
+                    id_pessoa = Id_pessoa,
                     nome = Nome,
                     razao_social = Razao_social,
                     celular = Celular,
@@ -232,7 +264,7 @@ namespace SMR_App.ViewModels
                     documento = Documento,
                     telefone1 = Telefone1,
                     telefone2 = Telefone2,
-                    senha_hash = Senha_hash, // Passa o que foi digitado (se vazio, a API ignora)
+                    senha_hash = Senha_hash,
                     id_pessoa_tipo = Id_pessoa_tipo,
                     ativo = Ativo,
                     data_cadastro = DateTime.Now

@@ -84,6 +84,17 @@
                     HeightRequest="50"
                     FontAttributes="Bold"/>
 
+            <!-- BOTÃO EXCLUIR -->
+            <Button Text="Excluir Minha Conta" 
+                    Command="{Binding ExcluirCommand}" 
+                    IsVisible="{Binding IsEdicao}"
+                    BackgroundColor="#FF3B30" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="10" 
+                    HeightRequest="50" 
+                    Margin="0, 15, 0, 30" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

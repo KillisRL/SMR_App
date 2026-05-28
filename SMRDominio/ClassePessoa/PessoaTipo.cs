@@ -2,7 +2,7 @@
 {
     public enum PessoaTipo
     {
-        Empresa = 1,
-        Promotor = 2
+        Empresa = 2,
+        Promotor = 1
     }
 }
