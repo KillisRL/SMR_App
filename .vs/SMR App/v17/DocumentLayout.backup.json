@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classepessoa\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|solutionrelative:smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classepessoa\\pessoatipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\pessoatipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classepessoa\\promotor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\promotor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classerecompensa\\recompensa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classerecompensa\\recompensa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classepessoa\\pessoa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrapi\\controllers\\recompensacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\recompensacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\pessoacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{670EA9F1-AC53-43E6-AFBB-6866DA79CB9B}|SMRInfraestrutura\\SMRInfraestrutura.csproj|solutionrelative:smrinfraestrutura\\smrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\luiz felipe\\tcc\\projeto\\smr_app\\smrdominio\\dtos\\cadastropessoadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\dtos\\cadastropessoadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,54 +54,67 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SMRDBContext.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
+              "RelativeDocumentMoniker": "SMRInfraestrutura\\SMRDBContext.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
+              "RelativeToolTip": "SMRInfraestrutura\\SMRDBContext.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAcwBgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T00:58:37.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Recompensa.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClasseRecompensa\\Recompensa.cs",
+              "RelativeDocumentMoniker": "SMRDominio\\ClasseRecompensa\\Recompensa.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClasseRecompensa\\Recompensa.cs",
+              "RelativeToolTip": "SMRDominio\\ClasseRecompensa\\Recompensa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T00:48:09.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "PessoaTipo.cs",
               "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\PessoaTipo.cs",
               "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\PessoaTipo.cs",
               "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\PessoaTipo.cs",
               "RelativeToolTip": "SMRDominio\\ClassePessoa\\PessoaTipo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:42:08.207Z",
+              "WhenOpened": "2026-05-28T00:42:23.417Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Promotor.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Promotor.cs",
-              "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\Promotor.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Promotor.cs",
-              "RelativeToolTip": "SMRDominio\\ClassePessoa\\Promotor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "CadastroPessoaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\DTOs\\CadastroPessoaDTO.cs",
+              "RelativeDocumentMoniker": "SMRDominio\\DTOs\\CadastroPessoaDTO.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\DTOs\\CadastroPessoaDTO.cs",
+              "RelativeToolTip": "SMRDominio\\DTOs\\CadastroPessoaDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:41:57.999Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Empresa.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Empresa.cs",
-              "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\Empresa.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Empresa.cs",
-              "RelativeToolTip": "SMRDominio\\ClassePessoa\\Empresa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:41:51.271Z",
+              "WhenOpened": "2026-05-28T00:42:19.471Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Pessoa.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "RelativeDocumentMoniker": "SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "RelativeToolTip": "SMRDominio\\ClassePessoa\\Pessoa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAOAAAAAAAAAA==",
+              "Title": "RecompensaController.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Controllers\\RecompensaController.cs",
+              "RelativeDocumentMoniker": "SMRApi\\Controllers\\RecompensaController.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Controllers\\RecompensaController.cs",
+              "RelativeToolTip": "SMRApi\\Controllers\\RecompensaController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAUwC4AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:38:47.32Z",
+              "WhenOpened": "2026-05-28T00:20:59.952Z",
               "EditorCaption": ""
             },
             {
@@ -112,22 +125,9 @@
               "RelativeDocumentMoniker": "SMRApi\\Controllers\\PessoaController.cs",
               "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRApi\\Controllers\\PessoaController.cs",
               "RelativeToolTip": "SMRApi\\Controllers\\PessoaController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwFwAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:37:11.079Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SMRDBContext.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
-              "RelativeDocumentMoniker": "SMRInfraestrutura\\SMRDBContext.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\TCC\\PROJETO\\SMR_App\\SMRInfraestrutura\\SMRDBContext.cs",
-              "RelativeToolTip": "SMRInfraestrutura\\SMRDBContext.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAQwCMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T23:35:48.271Z",
+              "WhenOpened": "2026-05-28T00:21:07.478Z",
               "EditorCaption": ""
             }
           ]
