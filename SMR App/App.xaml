@@ -20,7 +20,7 @@
                                      Command="{Binding BindingContext.AbrirTelaCommand, 
                             Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                      CommandParameter="CadastroPessoaView"
-                                     Source="profile_icon.png" HeightRequest="40"/>
+                                     Source="profile_icon.jpg" HeightRequest="40"/>
                     </Grid>
 
                     <ContentPresenter Grid.Row="1" />

@@ -30,6 +30,8 @@ namespace SMR_App.ViewModels
             AbrirTelaCommand = new Command<string>(ExecuteAbrirTela);
 
             ApiServicesSessaoPessoa.OnSessaoChanged += NotificarMudancaDeSessao;
+
+            NotificarMudancaDeSessao();
         }
 
 
@@ -96,6 +98,9 @@ namespace SMR_App.ViewModels
         }
         private void NotificarMudancaDeSessao()
         {
+            // Atualizar nome na tela
+            NomeUsuario = ApiServicesSessaoPessoa.PessoaLogada?.nome ?? "Usuário";
+
             OnPropertyChanged(nameof(IsPessoaFisica));
             OnPropertyChanged(nameof(IsPessoaJuridica));
         }

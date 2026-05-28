@@ -113,6 +113,25 @@ namespace SMR_App.Services
             }
         }
 
+        public async Task<(bool Sucesso, string Mensagem)> DeletarPessoaService(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"pessoa/deletar/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, "Conta excluída com sucesso!");
+                }
+                return (false, "Falha ao excluir a conta.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao deletar: {ex.Message}");
+                return (false, "Erro de comunicação com o servidor.");
+            }
+        }
+
         public async Task<Pessoa?> Login(PessoaLogin login)
         {
             try

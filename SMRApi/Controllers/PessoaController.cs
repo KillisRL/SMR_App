@@ -32,7 +32,7 @@ namespace SMRApi.Controllers
                     id_pessoa_tipo = dto.id_pessoa_tipo,
                     email = dto.email,
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
-                    ativo = dto.ativo,
+                    ativo = true,
                     data_cadastro = dto.data_cadastro
                 };
 
@@ -120,7 +120,6 @@ namespace SMRApi.Controllers
                 var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == id);
                 if (promotor != null)
                 {
-                    dto.nome = promotor.nome;
                     dto.documento = promotor.cpf;
                     dto.celular = promotor.celular;
                 }
@@ -205,6 +204,31 @@ namespace SMRApi.Controllers
             }
         }
 
+        [HttpDelete("deletar/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeletarPessoa(int id)
+        {
+            try
+            {
+                var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
+
+                if (pessoa == null)
+                    return NotFound(new { Message = "Usuário não encontrado." });
+
+                // EXCLUSÃO LÓGICA (Soft Delete): Apenas mudamos o status para inativo
+                pessoa.ativo = false;
+
+                _dbContext.Pessoa.Update(pessoa);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { Message = "Conta desativada com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Erro ao desativar a conta.", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+
         [HttpPost ("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] PessoaLogin pessoalogin)
@@ -241,20 +265,9 @@ namespace SMRApi.Controllers
                 return Unauthorized(new { Message = "Senha inválida!" });
             }
 
-            var token = TokenService.GenerateToken(pessoa);
-
-            return Ok(new
+            if (pessoa.ativo == false)
             {
-                usuario = pessoa,
-                Token = token
-            });
-
-            /*
-            var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(u => u.login == pessoalogin.documento);
-
-            if (pessoa == null || !BCrypt.Net.BCrypt.Verify(pessoalogin.senha_hash, pessoa.senha_hash))
-            {
-                return Unauthorized(new { Message = "Login ou senha inválidos!" });
+                return Unauthorized(new { Message = "Esta conta foi desativada ou excluída." });
             }
 
             var token = TokenService.GenerateToken(pessoa);
@@ -263,7 +276,8 @@ namespace SMRApi.Controllers
             {
                 usuario = pessoa,
                 Token = token
-            });*/
+            });
+
         }
     }
 }

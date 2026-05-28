@@ -19,16 +19,7 @@ namespace SMR_App.ViewModels
             }
         }
 
-        private string _nomeUsuario;
-        public string NomeUsuario
-        {
-            get => _nomeUsuario;
-            set
-            {
-                _nomeUsuario = value;
-                OnPropertyChanged();
-            }
-        }
+        
 
         public PrincipalViewModel()
         {
