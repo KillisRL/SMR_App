@@ -1,10 +1,12 @@
-﻿using SMR_App.Services;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SMR_App.Services;
 using SMRDominio.ClassePessoa;
 
 namespace SMR_App.ViewModels
 {
     public class PrincipalViewModel : BaseViewModel
     {
+
         // VARIAVEIS
         private bool _visualizarConfiguracoesEmpresa;
 

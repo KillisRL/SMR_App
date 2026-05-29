@@ -27,12 +27,89 @@ namespace SMRApi.Controllers
 
             try
             {
+                // ========================================================
+                // 1. VERIFICAÇÃO DE EXISTÊNCIA E REATIVAÇÃO DO CADASTRO
+                // ========================================================
+                int? idPessoaExistente = null;
+
+                // Procura o documento na tabela filha correspondente
+                if (dto.id_pessoa_tipo == PessoaTipo.Promotor)
+                {
+                    var promotorExistente = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.cpf == dto.documento);
+                    if (promotorExistente != null) idPessoaExistente = promotorExistente.id_pessoa;
+                }
+                else if (dto.id_pessoa_tipo == PessoaTipo.Empresa)
+                {
+                    var empresaExistente = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.cnpj == dto.documento);
+                    if (empresaExistente != null) idPessoaExistente = empresaExistente.id_pessoa;
+                }
+
+                // Se encontrou o documento no banco...
+                if (idPessoaExistente != null)
+                {
+                    var pessoaExistente = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == idPessoaExistente);
+
+                    if (pessoaExistente != null)
+                    {
+                        if (pessoaExistente.ativo == true)
+                        {
+                            // Já existe e está ativo. Barra o cadastro na hora, antes de dar erro no banco.
+                            return BadRequest(new { Message = "Este CPF/CNPJ já está cadastrado e ativo em nosso sistema." });
+                        }
+                        else
+                        {
+                            // CONTA EXCLUÍDA: Reativar e atualizar com os dados novos da tela
+                            pessoaExistente.ativo = true;
+                            pessoaExistente.nome = dto.nome;
+                            pessoaExistente.email = dto.email;
+
+                            if (!string.IsNullOrWhiteSpace(dto.senha_hash))
+                            {
+                                pessoaExistente.senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash);
+                            }
+                            _dbContext.Pessoa.Update(pessoaExistente);
+
+                            // Atualiza também os dados específicos na tabela filha
+                            if (dto.id_pessoa_tipo == PessoaTipo.Promotor)
+                            {
+                                var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == idPessoaExistente);
+                                if (promotor != null)
+                                {
+                                    promotor.celular = dto.celular;
+                                    _dbContext.Promotor.Update(promotor);
+                                }
+                            }
+                            else if (dto.id_pessoa_tipo == PessoaTipo.Empresa)
+                            {
+                                var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == idPessoaExistente);
+                                if (empresa != null)
+                                {
+                                    empresa.razao_social = dto.razao_social;
+                                    empresa.nome_fantasia = dto.nome;
+                                    empresa.telefone1 = dto.telefone1;
+                                    empresa.telefone2 = dto.telefone2;
+                                    _dbContext.Empresa.Update(empresa);
+                                }
+                            }
+
+                            await _dbContext.SaveChangesAsync();
+                            await transaction.CommitAsync();
+
+                            // Sai do método aqui, retorna sucesso fingindo que foi um cadastro comum.
+                            return Ok(new { Message = "Conta reativada com sucesso!" });
+                        }
+                    }
+                }
+
+                // ========================================================
+                // 2. FLUXO NORMAL DE CADASTRO (Se o documento não existe)
+                // ========================================================
                 var criarPessoa = new Pessoa
                 {
                     id_pessoa_tipo = dto.id_pessoa_tipo,
                     email = dto.email,
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
-                    ativo = true,
+                    ativo = dto.ativo,
                     data_cadastro = dto.data_cadastro
                 };
 

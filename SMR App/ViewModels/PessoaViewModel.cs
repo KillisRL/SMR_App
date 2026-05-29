@@ -23,6 +23,9 @@ namespace SMR_App.ViewModels
         [NotifyPropertyChangedFor(nameof(IsEdicao))]
         private AcaoTela _acaoTela;
 
+        [ObservableProperty] private bool _isSenhaHabilitada = true; // Por padrão aparece destravado pro Cadastro
+        [ObservableProperty] private bool _isBotaoSenhaVisivel = false; // Cadeado aparece invisível
+
         public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
         public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Nova Pessoa" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Salvar";
@@ -88,8 +91,10 @@ namespace SMR_App.ViewModels
         private async Task Salvar()
         {
             // Validações Comuns (Todos precisam preencher)
+            bool senhaInvalida = (AcaoTela == AcaoTela.Cadastro && string.IsNullOrEmpty(Senha_hash));
+
             if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
-                || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Senha_hash))
+                || string.IsNullOrEmpty(Email) || senhaInvalida)
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos base.", "OK");
                 return;
@@ -171,6 +176,14 @@ namespace SMR_App.ViewModels
             }
         }
 
+        [RelayCommand]
+        private void DesbloquearSenha()
+        {
+            IsSenhaHabilitada = true;    // Libera a digitação
+            IsBotaoSenhaVisivel = false; // Esconde o cadeado
+            Senha_hash = string.Empty;   // Apaga os asteriscos para ele digitar a nova senha limpa
+        }
+
         partial void OnPessoaRecebidaChanged(Pessoa? value)
         {
             if (value != null)
@@ -193,7 +206,9 @@ namespace SMR_App.ViewModels
                 Email = perfilCompleto.email;
                 Id_pessoa_tipo = perfilCompleto.id_pessoa_tipo;
                 Ativo = perfilCompleto.ativo ?? true;
-                Senha_hash = string.Empty; // Senha sempre vazia por segurança
+                Senha_hash = "********";        // Visualmente preenchido
+                IsSenhaHabilitada = false;      // Campo bloqueado para clique
+                IsBotaoSenhaVisivel = true;     // Mostra o cadeado
 
                 if (Id_pessoa_tipo == PessoaTipo.Promotor)
                 {
@@ -264,7 +279,7 @@ namespace SMR_App.ViewModels
                     documento = Documento,
                     telefone1 = Telefone1,
                     telefone2 = Telefone2,
-                    senha_hash = Senha_hash,
+                    senha_hash = Senha_hash == "********" ? string.Empty : Senha_hash,
                     id_pessoa_tipo = Id_pessoa_tipo,
                     ativo = Ativo,
                     data_cadastro = DateTime.Now
