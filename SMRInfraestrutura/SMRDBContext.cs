@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SMRDominio.ClasseRecompensa;
 
 
 namespace SMRInfraestrutura
@@ -10,11 +11,20 @@ namespace SMRInfraestrutura
     
         public DbSet<SMRDominio.ClassePessoa.Pessoa> Pessoa {  get; set; }
         public DbSet<SMRDominio.ClassePessoa.Promotor> Promotor { get; set; }
-        public DbSet<SMRDominio.ClassePessoa.Empresa> Empresa { get; set; }            
+        public DbSet<SMRDominio.ClassePessoa.Empresa> Empresa { get; set; }
+        public DbSet<SMRDominio.ClasseRecompensa.Recompensa> Recompensas { get; set; }
         public SMRDBContext(IConfiguration configuracao, DbContextOptions<SMRDBContext> options): base(options)
         {
             _configuracao = configuracao ?? throw new ArgumentNullException(nameof(configuracao));
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+         
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
