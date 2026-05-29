@@ -71,9 +71,25 @@
                    Keyboard="Text" /> -->
 
             <Label Text="Senha" FontAttributes="Bold" />
-            <Entry Text="{Binding Senha_hash}" 
-                   Placeholder="Digite sua senha" 
-                   IsPassword="True" />
+                <Grid ColumnDefinitions="*, Auto">
+
+                    <Entry Grid.Column="0"
+                           Text="{Binding Senha_hash}" 
+                           Placeholder="Digite sua senha" 
+                           IsPassword="True"
+                           IsEnabled="{Binding IsSenhaHabilitada}" />
+                    <Button Grid.Column="1"
+                            Text="🔓 Alterar"
+                            Command="{Binding DesbloquearSenhaCommand}"
+                            IsVisible="{Binding IsBotaoSenhaVisivel}"
+                            BackgroundColor="#E0E0E0"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HeightRequest="45"
+                            CornerRadius="8"
+                            Margin="10,0,0,0"
+                            Padding="15,0" />
+                </Grid>
 
             <Button Text="Salvar Cadastro" 
                     Command="{Binding SalvarCommand}" 
