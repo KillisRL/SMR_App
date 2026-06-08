@@ -4,28 +4,44 @@
              xmlns:local="clr-namespace:SMR_App"
              x:Class="SMR_App.App">
     <Application.Resources>
+        
         <ResourceDictionary>
+            
+            <!-- MAIN PAGE TEMPLATE -->
             <ControlTemplate x:Key="MainPageTemplate">
-                <Grid RowDefinitions="80, *, 60">
+                <Grid RowDefinitions="80, *">
 
                     <Grid Grid.Row="0" BackgroundColor="#D3D3D3" ColumnDefinitions="Auto, *, Auto" Padding="15,0">
-                        <Image Grid.Column="0" Source="home_icon.png" HeightRequest="30"/>
+                        
+                        <!-- HOME ICON -->
+                        <Image Grid.Column="0" Source="home_icon.png" 
+                               HeightRequest="40"
+                               WidthRequest="40"/>
+                        
+                        <!-- NOME USUÁRIO -->
                         <Label Grid.Column="1" 
+                               FontSize="23"
                                Text="{Binding BindingContext.NomeUsuario, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                FontAttributes="Bold" 
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
                                TextColor="Black"/>
+                        
+                        <!-- PROFILE ICON -->
                         <ImageButton Grid.Column="2"
                                      Command="{Binding BindingContext.AbrirTelaCommand, 
                             Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                      CommandParameter="CadastroPessoaView"
-                                     Source="profile_icon.jpg" HeightRequest="40"/>
+                                     Source="profile_icon2.png"
+                                     HeightRequest="50"
+                                     WidthRequest="50"/>
                     </Grid>
 
-                    <ContentPresenter Grid.Row="1" />
+                    <ContentPresenter Grid.Row="1"/>
+
                 </Grid>
             </ControlTemplate>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

@@ -32,7 +32,6 @@ namespace SMR_App.ViewModels
 
         //propriedades do clientes
         [ObservableProperty] private string nome;
-        [ObservableProperty] private string nome_fantasia;
         [ObservableProperty] private string razao_social;
         [ObservableProperty] private string documento;
         [ObservableProperty] private string celular;
@@ -42,11 +41,11 @@ namespace SMR_App.ViewModels
         [ObservableProperty] private string senha_hash;
         [ObservableProperty] private DateTime data_cadastro;
         [ObservableProperty] private int id_pessoa;
-        [ObservableProperty] private bool ativo;
+        [ObservableProperty] private bool ativo = true;
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsEmpresaVisible))]
         [NotifyPropertyChangedFor(nameof(IsPromotorVisible))]
-        private PessoaTipo id_pessoa_tipo;
+        private PessoaTipo id_pessoa_tipo = PessoaTipo.Promotor;
         public bool IsEmpresaVisible => Id_pessoa_tipo == PessoaTipo.Empresa;
         public bool IsPromotorVisible => Id_pessoa_tipo == PessoaTipo.Promotor;
 
@@ -217,8 +216,6 @@ namespace SMR_App.ViewModels
                 }
                 else if (Id_pessoa_tipo == PessoaTipo.Empresa)
                 {
-                    Nome = perfilCompleto.nome_fantasia;
-                    Razao_social = perfilCompleto.razao_social;
                     Documento = perfilCompleto.documento;
                     Telefone1 = perfilCompleto.telefone1;
                     Telefone2 = perfilCompleto.telefone2;
