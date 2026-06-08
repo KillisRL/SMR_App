@@ -13,7 +13,6 @@ namespace SMRDominio.ClassePessoa
         public int id_pessoa { get; set; }
         [Required]
         public string? cpf { get; set; }
-        public string? nome { get; set; }
         public string? celular { get; set; }
         public int pontos_acumulados { get; set; }
     }

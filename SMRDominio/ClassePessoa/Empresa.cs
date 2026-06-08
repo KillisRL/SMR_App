@@ -14,7 +14,6 @@ namespace SMRDominio.ClassePessoa
         public int id_pessoa { get; set; }
         [Required]
         public string? razao_social { get; set; }
-        public string? nome_fantasia { get; set; }
         [Required]
         public string? cnpj {  get; set; }
         public string? cor_padrao { get; set; }

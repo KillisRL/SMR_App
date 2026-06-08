@@ -85,7 +85,6 @@ namespace SMRApi.Controllers
                                 if (empresa != null)
                                 {
                                     empresa.razao_social = dto.razao_social;
-                                    empresa.nome_fantasia = dto.nome;
                                     empresa.telefone1 = dto.telefone1;
                                     empresa.telefone2 = dto.telefone2;
                                     _dbContext.Empresa.Update(empresa);
@@ -106,6 +105,7 @@ namespace SMRApi.Controllers
                 // ========================================================
                 var criarPessoa = new Pessoa
                 {
+                    nome = dto.nome,
                     id_pessoa_tipo = dto.id_pessoa_tipo,
                     email = dto.email,
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
@@ -122,7 +122,6 @@ namespace SMRApi.Controllers
                     {
                         id_pessoa = criarPessoa.id_pessoa,
                         razao_social = dto.razao_social,
-                        nome_fantasia = dto.nome,
                         cnpj = dto.documento,
                         telefone1 = dto.telefone1,
                         telefone2 = dto.telefone2,
@@ -135,7 +134,6 @@ namespace SMRApi.Controllers
                     var novoPromotor = new Promotor
                     {
                         id_pessoa = criarPessoa.id_pessoa,
-                        nome = dto.nome,
                         cpf = dto.documento,
                         celular = dto.celular,
                         pontos_acumulados = 0
@@ -207,7 +205,6 @@ namespace SMRApi.Controllers
                 var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == id);
                 if (empresa != null)
                 {
-                    dto.nome_fantasia = empresa.nome_fantasia;
                     dto.razao_social = empresa.razao_social;
                     dto.documento = empresa.cnpj;
                     dto.telefone1 = empresa.telefone1;
@@ -251,7 +248,6 @@ namespace SMRApi.Controllers
                     if (empresa != null)
                     {
                         empresa.razao_social = dto.razao_social;
-                        empresa.nome_fantasia = dto.nome_fantasia;
                         empresa.cnpj = dto.documento;
                         empresa.telefone1 = dto.telefone1;
                         empresa.telefone2 = dto.telefone2;
