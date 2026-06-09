@@ -94,8 +94,7 @@
               "RelativeToolTip": "SMR App\\Views\\RecompensasView.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-01T23:23:11.419Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T23:23:11.419Z"
             },
             {
               "$type": "Document",
@@ -107,8 +106,7 @@
               "RelativeToolTip": "SMR App\\App.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T23:13:17.618Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T23:13:17.618Z"
             },
             {
               "$type": "Document",
@@ -120,8 +118,7 @@
               "RelativeToolTip": "SMR App\\App.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-01T22:57:26.705Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:57:26.705Z"
             },
             {
               "$type": "Document",
@@ -133,8 +130,7 @@
               "RelativeToolTip": "SMR App\\AppShell.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-01T22:57:21.979Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:57:21.979Z"
             },
             {
               "$type": "Document",
@@ -146,8 +142,7 @@
               "RelativeToolTip": "SMR App\\Views\\PrincipalView.xaml",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-01T22:50:26.261Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:50:26.261Z"
             },
             {
               "$type": "Document",
@@ -159,8 +154,7 @@
               "RelativeToolTip": "SMRDominio\\DTOs\\CadastroPessoaDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T22:35:58.415Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:35:58.415Z"
             },
             {
               "$type": "Document",
@@ -172,8 +166,7 @@
               "RelativeToolTip": "SMRDominio\\ClassePessoa\\Empresa.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T22:35:45.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:35:45.976Z"
             },
             {
               "$type": "Document",
@@ -185,8 +178,7 @@
               "RelativeToolTip": "SMRDominio\\ClassePessoa\\Promotor.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T22:35:35.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:35:35.663Z"
             },
             {
               "$type": "Document",
@@ -198,8 +190,7 @@
               "RelativeToolTip": "SMRDominio\\ClassePessoa\\PessoaTipo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T22:24:57.124Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:24:57.124Z"
             },
             {
               "$type": "Document",
@@ -207,9 +198,9 @@
               "Title": "CadastroPessoaView.xaml",
               "DocumentMoniker": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\CadastroPessoaView.xaml",
               "RelativeDocumentMoniker": "SMR App\\Views\\CadastroPessoaView.xaml",
-              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\CadastroPessoaView.xaml",
-              "RelativeToolTip": "SMR App\\Views\\CadastroPessoaView.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAawAkAAAAUAAAAAAAAAA==",
+              "ToolTip": "C:\\Luiz\\TCC\\SMR_App\\SMR App\\Views\\CadastroPessoaView.xaml*",
+              "RelativeToolTip": "SMR App\\Views\\CadastroPessoaView.xaml*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-05-29T01:06:46.971Z",
               "EditorCaption": ""
@@ -224,8 +215,7 @@
               "RelativeToolTip": "SMR App\\Views\\LoginView.xaml",
               "ViewState": "AgIAACQAAAAAAAAAAAAAAC0AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-06-01T23:45:08.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T23:45:08.619Z"
             },
             {
               "$type": "Document",
@@ -237,8 +227,7 @@
               "RelativeToolTip": "SMR App\\Views\\PrincipalView.xaml.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAgwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T23:23:12.426Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T23:23:12.426Z"
             },
             {
               "$type": "Document",
@@ -250,8 +239,7 @@
               "RelativeToolTip": "SMRApi\\Controllers\\PessoaController.cs",
               "ViewState": "AgIAAJQAAAAAAAAAAAAwwKQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T00:38:53.688Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T00:38:53.688Z"
             },
             {
               "$type": "Document",
@@ -263,8 +251,7 @@
               "RelativeToolTip": "SMR App\\ViewModels\\PessoaViewModel.cs",
               "ViewState": "AgIAAD8BAAAAAAAAAAAuwFoBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T00:36:34.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T00:36:34.938Z"
             },
             {
               "$type": "Document",
@@ -276,8 +263,7 @@
               "RelativeToolTip": "SMR App\\AppShell.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T22:57:24.728Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T22:57:24.728Z"
             },
             {
               "$type": "Document",
@@ -313,8 +299,7 @@
               "RelativeToolTip": "SMRApi\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAB/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-29T00:32:54.881Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T00:32:54.881Z"
             }
           ]
         }

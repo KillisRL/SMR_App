@@ -6,8 +6,7 @@
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">
 
-            <Label Text="Tipo de Pessoa" FontAttributes="Bold"
-                   F/>
+            <Label Text="Tipo de Pessoa" FontAttributes="Bold"/>
             <Picker
                       Title="Tipo de Usuário" 
                       TitleColor="White"
