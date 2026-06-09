@@ -21,12 +21,14 @@ namespace SMR_App.ViewModels
         [NotifyPropertyChangedFor(nameof(TituloPagina))]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         [NotifyPropertyChangedFor(nameof(IsEdicao))]
+        [NotifyPropertyChangedFor(nameof(IsCadastro))]
         private AcaoTela _acaoTela;
 
         [ObservableProperty] private bool _isSenhaHabilitada = true; // Por padrão aparece destravado pro Cadastro
         [ObservableProperty] private bool _isBotaoSenhaVisivel = false; // Cadeado aparece invisível
 
         public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
+        public bool IsCadastro => AcaoTela == AcaoTela.Cadastro;
         public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Nova Pessoa" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Salvar";
 
