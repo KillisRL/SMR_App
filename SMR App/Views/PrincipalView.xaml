@@ -3,24 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMR_App.Views.PrincipalView"
              xmlns:views="clr-namespace:SMR_App.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ControlTemplate="{StaticResource MainPageTemplate}"
-             BackgroundColor="White">
+             BackgroundColor="{StaticResource FundoPrincipal}">
     <Grid>
-        
-        <!-- LOGO CENTRALIZADA APLICATIVO -->
-        <Image Source="logosmr.png"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   MaximumWidthRequest="250"
-                   HeightRequest="200"
-                   Aspect="AspectFit"/>
-        
-        <!-- MENU -->
+
+        <Image Source="smr_app_gold1_nobg.png"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               MaximumWidthRequest="250"
+               HeightRequest="200"
+               Aspect="AspectFit">
+        </Image>
+
         <Frame x:Name="MenuBottomSheet"
                HeightRequest="400"
                TranslationY="330"
                VerticalOptions="End"
-               BackgroundColor="#D3D3D3"
+               BackgroundColor="{StaticResource FundoMenu}"
                HasShadow="True"
                Padding="20"
                BorderColor="Transparent">
@@ -30,7 +30,7 @@
             </Frame.GestureRecognizers>
 
             <VerticalStackLayout Spacing="30" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,10,0,0">
-                <ContentView BackgroundColor="#D3D3D3">
+                <ContentView BackgroundColor="Transparent">
                     <ContentView.GestureRecognizers>
                         <TapGestureRecognizer Tapped="AbrirMenu_Action" />
                         <SwipeGestureRecognizer Direction="Up" Swiped="AbrirMenu_Action" />
@@ -38,45 +38,41 @@
 
                     <BoxView HeightRequest="5" 
                              WidthRequest="100" 
-                             Color="Black" 
+                             Color="{StaticResource TextoSecundario}" 
                              CornerRadius="2" 
                              HorizontalOptions="Center" 
                              VerticalOptions="Center"/>
                 </ContentView>
 
-                <!-- CONFIGURAÇÃO EMPRESA -->
                 <Label
                     x:Name="MenuConfigEmpresa"
                     Text="Configurações Empresa" 
                     FontSize="Title" 
-                    TextColor="Black"                     
+                    TextColor="{StaticResource TextoPrincipal}"                      
                     HorizontalOptions="Center"
                     IsVisible="{Binding VisualizarConfiguracoesEmpresa}">
-                    
+
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
                                               CommandParameter="ConfigEmpresaView"/>
                     </Label.GestureRecognizers>
                 </Label>
-                
-                <!-- FAZER INDICAÇÃO -->
+
                 <Label Text="Fazer indicação"
                        FontSize="Title"
-                       TextColor="Black"
+                       TextColor="{StaticResource TextoPrincipal}"
                        HorizontalOptions="Center"/>
-                
-                <!-- HISTÓRIO DE INDICAÇÃO -->
+
                 <Label Text="Histórico de indicações"
                        FontSize="Title"
-                       TextColor="Black"
+                       TextColor="{StaticResource TextoPrincipal}"
                        HorizontalOptions="Center"/>
-                
-                <!-- VALDAR INDICAÇÃO -->
+
                 <Label Text="Validar Indicado"
                        FontSize="Title"
-                       TextColor="Black"
+                       TextColor="{StaticResource TextoPrincipal}"
                        HorizontalOptions="Center"/>
-                
+
             </VerticalStackLayout>
         </Frame>
     </Grid>
