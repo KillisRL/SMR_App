@@ -4,15 +4,9 @@
              x:Class="SMR_App.Views.SplashView">
     <Grid>
         <VerticalStackLayout>
-            <Image Source="splash.png"
+            <Image Source="smr_app_gold1_nobg.png"
                    WidthRequest="300"
                    HeightRequest="750"/>
-
-            <!--<ActivityIndicator IsRunning="True" Color="#00A0FF" />
-
-            <Label Text="Sincronizando dados..." 
-                   TextColor="#666666" 
-                   HorizontalOptions="Center" />-->
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
