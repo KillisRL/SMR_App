@@ -96,6 +96,9 @@
 	  <MauiXaml Update="Views\RecompensasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\RecuperarSenhaView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RelatoriosView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

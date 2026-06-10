@@ -1,0 +1,6 @@
+POST http://127.0.0.1/C:\Luiz\TCC\SMR_App\SMRApi/recuperar_senha.php
+Content-Type: application/json
+
+{
+    "email": "seu_email_real@gmail.com"
+}
