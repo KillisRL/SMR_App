@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
   UNIQUE KEY `email` (`email`),
   KEY `id_pessoa_tipo` (`id_pessoa_tipo`),
   CONSTRAINT `1` FOREIGN KEY (`id_pessoa_tipo`) REFERENCES `pessoa_tipo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `promotor` (
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
@@ -84,6 +84,20 @@ CREATE TABLE IF NOT EXISTS `recompensa` (
   KEY `id_empresa` (`id_empresa`),
   CONSTRAINT `1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Exportação de dados foi desmarcado.
+
+-- Copiando estrutura para tabela dbsmr.recuperacao_senha
+CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
+  `id_recuperacao` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(150) NOT NULL,
+  `codigo` varchar(6) NOT NULL,
+  `data_geracao` datetime DEFAULT current_timestamp(),
+  `data_expiracao` datetime NOT NULL,
+  `utilizado` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id_recuperacao`),
+  KEY `idx_valida_codigo` (`email`,`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
