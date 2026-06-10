@@ -55,7 +55,8 @@
                    HorizontalOptions="Center"
                    Margin="0,5,0,15">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding EsqueciSenhaCommand}" />
+                    <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
+                                          CommandParameter="RecuperarSenhaView"/>
                 </Label.GestureRecognizers>
             </Label>
 

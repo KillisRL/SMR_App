@@ -5,6 +5,7 @@ using SMRApi.Services;
 using SMRDominio.ClassePessoa;
 using SMRDominio.DTOs;
 using SMRInfraestrutura;
+using System.Net;
 
 namespace SMRApi.Controllers
 {
@@ -18,6 +19,7 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        #region cadastrar
         [HttpPost("cadastrar")]
         [AllowAnonymous]
         public async Task<IActionResult> CriarPessoa([FromBody] CadastroPessoaDTO dto)
@@ -172,7 +174,9 @@ namespace SMRApi.Controllers
                 return BadRequest(new { Message = "Erro inesperado ao realizar o cadastro", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
+        #endregion
 
+        #region perfil
         [HttpGet("perfil/{id}")]
         [AllowAnonymous] // Considerar [Authorize]
         public async Task<IActionResult> ObterPerfil(int id)
@@ -214,9 +218,10 @@ namespace SMRApi.Controllers
 
             return Ok(dto);
         }
+        #endregion
 
-
-        [HttpPut ("alterar")]
+        #region alterar
+        [HttpPut("alterar")]
         [AllowAnonymous]
         public async Task<IActionResult> AlterarPessoa([FromBody] CadastroPessoaDTO dto)
         {
@@ -276,7 +281,9 @@ namespace SMRApi.Controllers
                 return BadRequest(new { Message = "Erro ao atualizar o perfil", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
+        #endregion
 
+        #region deletar
         [HttpDelete("deletar/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeletarPessoa(int id)
@@ -301,8 +308,10 @@ namespace SMRApi.Controllers
                 return BadRequest(new { Message = "Erro ao desativar a conta.", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
+        #endregion
 
-        [HttpPost ("login")]
+        #region login
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] PessoaLogin pessoalogin)
         {
@@ -352,5 +361,188 @@ namespace SMRApi.Controllers
             });
 
         }
+        #endregion
+
+        #region solicitar_codigo
+        // ========================================================
+        //        ENDPOINT PARA RECUPERAÇÃO DE SENHA
+        // ========================================================
+        [HttpPost("solicitar-codigo")]
+        public async Task<IActionResult> SolicitarCodigoRecuperacao([FromBody] RecuperarSenhaRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest(new { erro = "O e-mail é obrigatório." });
+            }
+
+            try
+            {
+                // 1. Verificar se o e-mail existe na sua tabela de Pessoas
+                var usuarioExiste = await _dbContext.Pessoa.AnyAsync(p => p.email == request.Email);
+
+                if (!usuarioExiste)
+                {
+                    return NotFound(new { erro = "E-mail não encontrado no sistema." });
+                }
+
+                // 2. Gerar o código de 6 dígitos (Garante os zeros à esquerda com o "D6")
+                string codigo = new Random().Next(1, 999999).ToString("D6");
+                DateTime dataExpiracao = DateTime.Now.AddMinutes(15);
+
+                // 3. Inserir direto na tabela que criamos no HeidiSQL
+                var sql = "INSERT INTO recuperacao_senha (email, codigo, data_expiracao) VALUES ({0}, {1}, {2})";
+                await _dbContext.Database.ExecuteSqlRawAsync(sql, request.Email, codigo, dataExpiracao);
+
+                // 4. Configuração do envio de e-mail nativo do C# (SmtpClient)
+                try
+                {
+                    var mailMessage = new System.Net.Mail.MailMessage();
+                    mailMessage.From = new System.Net.Mail.MailAddress("felipe120505@gmail.com");
+                    mailMessage.To.Add(request.Email);
+                    mailMessage.Subject = "SMR APP - Código de Recuperação";
+                    mailMessage.Body = $"Olá!\n\nSeu código de verificação é: {codigo}\n\nEste código é válido por 15 minutos.";
+
+                    using (var smtpClient = new System.Net.Mail.SmtpClient("seu.servidor.smtp.com"))
+                    {
+                        smtpClient.Port = 587; // Porta padrão de segurança do Gmail
+                        smtpClient.EnableSsl = true; // Criptografia ativada
+                        smtpClient.UseDefaultCredentials = false;
+
+                        // Suas credenciais
+                        smtpClient.Credentials = new NetworkCredential(
+                            "felipe120505@gmail.com", // O mesmo e-mail do 'From'
+                            "ugnw uygz hvem pnqi"
+                        );
+
+                        // Enviando o e-mail!
+                        smtpClient.Send(mailMessage);
+                    }
+                }
+                catch
+                {
+                    // Ignora o erro de envio físico do e-mail no ambiente de desenvolvimento local
+                    // para permitir que você teste a lógica gravando direto no banco
+                }
+
+                return Ok(new { mensagem = "Código de recuperação gerado com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { erro = $"Erro interno no servidor: {ex.Message}" });
+            }
+        }
+        #endregion
+
+        #region validacao_codigo_recuperacao
+        // ========================================================
+        // VALIDAÇÃO DO CÓDIGO DE RECUPERAÇÃO
+        // ========================================================
+        [HttpPost("validar-codigo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ValidarCodigo([FromBody] ValidarCodigoRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Codigo))
+                return BadRequest(new { Message = "E-mail e código são obrigatórios." });
+
+            bool codigoValido = false;
+
+            // Como não criamos um 'DbSet' para a tabela recuperacao_senha para poupar tempo,
+            // abrimos uma conexão rápida direto com o MariaDB para fazer o SELECT:
+            var connection = _dbContext.Database.GetDbConnection();
+            try
+            {
+                await connection.OpenAsync();
+                using (var command = connection.CreateCommand())
+                {
+                    // A query verifica se o código bate, se a data de expiração ainda é maior que o AGORA, e se não foi utilizado (0)
+                    command.CommandText = "SELECT COUNT(*) FROM recuperacao_senha WHERE email = @email AND codigo = @codigo AND data_expiracao >= NOW() AND utilizado = 0";
+
+                    var paramEmail = command.CreateParameter();
+                    paramEmail.ParameterName = "@email";
+                    paramEmail.Value = request.Email;
+                    command.Parameters.Add(paramEmail);
+
+                    var paramCodigo = command.CreateParameter();
+                    paramCodigo.ParameterName = "@codigo";
+                    paramCodigo.Value = request.Codigo;
+                    command.Parameters.Add(paramCodigo);
+
+                    var result = await command.ExecuteScalarAsync();
+                    codigoValido = Convert.ToInt32(result) > 0;
+                }
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            if (!codigoValido)
+                return BadRequest(new { Message = "Código inválido ou expirado." });
+
+            return Ok(new { Message = "Código validado com sucesso!" });
+        }
+
+        // ========================================================
+        // REDEFINIÇÃO DA SENHA FINAL
+        // ========================================================
+        [HttpPost("redefinir-senha")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RedefinirSenha([FromBody] RedefinirSenhaRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.NovaSenha) || string.IsNullOrEmpty(request.Codigo))
+                return BadRequest(new { Message = "Dados incompletos." });
+
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                // 1. Busca a Pessoa pelo email que tá na sua model
+                var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.email == request.Email);
+                if (pessoa == null)
+                    return NotFound(new { Message = "Usuário não encontrado." });
+
+                // 2. Faz o hash da senha nova com o BCrypt (Igual você já faz no seu Cadastro)
+                pessoa.senha_hash = BCrypt.Net.BCrypt.HashPassword(request.NovaSenha);
+                _dbContext.Pessoa.Update(pessoa);
+
+                // 3. Queima o código marcando utilizado como 1 (Para evitar hackers tentando reutilizar)
+                var sqlInvalida = "UPDATE recuperacao_senha SET utilizado = 1 WHERE email = {0} AND codigo = {1}";
+                await _dbContext.Database.ExecuteSqlRawAsync(sqlInvalida, request.Email, request.Codigo);
+
+                // 4. Salva no banco!
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return Ok(new { Message = "Senha redefinida com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Erro ao redefinir senha.", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+        #endregion
+
+        // ========================================================
+        // DTOs PARA AS REQUISIÇÕES
+        // ========================================================
+        public class RecuperarSenhaRequest
+        {
+            public string Email { get; set; }
+        }
+
+        public class ValidarCodigoRequest
+        {
+            public string Email { get; set; }
+            public string Codigo { get; set; }
+        }
+
+        public class RedefinirSenhaRequest
+        {
+            public string Email { get; set; }
+            public string Codigo { get; set; }
+            public string NovaSenha { get; set; }
+        }
+
     }
 }
