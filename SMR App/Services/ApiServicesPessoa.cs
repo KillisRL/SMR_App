@@ -3,6 +3,7 @@ using SMRDominio.DTOs;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Net.Http.Headers;
 
 namespace SMR_App.Services
 {
@@ -11,7 +12,7 @@ namespace SMR_App.Services
         private readonly HttpClient _httpClient;
         public ApiServicesPessoa()
         {
-            string baseURL = "http://localhost:5015";
+            string baseURL = "https://localhost:7190/";
 
             _httpClient = new HttpClient
             {
@@ -57,11 +58,14 @@ namespace SMR_App.Services
         }
 
         // 'Read' do CRUD: Consulta os dados completos da API usando GET
-        public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id)
+        public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id, string token)
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var response = await _httpClient.GetAsync($"pessoa/perfil/{id}");
+
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadFromJsonAsync<CadastroPessoaDTO>();
@@ -76,10 +80,11 @@ namespace SMR_App.Services
         }
 
         // 'Update' do CRUD: Envia a alteração para a API usando PUT
-        public async Task<(bool Sucesso, string Mensagem)> AlterarPessoaService(CadastroPessoaDTO dto)
+        public async Task<(bool Sucesso, string Mensagem)> AlterarPessoaService(CadastroPessoaDTO dto, string token)
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 // Atenção aqui: PutAsJsonAsync em vez de Post
                 var response = await _httpClient.PutAsJsonAsync("pessoa/alterar", dto);
 
@@ -113,10 +118,13 @@ namespace SMR_App.Services
             }
         }
 
-        public async Task<(bool Sucesso, string Mensagem)> DeletarPessoaService(int id)
+        #region EXCLUIR
+        public async Task<(bool Sucesso, string Mensagem)> DeletarPessoaService(int id, string token)
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var response = await _httpClient.DeleteAsync($"pessoa/deletar/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -131,6 +139,7 @@ namespace SMR_App.Services
                 return (false, "Erro de comunicação com o servidor.");
             }
         }
+        #endregion
 
         public async Task<Pessoa?> Login(PessoaLogin login)
         {
@@ -142,7 +151,12 @@ namespace SMR_App.Services
                 {
                     // resultado = Usuario+Token
                     var resultado = await response.Content.ReadFromJsonAsync<LoginResponse>();
+                    if (resultado != null && !string.IsNullOrEmpty(resultado.token))
+                    {
+                        await SecureStorage.Default.SetAsync("jwt_token", resultado.token);
+                    }
                     return resultado?.usuario;
+
                 }
                 else // Falha durante processo de login
                 {

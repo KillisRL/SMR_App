@@ -34,6 +34,7 @@ namespace SMR_App
             builder.Services.AddTransient<GrRecompensasViewModel>();
             builder.Services.AddTransient<RelatoriosViewModel>();
             builder.Services.AddTransient<IndicacoesViewModel>();
+            builder.Services.AddTransient<ReSenhaViewModel>();
 
             //Views
             builder.Services.AddTransient<CadastroPessoaView>();

@@ -93,7 +93,11 @@ namespace SMR_App.ViewModels
         {
             // Validações Comuns (Todos precisam preencher)
             bool senhaInvalida = (AcaoTela == AcaoTela.Cadastro && string.IsNullOrEmpty(Senha_hash));
-
+            if (Senha_hash.Length < 6)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Senha precisa ter no mínimo 6 dígitos", "OK");
+                return;
+            }
             if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
                 || string.IsNullOrEmpty(Email) || senhaInvalida)
             {
@@ -158,8 +162,9 @@ namespace SMR_App.ViewModels
 
             if (!confirmacao) return; // O usuário clicou em Cancelar
 
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
             // Manda o ID para a API desativar
-            var resultado = await _api.DeletarPessoaService(Id_pessoa);
+            var resultado = await _api.DeletarPessoaService(Id_pessoa, token);
 
             if (resultado.Sucesso)
             {
@@ -198,7 +203,9 @@ namespace SMR_App.ViewModels
 
         private async Task CarregarDadosDoBancoAsync(int id)
         {
-            var perfilCompleto = await _api.ObterPerfilCompleto(id);
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+            var perfilCompleto = await _api.ObterPerfilCompleto(id, token);
 
             if (perfilCompleto != null)
             {
@@ -266,6 +273,8 @@ namespace SMR_App.ViewModels
 
         private async Task AlterarPessoa()
         {
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+
             try
             {
                 var dadosParaAlteracao = new CadastroPessoaDTO
@@ -284,7 +293,7 @@ namespace SMR_App.ViewModels
                     data_cadastro = DateTime.Now
                 };
 
-                var resultado = await _api.AlterarPessoaService(dadosParaAlteracao);
+                var resultado = await _api.AlterarPessoaService(dadosParaAlteracao, token);
 
                 if (resultado.Sucesso)
                 {

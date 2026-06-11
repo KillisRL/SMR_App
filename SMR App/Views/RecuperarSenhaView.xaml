@@ -7,7 +7,7 @@
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="30,60,30,30" VerticalOptions="Center">
 
-            <Image Source="logosmr_nobg.png"
+            <Image Source="smr_app_gold1_nobg.png"
                    HorizontalOptions="Center"
                    MaximumWidthRequest="180"
                    Aspect="AspectFit"

@@ -178,9 +178,16 @@ namespace SMRApi.Controllers
 
         #region perfil
         [HttpGet("perfil/{id}")]
-        [AllowAnonymous] // Considerar [Authorize]
+        [Authorize]
         public async Task<IActionResult> ObterPerfil(int id)
         {
+            var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
+
+            if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+            {
+                return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
+            }
+
             var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
             if (pessoa == null) return NotFound(new { Message = "Pessoa não encontrada" });
 
@@ -222,7 +229,7 @@ namespace SMRApi.Controllers
 
         #region alterar
         [HttpPut("alterar")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> AlterarPessoa([FromBody] CadastroPessoaDTO dto)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
@@ -285,9 +292,11 @@ namespace SMRApi.Controllers
 
         #region deletar
         [HttpDelete("deletar/{id}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> DeletarPessoa(int id)
         {
+
+
             try
             {
                 var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
@@ -402,7 +411,7 @@ namespace SMRApi.Controllers
                     mailMessage.Subject = "SMR APP - Código de Recuperação";
                     mailMessage.Body = $"Olá!\n\nSeu código de verificação é: {codigo}\n\nEste código é válido por 15 minutos.";
 
-                    using (var smtpClient = new System.Net.Mail.SmtpClient("seu.servidor.smtp.com"))
+                    using (var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com"))
                     {
                         smtpClient.Port = 587; // Porta padrão de segurança do Gmail
                         smtpClient.EnableSsl = true; // Criptografia ativada

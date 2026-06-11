@@ -88,7 +88,7 @@
 
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                     <VerticalStackLayout Spacing="5" Grid.Column="0">
-                        <Label Text="TELEFONE 1" 
+                        <Label Text="TELEFONE 1"                               
                                FontSize="12" 
                                TextColor="{StaticResource TextoSecundario}" 
                                FontAttributes="Bold" />
@@ -99,7 +99,8 @@
                                 StrokeShape="RoundRectangle 10" Padding="15,0">
 
                             <Entry Text="{Binding Telefone1}"
-                                   Keyboard="Telephone" 
+                                   Keyboard="Telephone"
+                                   Placeholder="(99) 99999-9999"
                                    TextColor="{StaticResource TextoPrincipal}" 
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -117,6 +118,7 @@
                             
                             <Entry Text="{Binding Telefone2}" 
                                    Keyboard="Telephone" 
+                                   Placeholder="(99) 99999-9999"
                                    TextColor="{StaticResource TextoPrincipal}" 
                                    BackgroundColor="Transparent" />
                         </Border>

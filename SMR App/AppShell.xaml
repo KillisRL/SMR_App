@@ -8,7 +8,6 @@
     Title="SMR_App">
 
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate views:SplashView}"
         Route="MainPage" />
 

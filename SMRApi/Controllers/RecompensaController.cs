@@ -32,17 +32,23 @@ namespace SMRApi.Controllers
 
             try
             {
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
 
-                //var usuarioClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-                //                   ?? User.FindFirst("id")?.Value;
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
+                }
+                var empresa = await _dbContext.Empresa
+                    .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
 
-                //if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int codigoUsuarioLogado))
-                //{
-                //    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
-                //}
+                if (empresa == null)
+                {
+                    return BadRequest(new { Message = "Não foi possível cadastrar a recompensa porque nenhuma empresa está vinculada a este usuário." });
+                }
+
                 var novaRecompensa = new Recompensa
                 {
-                    id_empresa =  recompensa.id_empresa,//codigoUsuarioLogado,
+                    id_empresa = empresa.id,
                     titulo = recompensa.titulo,
                     descricao = recompensa.descricao,
                     pontos_necessarios = recompensa.pontos_necessarios,
@@ -53,7 +59,97 @@ namespace SMRApi.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 return Ok(new { Message = "Recompensa cadastrada com sucesso!", Id = novaRecompensa.id });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Erro ao cadastrar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
 
+        [HttpPut("alterar")]
+        [Authorize]
+        public async Task<IActionResult> AlterarRecompensa([FromBody] Recompensa recompensa)
+        {
+            if (recompensa == null || !ModelState.IsValid)
+            {
+                return BadRequest(new { Message = "Dados da recompensa inválidos." });
+            }
+
+            try
+            {
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
+
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
+                }
+                var empresa = await _dbContext.Empresa
+                    .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
+
+                if (empresa == null)
+                {
+                    return BadRequest(new { Message = "Não foi possível alterar a recompensa porque nenhuma empresa está vinculada a este usuário." });
+                }
+
+                var recompesaAlterar = await _dbContext.Recompensas
+                    .Where(a => a.id == recompensa.id)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(u => u.titulo, recompensa.titulo)
+                        .SetProperty(u => u.descricao, recompensa.descricao)
+                        .SetProperty(u => u.Ativo, recompensa.Ativo)
+                        .SetProperty(u => u.pontos_necessarios, recompensa.pontos_necessarios)
+                    );
+
+                if (recompesaAlterar <= 0)
+                {
+                    return NotFound(new { Mensagem = "Recompensa não encontrada para alteração." });
+                }
+
+                return Ok(new { Mensagem = "Recompensa alterada com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Erro ao cadastrar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+
+        [HttpDelete("excluir{id}")]
+        [Authorize]
+        public async Task<IActionResult> ExcluirRecompensa(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(new { Message = "Dados da recompensa inválidos." });
+            }
+
+            try
+            {
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
+
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
+                }
+                var empresa = await _dbContext.Empresa
+                    .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
+
+                if (empresa == null)
+                {
+                    return BadRequest(new { Message = "Não foi possível alterar a recompensa porque nenhuma empresa está vinculada a este usuário." });
+                }
+
+                //var recompensaUsada = await _dbContext.Recompensas
+                //    .AnyAsync(r => r.id)
+
+                var excluirRecompensa = await _dbContext.Recompensas
+                    .Where(r => r.id == id && r.id_empresa == empresa.id).ExecuteDeleteAsync();
+
+                if (excluirRecompensa <= 0)
+                {
+                    return NotFound(new { Mensagem = "Recompensa não encontrada para exclusão." });
+                }
+
+                return Ok(new { Mensagem = "Recompensa excluída com sucesso!" });
             }
             catch (Exception ex)
             {
