@@ -14,7 +14,11 @@ namespace SMR_App.Services
         {
             string baseURL = "https://localhost:7190/";
 
-            _httpClient = new HttpClient
+            var handler = new HttpClientHandler();
+
+            handler.UseProxy = false;
+
+            _httpClient = new HttpClient(handler)
             {
                 BaseAddress =  new Uri(baseURL)
             };
