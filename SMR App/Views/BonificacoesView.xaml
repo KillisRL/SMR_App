@@ -1,12 +1,148 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              x:Class="SMR_App.Views.BonificacoesView"
-             Title="BonificacoesView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:BonificacoesViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- O Cabeçalho agora vem do ControlTemplate, então o Grid começa direto no Título -->
+    <Grid RowDefinitions="Auto, *, Auto" 
+          Padding="0,0,0,20">
+
+        <!-- TÍTULO -->
+        <Label Grid.Row="0" 
+               Text="BONIFICAÇÕES" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               TextColor="{StaticResource TextoPrincipal}" 
+               HorizontalOptions="Center" 
+               Margin="0,30,0,20" />
+
+        <!-- LISTA DE BONIFICAÇÕES -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaBonificacoes}" 
+                        Margin="20,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Card Escuro -->
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            Margin="0,0,0,15" 
+                            Padding="15">
+
+                        <Grid ColumnDefinitions="Auto, *">
+
+                            <!-- Número (ID) em Dourado -->
+                            <Label Grid.Column="0" 
+                                   Text="{Binding Id}" 
+                                   FontSize="40" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#D4AF37" 
+                                   VerticalOptions="Center" 
+                                   Margin="0,0,20,0" />
+
+                            <!-- Dados da Bonificação -->
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 VerticalOptions="Center" 
+                                                 Spacing="10">
+
+                                <Label Text="{Binding Nome, StringFormat='NOME: {0}'}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="{StaticResource TextoPrincipal}" />
+
+                                <HorizontalStackLayout Spacing="30">
+
+                                    <!-- Container MGM -->
+                                    <HorizontalStackLayout Spacing="5" 
+                                                           VerticalOptions="Center">
+
+                                        <Label Text="MGM:" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               TextColor="{StaticResource TextoPrincipal}" 
+                                               VerticalOptions="Center" />
+
+                                        <Border StrokeShape="RoundRectangle 4" 
+                                                Stroke="Transparent" 
+                                                HeightRequest="20" 
+                                                WidthRequest="20" 
+                                                VerticalOptions="Center">
+                                            <Border.Triggers>
+                                                <!-- Se for TRUE, fica Dourado -->
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsMgm}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                </DataTrigger>
+                                                <!-- Se for FALSE, fica Cinza Escuro -->
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsMgm}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="#404040" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                        </Border>
+                                    </HorizontalStackLayout>
+
+                                    <!-- Container ATIVO -->
+                                    <HorizontalStackLayout Spacing="5" 
+                                                           VerticalOptions="Center">
+
+                                        <Label Text="ATIVO:" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               TextColor="{StaticResource TextoPrincipal}" 
+                                               VerticalOptions="Center" />
+
+                                        <Border StrokeShape="RoundRectangle 4" 
+                                                Stroke="Transparent" 
+                                                HeightRequest="20" 
+                                                WidthRequest="20" 
+                                                VerticalOptions="Center">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsAtivo}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsAtivo}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="#404040" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- BOTÕES INFERIORES -->
+        <Grid Grid.Row="2" 
+              ColumnDefinitions="*, *" 
+              Margin="20,0" 
+              ColumnSpacing="20">
+
+            <Button Grid.Column="0" 
+                    Text="ALTERAR" 
+                    Command="{Binding AlterarCommand}" 
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20" />
+
+            <Button Grid.Column="1" 
+                    Text="CADASTRAR" 
+                    Command="{Binding AbrirTelaCommand}" 
+                    CommandParameter="view"
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20" />
+        </Grid>
+
+    </Grid>
 </ContentPage>
