@@ -1,3 +1,32 @@
+-- --------------------------------------------------------
+-- Servidor:                     127.0.0.1
+-- Versão do servidor:           12.2.2-MariaDB - MariaDB Server
+-- OS do Servidor:               Win64
+-- HeidiSQL Versão:              12.16.0.7229
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Copiando estrutura para tabela dbsmr.cliente_importado
+CREATE TABLE IF NOT EXISTS `cliente_importado` (
+  `id_cliente_importado` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `documento` varchar(20) NOT NULL,
+  `data_importacao` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_cliente_importado`),
+  KEY `idx_valida_mgm` (`id_empresa`,`documento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Exportação de dados foi desmarcado.
+
 -- Copiando estrutura para tabela dbsmr.empresa
 CREATE TABLE IF NOT EXISTS `empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -11,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   UNIQUE KEY `cnpj` (`cnpj`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
@@ -44,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
   UNIQUE KEY `email` (`email`),
   KEY `id_pessoa_tipo` (`id_pessoa_tipo`),
   CONSTRAINT `1` FOREIGN KEY (`id_pessoa_tipo`) REFERENCES `pessoa_tipo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
@@ -68,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `promotor` (
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Exportação de dados foi desmarcado.
 
@@ -115,3 +144,11 @@ CREATE TABLE IF NOT EXISTS `solicitacao_resgate` (
   CONSTRAINT `1` FOREIGN KEY (`id_promotor`) REFERENCES `promotor` (`id`) ON DELETE CASCADE,
   CONSTRAINT `2` FOREIGN KEY (`id_recompensa`) REFERENCES `recompensa` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Exportação de dados foi desmarcado.
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
