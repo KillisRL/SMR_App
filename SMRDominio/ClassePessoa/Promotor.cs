@@ -13,7 +13,10 @@ namespace SMRDominio.ClassePessoa
         public int id_pessoa { get; set; }
         [Required]
         public string? cpf { get; set; }
+<<<<<<< HEAD
         public string? nome { get; set; }
+=======
+>>>>>>> dfa26fb (criação da service e api de recompensas)
         public string? celular { get; set; }
         public int pontos_acumulados { get; set; }
     }

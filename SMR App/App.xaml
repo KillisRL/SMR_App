@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SMR_App"
+<<<<<<< HEAD
              x:Class="SMR_App.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -11,21 +12,65 @@
                     <Grid Grid.Row="0" BackgroundColor="#D3D3D3" ColumnDefinitions="Auto, *, Auto" Padding="15,0">
                         <Image Grid.Column="0" Source="home_icon.png" HeightRequest="30"/>
                         <Label Grid.Column="1" 
+=======
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="SMR_App.App">
+    <Application.Resources>
+        
+        <ResourceDictionary>
+            
+            <!-- MAIN PAGE TEMPLATE -->
+            <ControlTemplate x:Key="MainPageTemplate">
+                <Grid RowDefinitions="80, *">
+
+                    <Grid Grid.Row="0" BackgroundColor="{StaticResource FundoMenu}"
+                          ColumnDefinitions="Auto, *, Auto" Padding="15,0">
+                        
+                        <!-- HOME ICON -->
+                        <Image Grid.Column="0" Source="home_gold.png" 
+                               HeightRequest="40"
+                               WidthRequest="40">
+                        </Image>
+
+                        <!-- NOME USUÁRIO -->
+                        <Label Grid.Column="1" 
+                               FontSize="23"
+>>>>>>> dfa26fb (criação da service e api de recompensas)
                                Text="{Binding BindingContext.NomeUsuario, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                FontAttributes="Bold" 
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
+<<<<<<< HEAD
                                TextColor="Black"/>
+=======
+                               TextColor="{StaticResource TextoPrincipal}"/>
+                        
+                        <!-- PROFILE ICON -->
+>>>>>>> dfa26fb (criação da service e api de recompensas)
                         <ImageButton Grid.Column="2"
                                      Command="{Binding BindingContext.AbrirTelaCommand, 
                             Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                      CommandParameter="CadastroPessoaView"
+<<<<<<< HEAD
                                      Source="profile_icon.jpg" HeightRequest="40"/>
                     </Grid>
 
                     <ContentPresenter Grid.Row="1" />
                 </Grid>
             </ControlTemplate>
+=======
+                                     Source="perfil_icon_gold3.png"
+                                     HeightRequest="50"
+                                     WidthRequest="50">
+                        </ImageButton>
+                    </Grid>
+
+                    <ContentPresenter Grid.Row="1"/>
+
+                </Grid>
+            </ControlTemplate>
+            
+>>>>>>> dfa26fb (criação da service e api de recompensas)
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

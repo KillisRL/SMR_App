@@ -34,6 +34,10 @@ namespace SMR_App
             builder.Services.AddTransient<GrRecompensasViewModel>();
             builder.Services.AddTransient<RelatoriosViewModel>();
             builder.Services.AddTransient<IndicacoesViewModel>();
+<<<<<<< HEAD
+=======
+            builder.Services.AddTransient<ReSenhaViewModel>();
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 
             //Views
             builder.Services.AddTransient<CadastroPessoaView>();

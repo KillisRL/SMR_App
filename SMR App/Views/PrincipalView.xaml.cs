@@ -15,7 +15,10 @@ public partial class PrincipalView : ContentPage
     private async void AbrirMenu_Action(object sender, EventArgs e)
     {
         // Move o menu para a posiÁ„o 0 no eixo Y (traz para a tela)
+<<<<<<< HEAD
         // 250 È o tempo da animaÁ„o em milissegundos
+=======
+>>>>>>> dfa26fb (cria√ß√£o da service e api de recompensas)
         await MenuBottomSheet.TranslateTo(0, 0, 250, Easing.CubicOut);
     }
 
@@ -23,7 +26,11 @@ public partial class PrincipalView : ContentPage
     private async void FecharMenu_Action(object sender, EventArgs e)
     {
         // Move o menu de volta para 500 no eixo Y (esconde para baixo)
+<<<<<<< HEAD
         await MenuBottomSheet.TranslateTo(0, 500, 250, Easing.CubicIn);
+=======
+        await MenuBottomSheet.TranslateTo(0, 330, 250, Easing.CubicIn);
+>>>>>>> dfa26fb (cria√ß√£o da service e api de recompensas)
     }
 
 }

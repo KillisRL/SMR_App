@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 ﻿using SMR_App.Services;
+=======
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SMR_App.Services;
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 using SMRDominio.ClassePessoa;
 
 namespace SMR_App.ViewModels
 {
     public class PrincipalViewModel : BaseViewModel
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> dfa26fb (criação da service e api de recompensas)
         // VARIAVEIS
         private bool _visualizarConfiguracoesEmpresa;
 

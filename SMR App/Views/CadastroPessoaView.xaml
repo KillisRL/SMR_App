@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+<<<<<<< HEAD
              x:Class="SMR_App.Views.CadastroPessoaView">
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">
@@ -94,6 +95,236 @@
                     CornerRadius="10" 
                     HeightRequest="50" 
                     Margin="0, 15, 0, 30" />
+=======
+             x:Class="SMR_App.Views.CadastroPessoaView"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="{StaticResource FundoPrincipal}" 
+                             Spacing="20" Padding="25, 30, 25, 40">
+
+            <!-- TIPO DE USUÁRIO -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="TIPO DE USUÁRIO" 
+                       FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                       FontAttributes="Bold" />
+                
+                <Border Stroke="{StaticResource BordaInput}" 
+                        StrokeThickness="1" 
+                        BackgroundColor="{StaticResource FundoInput}" 
+                        StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Picker ItemsSource="{Binding pessoaTiposDisponiveis}" 
+                            SelectedItem="{Binding Id_pessoa_tipo}"
+                            IsEnabled="{Binding IsCadastro}"
+                            BackgroundColor="Transparent" 
+                            TextColor="{StaticResource TextoPrincipal}" 
+                            Title="Selecione o tipo..." />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- CAMPO NOMES -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="NOME / NOME FANTASIA" 
+                       FontSize="12" 
+                       TextColor="{StaticResource TextoSecundario}" 
+                       FontAttributes="Bold" />
+                
+                <Border Stroke="{StaticResource BordaInput}" 
+                        StrokeThickness="1" 
+                        BackgroundColor="{StaticResource FundoInput}" 
+                        StrokeShape="RoundRectangle 10" Padding="15,0">
+                    
+                    <Entry Text="{Binding Nome}" 
+                           Placeholder="Como você quer ser chamado?" 
+                           PlaceholderColor="{StaticResource TextoSecundario}" 
+                           TextColor="{StaticResource TextoPrincipal}" 
+                           BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- CAMPO RAZÃO SOCIAL -->
+            <VerticalStackLayout IsVisible="{Binding IsEmpresaVisible}" Spacing="20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="RAZÃO SOCIAL" 
+                           FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                           FontAttributes="Bold" />
+                    
+                    <Border Stroke="{StaticResource BordaInput}" 
+                            StrokeThickness="1" 
+                            BackgroundColor="{StaticResource FundoInput}" 
+                            StrokeShape="RoundRectangle 10" Padding="15,0">
+                        
+                        <Entry Text="{Binding Razao_social}" 
+                               Placeholder="Nome Jurídico" 
+                               PlaceholderColor="{StaticResource TextoSecundario}" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="CNPJ" 
+                           FontSize="12" 
+                           TextColor="{StaticResource TextoSecundario}" 
+                           FontAttributes="Bold" />
+                    
+                    <Border Stroke="{StaticResource BordaInput}" 
+                            StrokeThickness="1" 
+                            BackgroundColor="{StaticResource FundoInput}" 
+                            StrokeShape="RoundRectangle 10" Padding="15,0">
+                        
+                        <Entry Text="{Binding Documento}" 
+                               Placeholder="Apenas números" 
+                               Keyboard="Numeric" 
+                               PlaceholderColor="{StaticResource TextoSecundario}" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <VerticalStackLayout Spacing="5" Grid.Column="0">
+                        <Label Text="TELEFONE 1"                               
+                               FontSize="12" 
+                               TextColor="{StaticResource TextoSecundario}" 
+                               FontAttributes="Bold" />
+
+                        <Border Stroke="{StaticResource BordaInput}" 
+                                StrokeThickness="1" 
+                                BackgroundColor="{StaticResource FundoInput}" 
+                                StrokeShape="RoundRectangle 10" Padding="15,0">
+
+                            <Entry Text="{Binding Telefone1}"
+                                   Keyboard="Telephone"
+                                   Placeholder="(99) 99999-9999"
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Spacing="5" Grid.Column="1">
+                        <Label Text="TELEFONE 2" 
+                               FontSize="12" 
+                               TextColor="{StaticResource TextoSecundario}" 
+                               FontAttributes="Bold" />
+                        <Border Stroke="{StaticResource BordaInput}" 
+                                StrokeThickness="1" 
+                                BackgroundColor="{StaticResource FundoInput}" 
+                                StrokeShape="RoundRectangle 10" Padding="15,0">
+                            
+                            <Entry Text="{Binding Telefone2}" 
+                                   Keyboard="Telephone" 
+                                   Placeholder="(99) 99999-9999"
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout IsVisible="{Binding IsPromotorVisible}" Spacing="20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="CPF" 
+                           FontSize="12" 
+                           TextColor="{StaticResource TextoSecundario}" 
+                           FontAttributes="Bold" />
+                    
+                    <Border Stroke="{StaticResource BordaInput}" 
+                            StrokeThickness="1" 
+                            BackgroundColor="{StaticResource FundoInput}" 
+                            StrokeShape="RoundRectangle 10" Padding="15,0">
+                        
+                        <Entry Text="{Binding Documento}" 
+                               Placeholder="Apenas números" 
+                               Keyboard="Numeric" 
+                               PlaceholderColor="{StaticResource TextoSecundario}" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- CAMPO CELULAR -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="CELULAR" 
+                           FontSize="12" 
+                           TextColor="{StaticResource TextoSecundario}" 
+                           FontAttributes="Bold" />
+                    
+                    <Border Stroke="{StaticResource BordaInput}" 
+                            StrokeThickness="1" 
+                            BackgroundColor="{StaticResource FundoInput}" 
+                            StrokeShape="RoundRectangle 10" Padding="15,0">
+                        
+                        <Entry Text="{Binding Celular}" 
+                               Placeholder="(00) 00000-0000" 
+                               Keyboard="Telephone" 
+                               PlaceholderColor="{StaticResource TextoSecundario}" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            
+            <!-- CAMPO E-MAIL -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="E-MAIL" 
+                       FontSize="12" 
+                       TextColor="{StaticResource TextoSecundario}" 
+                       FontAttributes="Bold" />
+                
+                <Border Stroke="{StaticResource BordaInput}" 
+                        StrokeThickness="1" 
+                        BackgroundColor="{StaticResource FundoInput}" 
+                        StrokeShape="RoundRectangle 10" Padding="15,0">
+                    
+                    <Entry Text="{Binding Email}" 
+                           Placeholder="exemplo@email.com" 
+                           Keyboard="Email" 
+                           PlaceholderColor="{StaticResource TextoSecundario}" 
+                           TextColor="{StaticResource TextoPrincipal}" 
+                           BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- CAMPO SENHA -->
+            <VerticalStackLayout Spacing="5">
+                
+                <Label Text="SENHA" 
+                       FontSize="12" 
+                       TextColor="{StaticResource TextoSecundario}" 
+                       FontAttributes="Bold" />
+                
+                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                    <Border Grid.Column="0" Stroke="{StaticResource BordaInput}" StrokeThickness="1" BackgroundColor="{StaticResource FundoInput}" StrokeShape="RoundRectangle 10" Padding="15,0">
+                        <Entry Text="{Binding Senha_hash}" Placeholder="Digite sua senha" IsPassword="True" IsEnabled="{Binding IsSenhaHabilitada}" TextColor="{StaticResource TextoPrincipal}" PlaceholderColor="{StaticResource TextoSecundario}" BackgroundColor="Transparent" />
+                    </Border>
+                    
+                    <Button Grid.Column="1" 
+                            Text="🔓 Alterar" 
+                            Command="{Binding DesbloquearSenhaCommand}" 
+                            IsVisible="{Binding IsBotaoSenhaVisivel}" 
+                            BackgroundColor="{StaticResource FundoMenu}" 
+                            TextColor="{StaticResource TextoPrincipal}" 
+                            FontAttributes="Bold" HeightRequest="50" CornerRadius="10" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="20" Color="Transparent" />
+
+            <!-- BOTÃO SALVAR -->
+            <Button Text="{Binding NomeBotaoAcao}" 
+                    Command="{Binding SalvarCommand}" 
+                    BackgroundColor="{StaticResource CorPrimaria}" 
+                    TextColor="#FFFFFF" CornerRadius="10" HeightRequest="55" 
+                    FontAttributes="Bold" FontSize="16"/>
+            
+            <!-- BOTÃO EXCLUIR -->
+            <Button Text="Excluir Minha Conta" 
+                    Command="{Binding ExcluirCommand}" 
+                    IsVisible="{Binding IsEdicao}" 
+                    BackgroundColor="Transparent" 
+                    TextColor="{StaticResource CorPerigo}" 
+                    FontAttributes="Bold" HeightRequest="50" />
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 
         </VerticalStackLayout>
     </ScrollView>

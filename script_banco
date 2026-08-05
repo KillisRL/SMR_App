@@ -14,11 +14,30 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+<<<<<<< HEAD
+=======
+-- Copiando estrutura para tabela dbsmr.cliente_importado
+CREATE TABLE IF NOT EXISTS `cliente_importado` (
+  `id_cliente_importado` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `documento` varchar(20) NOT NULL,
+  `data_importacao` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_cliente_importado`),
+  KEY `idx_valida_mgm` (`id_empresa`,`documento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Exportação de dados foi desmarcado.
+
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 -- Copiando estrutura para tabela dbsmr.empresa
 CREATE TABLE IF NOT EXISTS `empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `razao_social` varchar(150) DEFAULT NULL,
+<<<<<<< HEAD
   `nome_fantasia` varchar(100) DEFAULT NULL,
+=======
+>>>>>>> dfa26fb (criação da service e api de recompensas)
   `cnpj` varchar(18) NOT NULL,
   `cor_padrao` varchar(7) DEFAULT '#00A0FF',
   `telefone1` varchar(50) DEFAULT NULL,
@@ -28,7 +47,11 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   UNIQUE KEY `cnpj` (`cnpj`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 
 -- Exportação de dados foi desmarcado.
 
@@ -61,7 +84,11 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
   UNIQUE KEY `email` (`email`),
   KEY `id_pessoa_tipo` (`id_pessoa_tipo`),
   CONSTRAINT `1` FOREIGN KEY (`id_pessoa_tipo`) REFERENCES `pessoa_tipo` (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 
 -- Exportação de dados foi desmarcado.
 
@@ -81,12 +108,19 @@ CREATE TABLE IF NOT EXISTS `promotor` (
   `cpf` varchar(14) DEFAULT NULL,
   `pontos_acumulados` int(11) DEFAULT 0,
   `celular` varchar(50) DEFAULT NULL,
+<<<<<<< HEAD
   `nome` varchar(50) DEFAULT NULL,
+=======
+>>>>>>> dfa26fb (criação da service e api de recompensas)
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 
 -- Exportação de dados foi desmarcado.
 
@@ -105,6 +139,23 @@ CREATE TABLE IF NOT EXISTS `recompensa` (
 
 -- Exportação de dados foi desmarcado.
 
+<<<<<<< HEAD
+=======
+-- Copiando estrutura para tabela dbsmr.recuperacao_senha
+CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
+  `id_recuperacao` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(150) NOT NULL,
+  `codigo` varchar(6) NOT NULL,
+  `data_geracao` datetime DEFAULT current_timestamp(),
+  `data_expiracao` datetime NOT NULL,
+  `utilizado` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id_recuperacao`),
+  KEY `idx_valida_codigo` (`email`,`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Exportação de dados foi desmarcado.
+
+>>>>>>> dfa26fb (criação da service e api de recompensas)
 -- Copiando estrutura para tabela dbsmr.solicitacao_resgate
 CREATE TABLE IF NOT EXISTS `solicitacao_resgate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
