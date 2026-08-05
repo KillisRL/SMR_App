@@ -2,9 +2,9 @@ using SMR_App.ViewModels;
 
 namespace SMR_App.Views;
 
-public partial class BonificacoesView : ContentPage
+public partial class CadBonificacoesView : ContentPage
 {
-	public BonificacoesView(BonificacoesViewModel viewModel)
+	public CadBonificacoesView(CadBoniViewModel viewModel)
 	{
 		InitializeComponent();
 

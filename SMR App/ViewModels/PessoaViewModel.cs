@@ -22,9 +22,17 @@ namespace SMR_App.ViewModels
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         [NotifyPropertyChangedFor(nameof(IsEdicao))]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        [NotifyPropertyChangedFor(nameof(IsCadastro))]
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         private AcaoTela _acaoTela;
 
+        [ObservableProperty] private bool _isSenhaHabilitada = true; // Por padrão aparece destravado pro Cadastro
+        [ObservableProperty] private bool _isBotaoSenhaVisivel = false; // Cadeado aparece invisível
+
         public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
+<<<<<<< HEAD
 =======
         [NotifyPropertyChangedFor(nameof(IsCadastro))]
         private AcaoTela _acaoTela;
@@ -35,15 +43,21 @@ namespace SMR_App.ViewModels
         public bool IsEdicao => AcaoTela == AcaoTela.Alteracao;
         public bool IsCadastro => AcaoTela == AcaoTela.Cadastro;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        public bool IsCadastro => AcaoTela == AcaoTela.Cadastro;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Nova Pessoa" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Salvar";
 
         //propriedades do clientes
         [ObservableProperty] private string nome;
 <<<<<<< HEAD
+<<<<<<< HEAD
         [ObservableProperty] private string nome_fantasia;
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [ObservableProperty] private string razao_social;
         [ObservableProperty] private string documento;
         [ObservableProperty] private string celular;
@@ -53,6 +67,7 @@ namespace SMR_App.ViewModels
         [ObservableProperty] private string senha_hash;
         [ObservableProperty] private DateTime data_cadastro;
         [ObservableProperty] private int id_pessoa;
+<<<<<<< HEAD
 <<<<<<< HEAD
         [ObservableProperty] private bool ativo;
         [ObservableProperty]
@@ -66,6 +81,13 @@ namespace SMR_App.ViewModels
         [NotifyPropertyChangedFor(nameof(IsPromotorVisible))]
         private PessoaTipo id_pessoa_tipo = PessoaTipo.Promotor;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        [ObservableProperty] private bool ativo = true;
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsEmpresaVisible))]
+        [NotifyPropertyChangedFor(nameof(IsPromotorVisible))]
+        private PessoaTipo id_pessoa_tipo = PessoaTipo.Promotor;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         public bool IsEmpresaVisible => Id_pessoa_tipo == PessoaTipo.Empresa;
         public bool IsPromotorVisible => Id_pessoa_tipo == PessoaTipo.Promotor;
 
@@ -98,6 +120,11 @@ namespace SMR_App.ViewModels
             }
 
             await LogarPessoa();
+
+            int idDaEmpresa = ApiServicesSessaoPessoa.PessoaLogada.id_pessoa;
+
+            // Salvamos na memória do celular
+            Preferences.Default.Set("IdEmpresaLogada", idDaEmpresa);
         }
 
         [RelayCommand]
@@ -111,6 +138,7 @@ namespace SMR_App.ViewModels
         {
             // Validações Comuns (Todos precisam preencher)
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
                 || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Senha_hash))
 =======
@@ -123,6 +151,16 @@ namespace SMR_App.ViewModels
             if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
                 || string.IsNullOrEmpty(Email) || senhaInvalida)
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            bool senhaInvalida = (AcaoTela == AcaoTela.Cadastro && string.IsNullOrEmpty(Senha_hash));
+            if (Senha_hash.Length < 6)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Senha precisa ter no mínimo 6 dígitos", "OK");
+                return;
+            }
+            if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Documento)
+                || string.IsNullOrEmpty(Email) || senhaInvalida)
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos base.", "OK");
                 return;
@@ -186,6 +224,7 @@ namespace SMR_App.ViewModels
             if (!confirmacao) return; // O usuário clicou em Cancelar
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             // Manda o ID para a API desativar
             var resultado = await _api.DeletarPessoaService(Id_pessoa);
 =======
@@ -193,6 +232,11 @@ namespace SMR_App.ViewModels
             // Manda o ID para a API desativar
             var resultado = await _api.DeletarPessoaService(Id_pessoa, token);
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+            // Manda o ID para a API desativar
+            var resultado = await _api.DeletarPessoaService(Id_pessoa, token);
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
             if (resultado.Sucesso)
             {
@@ -211,7 +255,10 @@ namespace SMR_App.ViewModels
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [RelayCommand]
         private void DesbloquearSenha()
         {
@@ -220,7 +267,10 @@ namespace SMR_App.ViewModels
             Senha_hash = string.Empty;   // Apaga os asteriscos para ele digitar a nova senha limpa
         }
 
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         partial void OnPessoaRecebidaChanged(Pessoa? value)
         {
             if (value != null)
@@ -235,12 +285,18 @@ namespace SMR_App.ViewModels
         private async Task CarregarDadosDoBancoAsync(int id)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             var perfilCompleto = await _api.ObterPerfilCompleto(id);
 =======
             string token = await SecureStorage.Default.GetAsync("jwt_token");
 
             var perfilCompleto = await _api.ObterPerfilCompleto(id, token);
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+            var perfilCompleto = await _api.ObterPerfilCompleto(id, token);
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
             if (perfilCompleto != null)
             {
@@ -250,12 +306,18 @@ namespace SMR_App.ViewModels
                 Id_pessoa_tipo = perfilCompleto.id_pessoa_tipo;
                 Ativo = perfilCompleto.ativo ?? true;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Senha_hash = string.Empty; // Senha sempre vazia por segurança
 =======
                 Senha_hash = "********";        // Visualmente preenchido
                 IsSenhaHabilitada = false;      // Campo bloqueado para clique
                 IsBotaoSenhaVisivel = true;     // Mostra o cadeado
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                Senha_hash = "********";        // Visualmente preenchido
+                IsSenhaHabilitada = false;      // Campo bloqueado para clique
+                IsBotaoSenhaVisivel = true;     // Mostra o cadeado
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
                 if (Id_pessoa_tipo == PessoaTipo.Promotor)
                 {
@@ -265,10 +327,13 @@ namespace SMR_App.ViewModels
                 else if (Id_pessoa_tipo == PessoaTipo.Empresa)
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     Nome = perfilCompleto.nome_fantasia;
                     Razao_social = perfilCompleto.razao_social;
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     Documento = perfilCompleto.documento;
                     Telefone1 = perfilCompleto.telefone1;
                     Telefone2 = perfilCompleto.telefone2;
@@ -318,10 +383,15 @@ namespace SMR_App.ViewModels
         private async Task AlterarPessoa()
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             string token = await SecureStorage.Default.GetAsync("jwt_token");
 
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             try
             {
                 var dadosParaAlteracao = new CadastroPessoaDTO
@@ -335,20 +405,28 @@ namespace SMR_App.ViewModels
                     telefone1 = Telefone1,
                     telefone2 = Telefone2,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     senha_hash = Senha_hash,
 =======
                     senha_hash = Senha_hash == "********" ? string.Empty : Senha_hash,
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                    senha_hash = Senha_hash == "********" ? string.Empty : Senha_hash,
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     id_pessoa_tipo = Id_pessoa_tipo,
                     ativo = Ativo,
                     data_cadastro = DateTime.Now
                 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 var resultado = await _api.AlterarPessoaService(dadosParaAlteracao);
 =======
                 var resultado = await _api.AlterarPessoaService(dadosParaAlteracao, token);
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                var resultado = await _api.AlterarPessoaService(dadosParaAlteracao, token);
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
                 if (resultado.Sucesso)
                 {

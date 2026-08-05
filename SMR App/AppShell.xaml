@@ -9,9 +9,12 @@
 
     <ShellContent
 <<<<<<< HEAD
+<<<<<<< HEAD
         Title="Home"
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         ContentTemplate="{DataTemplate views:SplashView}"
         Route="MainPage" />
 

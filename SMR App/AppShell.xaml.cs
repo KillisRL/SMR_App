@@ -20,9 +20,14 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(RelatoriosView), typeof(RelatoriosView));
             Routing.RegisterRoute(nameof(IndicacoesView), typeof(IndicacoesView));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             Routing.RegisterRoute(nameof(RecuperarSenhaView), typeof(RecuperarSenhaView));
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            Routing.RegisterRoute(nameof(RecuperarSenhaView), typeof(RecuperarSenhaView));
+            Routing.RegisterRoute(nameof(CadBonificacoesView), typeof(CadBonificacoesView));
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         }
     }
 }

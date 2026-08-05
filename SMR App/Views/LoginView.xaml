@@ -3,43 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMR_App.Views.LoginView"
 <<<<<<< HEAD
+<<<<<<< HEAD
              Title="LoginView">
+=======
+             BackgroundColor="{StaticResource FundoPrincipal}">
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30,60,30,30" VerticalOptions="Center">
 
-            <Label Text="SMR"
+            <Image Source="smr_app_gold1_nobg.png"
                    HorizontalOptions="Center"
-                   FontSize="50"/>
+                   VerticalOptions="Center"
+                   MaximumWidthRequest="250"
+                   HeightRequest="200"
+                   Aspect="AspectFit"/>
 
-            <Label Text="Bem-vindo ao SMR"
-                   TextColor="White"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-
-            <Label Text="Faça login para indicar amigos e ganhar prêmios"
-                   TextColor="Gray"
-                   FontSize="16"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   Margin="0,-15,0,10"/>
-
-            <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Padding="15,2" HasShadow="False">
+            <Border Stroke="{StaticResource BordaInput}" 
+                    StrokeThickness="1" 
+                    BackgroundColor="{StaticResource FundoInput}" 
+                    StrokeShape="RoundRectangle 10" 
+                    Padding="15,2">
                 <Entry Text="{Binding Documento}"
                        Placeholder="CPF ou CNPJ"
-                       PlaceholderColor="Gray"
-                       TextColor="White"
+                       PlaceholderColor="{StaticResource TextoSecundario}"
+                       TextColor="{StaticResource TextoPrincipal}"
+                       BackgroundColor="Transparent"
                        HeightRequest="50"
                        Keyboard="Text"/>
-            </Frame>
+            </Border>
 
-            <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Padding="15,2" HasShadow="False">
+            <Border Stroke="{StaticResource BordaInput}" 
+                    StrokeThickness="1" 
+                    BackgroundColor="{StaticResource FundoInput}" 
+                    StrokeShape="RoundRectangle 10" 
+                    Padding="15,2">
                 <Entry Text="{Binding Senha_hash}"
                        Placeholder="Sua Senha"
-                       PlaceholderColor="Gray"
-                       TextColor="White"
+                       PlaceholderColor="{StaticResource TextoSecundario}"
+                       TextColor="{StaticResource TextoPrincipal}"
+                       BackgroundColor="Transparent"
                        IsPassword="True"
                        HeightRequest="50"/>
+<<<<<<< HEAD
             </Frame>
 =======
              BackgroundColor="{StaticResource FundoPrincipal}">
@@ -81,26 +86,47 @@
                        HeightRequest="50"/>
             </Border>
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+            </Border>
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
             <Button Command="{Binding LogarCommand}"
                     Text="ENTRAR"
                     BackgroundColor="#D4AF37" 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     TextColor="Black"
 =======
                     TextColor="#121212"
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                    TextColor="#121212"
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     FontAttributes="Bold"
                     HeightRequest="55"
                     CornerRadius="10"
                     Margin="0,10,0,0"/>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            <Label Text="Esqueci minha senha"
+                   TextColor="{StaticResource TextoSecundario}"
+                   HorizontalOptions="Center"
+                   Margin="0,5,0,15">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
+                                          CommandParameter="RecuperarSenhaView"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             <Label HorizontalOptions="Center" Margin="0,10,0,0">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Não possui uma conta? " TextColor="#AAAAAA"/>
+                        <Span Text="Não possui uma conta? " TextColor="{StaticResource TextoSecundario}"/>
                         <Span Text="Cadastre-se"
+<<<<<<< HEAD
                       FontAttributes="Bold"
                       TextColor="LightBlue"
                       TextDecorations="Underline"/>
@@ -124,6 +150,11 @@
                               TextColor="#D4AF37"
                               TextDecorations="Underline"/>
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                              FontAttributes="Bold"
+                              TextColor="#D4AF37"
+                              TextDecorations="Underline"/>
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     </FormattedString>
                 </Label.FormattedText>
                 <Label.GestureRecognizers>

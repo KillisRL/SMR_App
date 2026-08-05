@@ -2,13 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 <<<<<<< HEAD
+<<<<<<< HEAD
              x:Class="SMR_App.Views.SplashView"
              Title="SplashView">
+=======
+             x:Class="SMR_App.Views.SplashView">
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
     <Grid>
         <VerticalStackLayout>
-            <Image Source="splash.png"
+            <Image Source="smr_app_gold1_nobg.png"
                    WidthRequest="300"
                    HeightRequest="750"/>
+<<<<<<< HEAD
 
             <!--<ActivityIndicator IsRunning="True" Color="#00A0FF" />
 
@@ -23,6 +28,8 @@
                    WidthRequest="300"
                    HeightRequest="750"/>
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

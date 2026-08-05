@@ -72,16 +72,26 @@ namespace SMRApi.Controllers
             try
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
-                //var usuarioClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-                //                   ?? User.FindFirst("id")?.Value;
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
+                }
+                var empresa = await _dbContext.Empresa
+                    .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
 
-                //if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int codigoUsuarioLogado))
-                //{
-                //    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
-                //}
+                if (empresa == null)
+                {
+                    return BadRequest(new { Message = "Não foi possível cadastrar a recompensa porque nenhuma empresa está vinculada a este usuário." });
+                }
+
                 var novaRecompensa = new Recompensa
                 {
+<<<<<<< HEAD
                     id_empresa =  recompensa.id_empresa,//codigoUsuarioLogado,
 =======
                 var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
@@ -102,6 +112,9 @@ namespace SMRApi.Controllers
                 {
                     id_empresa = empresa.id,
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                    id_empresa = empresa.id,
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     titulo = recompensa.titulo,
                     descricao = recompensa.descricao,
                     pontos_necessarios = recompensa.pontos_necessarios,
@@ -113,6 +126,7 @@ namespace SMRApi.Controllers
 
                 return Ok(new { Message = "Recompensa cadastrada com sucesso!", Id = novaRecompensa.id });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
             }
@@ -122,6 +136,15 @@ namespace SMRApi.Controllers
             }
         }
 
+=======
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Erro ao cadastrar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [HttpPut("alterar")]
         [Authorize]
         public async Task<IActionResult> AlterarRecompensa([FromBody] Recompensa recompensa)
@@ -206,7 +229,10 @@ namespace SMRApi.Controllers
                 }
 
                 return Ok(new { Mensagem = "Recompensa excluída com sucesso!" });
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             }
             catch (Exception ex)
             {

@@ -15,7 +15,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 -- Copiando estrutura para tabela dbsmr.cliente_importado
 CREATE TABLE IF NOT EXISTS `cliente_importado` (
   `id_cliente_importado` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,15 +32,21 @@ CREATE TABLE IF NOT EXISTS `cliente_importado` (
 
 -- Exportação de dados foi desmarcado.
 
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 -- Copiando estrutura para tabela dbsmr.empresa
 CREATE TABLE IF NOT EXISTS `empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `razao_social` varchar(150) DEFAULT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `nome_fantasia` varchar(100) DEFAULT NULL,
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
   `cnpj` varchar(18) NOT NULL,
   `cor_padrao` varchar(7) DEFAULT '#00A0FF',
   `telefone1` varchar(50) DEFAULT NULL,
@@ -48,10 +57,14 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 <<<<<<< HEAD
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 =======
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
 -- Exportação de dados foi desmarcado.
 
@@ -85,10 +98,14 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
   KEY `id_pessoa_tipo` (`id_pessoa_tipo`),
   CONSTRAINT `1` FOREIGN KEY (`id_pessoa_tipo`) REFERENCES `pessoa_tipo` (`id`)
 <<<<<<< HEAD
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 =======
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
 -- Exportação de dados foi desmarcado.
 
@@ -109,18 +126,25 @@ CREATE TABLE IF NOT EXISTS `promotor` (
   `pontos_acumulados` int(11) DEFAULT 0,
   `celular` varchar(50) DEFAULT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `nome` varchar(50) DEFAULT NULL,
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_pessoa` (`id_pessoa`),
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 <<<<<<< HEAD
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 =======
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
 -- Exportação de dados foi desmarcado.
 
@@ -140,7 +164,10 @@ CREATE TABLE IF NOT EXISTS `recompensa` (
 -- Exportação de dados foi desmarcado.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 -- Copiando estrutura para tabela dbsmr.recuperacao_senha
 CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
   `id_recuperacao` int(11) NOT NULL AUTO_INCREMENT,
@@ -155,7 +182,10 @@ CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
 
 -- Exportação de dados foi desmarcado.
 
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 -- Copiando estrutura para tabela dbsmr.solicitacao_resgate
 CREATE TABLE IF NOT EXISTS `solicitacao_resgate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

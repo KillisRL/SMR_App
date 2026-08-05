@@ -6,9 +6,13 @@ using SMRDominio.ClassePessoa;
 using SMRDominio.DTOs;
 using SMRInfraestrutura;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 using System.Net;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+using System.Net;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
 namespace SMRApi.Controllers
 {
@@ -23,9 +27,13 @@ namespace SMRApi.Controllers
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         #region cadastrar
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        #region cadastrar
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [HttpPost("cadastrar")]
         [AllowAnonymous]
         public async Task<IActionResult> CriarPessoa([FromBody] CadastroPessoaDTO dto)
@@ -36,11 +44,92 @@ namespace SMRApi.Controllers
             try
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                // ========================================================
+                // 1. VERIFICAÇÃO DE EXISTÊNCIA E REATIVAÇÃO DO CADASTRO
+                // ========================================================
+                int? idPessoaExistente = null;
+
+                // Procura o documento na tabela filha correspondente
+                if (dto.id_pessoa_tipo == PessoaTipo.Promotor)
+                {
+                    var promotorExistente = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.cpf == dto.documento);
+                    if (promotorExistente != null) idPessoaExistente = promotorExistente.id_pessoa;
+                }
+                else if (dto.id_pessoa_tipo == PessoaTipo.Empresa)
+                {
+                    var empresaExistente = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.cnpj == dto.documento);
+                    if (empresaExistente != null) idPessoaExistente = empresaExistente.id_pessoa;
+                }
+
+                // Se encontrou o documento no banco...
+                if (idPessoaExistente != null)
+                {
+                    var pessoaExistente = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == idPessoaExistente);
+
+                    if (pessoaExistente != null)
+                    {
+                        if (pessoaExistente.ativo == true)
+                        {
+                            // Já existe e está ativo. Barra o cadastro na hora, antes de dar erro no banco.
+                            return BadRequest(new { Message = "Este CPF/CNPJ já está cadastrado e ativo em nosso sistema." });
+                        }
+                        else
+                        {
+                            // CONTA EXCLUÍDA: Reativar e atualizar com os dados novos da tela
+                            pessoaExistente.ativo = true;
+                            pessoaExistente.nome = dto.nome;
+                            pessoaExistente.email = dto.email;
+
+                            if (!string.IsNullOrWhiteSpace(dto.senha_hash))
+                            {
+                                pessoaExistente.senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash);
+                            }
+                            _dbContext.Pessoa.Update(pessoaExistente);
+
+                            // Atualiza também os dados específicos na tabela filha
+                            if (dto.id_pessoa_tipo == PessoaTipo.Promotor)
+                            {
+                                var promotor = await _dbContext.Promotor.FirstOrDefaultAsync(p => p.id_pessoa == idPessoaExistente);
+                                if (promotor != null)
+                                {
+                                    promotor.celular = dto.celular;
+                                    _dbContext.Promotor.Update(promotor);
+                                }
+                            }
+                            else if (dto.id_pessoa_tipo == PessoaTipo.Empresa)
+                            {
+                                var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == idPessoaExistente);
+                                if (empresa != null)
+                                {
+                                    empresa.razao_social = dto.razao_social;
+                                    empresa.telefone1 = dto.telefone1;
+                                    empresa.telefone2 = dto.telefone2;
+                                    _dbContext.Empresa.Update(empresa);
+                                }
+                            }
+
+                            await _dbContext.SaveChangesAsync();
+                            await transaction.CommitAsync();
+
+                            // Sai do método aqui, retorna sucesso fingindo que foi um cadastro comum.
+                            return Ok(new { Message = "Conta reativada com sucesso!" });
+                        }
+                    }
+                }
+
+                // ========================================================
+                // 2. FLUXO NORMAL DE CADASTRO (Se o documento não existe)
+                // ========================================================
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                 var criarPessoa = new Pessoa
                 {
+                    nome = dto.nome,
                     id_pessoa_tipo = dto.id_pessoa_tipo,
                     email = dto.email,
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
+<<<<<<< HEAD
                     ativo = true,
 =======
                 // ========================================================
@@ -127,6 +216,9 @@ namespace SMRApi.Controllers
                     senha_hash = BCrypt.Net.BCrypt.HashPassword(dto.senha_hash),
                     ativo = dto.ativo,
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                    ativo = dto.ativo,
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     data_cadastro = dto.data_cadastro
                 };
 
@@ -140,9 +232,12 @@ namespace SMRApi.Controllers
                         id_pessoa = criarPessoa.id_pessoa,
                         razao_social = dto.razao_social,
 <<<<<<< HEAD
+<<<<<<< HEAD
                         nome_fantasia = dto.nome,
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                         cnpj = dto.documento,
                         telefone1 = dto.telefone1,
                         telefone2 = dto.telefone2,
@@ -156,9 +251,12 @@ namespace SMRApi.Controllers
                     {
                         id_pessoa = criarPessoa.id_pessoa,
 <<<<<<< HEAD
+<<<<<<< HEAD
                         nome = dto.nome,
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                         cpf = dto.documento,
                         celular = dto.celular,
                         pontos_acumulados = 0
@@ -198,11 +296,17 @@ namespace SMRApi.Controllers
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        #endregion
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
+        #region perfil
         [HttpGet("perfil/{id}")]
-        [AllowAnonymous] // Considerar [Authorize]
+        [Authorize]
         public async Task<IActionResult> ObterPerfil(int id)
         {
+<<<<<<< HEAD
 =======
         #endregion
 
@@ -211,6 +315,8 @@ namespace SMRApi.Controllers
         [Authorize]
         public async Task<IActionResult> ObterPerfil(int id)
         {
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
 
             if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
@@ -218,7 +324,10 @@ namespace SMRApi.Controllers
                 return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
             }
 
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
             if (pessoa == null) return NotFound(new { Message = "Pessoa não encontrada" });
 
@@ -248,9 +357,12 @@ namespace SMRApi.Controllers
                 if (empresa != null)
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     dto.nome_fantasia = empresa.nome_fantasia;
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                     dto.razao_social = empresa.razao_social;
                     dto.documento = empresa.cnpj;
                     dto.telefone1 = empresa.telefone1;
@@ -260,6 +372,7 @@ namespace SMRApi.Controllers
 
             return Ok(dto);
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -272,6 +385,13 @@ namespace SMRApi.Controllers
         [HttpPut("alterar")]
         [Authorize]
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        #endregion
+
+        #region alterar
+        [HttpPut("alterar")]
+        [Authorize]
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         public async Task<IActionResult> AlterarPessoa([FromBody] CadastroPessoaDTO dto)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
@@ -303,9 +423,12 @@ namespace SMRApi.Controllers
                     {
                         empresa.razao_social = dto.razao_social;
 <<<<<<< HEAD
+<<<<<<< HEAD
                         empresa.nome_fantasia = dto.nome_fantasia;
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                         empresa.cnpj = dto.documento;
                         empresa.telefone1 = dto.telefone1;
                         empresa.telefone2 = dto.telefone2;
@@ -335,11 +458,17 @@ namespace SMRApi.Controllers
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        #endregion
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
+        #region deletar
         [HttpDelete("deletar/{id}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> DeletarPessoa(int id)
         {
+<<<<<<< HEAD
 =======
         #endregion
 
@@ -351,6 +480,10 @@ namespace SMRApi.Controllers
 
 
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             try
             {
                 var pessoa = await _dbContext.Pessoa.FirstOrDefaultAsync(p => p.id_pessoa == id);
@@ -372,6 +505,7 @@ namespace SMRApi.Controllers
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         [HttpPost ("login")]
 =======
@@ -380,6 +514,12 @@ namespace SMRApi.Controllers
         #region login
         [HttpPost("login")]
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        #endregion
+
+        #region login
+        [HttpPost("login")]
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] PessoaLogin pessoalogin)
         {
@@ -430,7 +570,10 @@ namespace SMRApi.Controllers
 
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         #endregion
 
         #region solicitar_codigo
@@ -593,6 +736,50 @@ namespace SMRApi.Controllers
         }
         #endregion
 
+<<<<<<< HEAD
+=======
+        #region importar_clientes
+
+        [HttpPost("{idEmpresa}/importar")]
+        public async Task<IActionResult> ImportarClientesCsv(int idEmpresa, [FromBody] List<ClienteImportacaoDTO> clientes)
+        {
+            if (clientes == null || !clientes.Any())
+            {
+                return BadRequest(new { erro = "A lista de clientes está vazia ou no formato incorreto." });
+            }
+
+            try
+            {
+                // Converte a lista de DTOs que veio do MAUI para a lista de entidades do Banco
+                var listaEntidades = clientes.Select(c => new ClienteImportado
+                {
+                    IdEmpresa = idEmpresa,
+                    Nome = c.Nome,
+                    Documento = c.Documento,
+                    DataImportacao = DateTime.Now
+                }).ToList();
+
+                // Adiciona todos de uma vez e salva (Isso é ultra rápido no Entity Framework)
+                await _dbContext.ClientesImportados.AddRangeAsync(listaEntidades);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { mensagem = $"{listaEntidades.Count} clientes importados com sucesso para a empresa {idEmpresa}!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { erro = $"Erro ao importar no banco: {ex.Message}" });
+            }
+        }
+
+        // Coloque a DTO no final do arquivo do Controller, fora da classe do EmpresaController
+        public class ClienteImportacaoDTO
+        {
+            public string Nome { get; set; }
+            public string Documento { get; set; }
+        }
+
+        #endregion
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         // ========================================================
         // DTOs PARA AS REQUISIÇÕES
         // ========================================================
@@ -614,6 +801,9 @@ namespace SMRApi.Controllers
             public string NovaSenha { get; set; }
         }
 
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
     }
 }

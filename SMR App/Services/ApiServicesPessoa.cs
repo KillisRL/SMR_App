@@ -4,9 +4,13 @@ using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 using System.Net.Http.Headers;
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+using System.Net.Http.Headers;
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
 namespace SMR_App.Services
 {
@@ -16,18 +20,26 @@ namespace SMR_App.Services
         public ApiServicesPessoa()
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             string baseURL = "http://localhost:5015";
 
             _httpClient = new HttpClient
 =======
             string baseURL = "https://localhost:7190/";
 
+=======
+            string baseURL = "https://localhost:7190/";
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             var handler = new HttpClientHandler();
 
             handler.UseProxy = false;
 
             _httpClient = new HttpClient(handler)
+<<<<<<< HEAD
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
             {
                 BaseAddress =  new Uri(baseURL)
             };
@@ -72,11 +84,18 @@ namespace SMR_App.Services
 
         // 'Read' do CRUD: Consulta os dados completos da API usando GET
 <<<<<<< HEAD
+<<<<<<< HEAD
         public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id)
+=======
+        public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id, string token)
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var response = await _httpClient.GetAsync($"pessoa/perfil/{id}");
+<<<<<<< HEAD
 =======
         public async Task<CadastroPessoaDTO?> ObterPerfilCompleto(int id, string token)
         {
@@ -87,6 +106,9 @@ namespace SMR_App.Services
                 var response = await _httpClient.GetAsync($"pessoa/perfil/{id}");
 
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadFromJsonAsync<CadastroPessoaDTO>();
@@ -102,6 +124,7 @@ namespace SMR_App.Services
 
         // 'Update' do CRUD: Envia a alteração para a API usando PUT
 <<<<<<< HEAD
+<<<<<<< HEAD
         public async Task<(bool Sucesso, string Mensagem)> AlterarPessoaService(CadastroPessoaDTO dto)
         {
             try
@@ -113,6 +136,13 @@ namespace SMR_App.Services
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        public async Task<(bool Sucesso, string Mensagem)> AlterarPessoaService(CadastroPessoaDTO dto, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                 // Atenção aqui: PutAsJsonAsync em vez de Post
                 var response = await _httpClient.PutAsJsonAsync("pessoa/alterar", dto);
 
@@ -147,6 +177,7 @@ namespace SMR_App.Services
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public async Task<(bool Sucesso, string Mensagem)> DeletarPessoaService(int id)
         {
             try
@@ -160,6 +191,15 @@ namespace SMR_App.Services
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        #region EXCLUIR
+        public async Task<(bool Sucesso, string Mensagem)> DeletarPessoaService(int id, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                 var response = await _httpClient.DeleteAsync($"pessoa/deletar/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -175,9 +215,13 @@ namespace SMR_App.Services
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         #endregion
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+        #endregion
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 
         public async Task<Pessoa?> Login(PessoaLogin login)
         {
@@ -190,6 +234,7 @@ namespace SMR_App.Services
                     // resultado = Usuario+Token
                     var resultado = await response.Content.ReadFromJsonAsync<LoginResponse>();
 <<<<<<< HEAD
+<<<<<<< HEAD
                     return resultado?.usuario;
 =======
                     if (resultado != null && !string.IsNullOrEmpty(resultado.token))
@@ -199,6 +244,14 @@ namespace SMR_App.Services
                     return resultado?.usuario;
 
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+                    if (resultado != null && !string.IsNullOrEmpty(resultado.token))
+                    {
+                        await SecureStorage.Default.SetAsync("jwt_token", resultado.token);
+                    }
+                    return resultado?.usuario;
+
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
                 }
                 else // Falha durante processo de login
                 {

@@ -80,6 +80,9 @@
 	  <MauiXaml Update="Views\CadastroPessoaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CadBonificacoesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ConfigEmpresaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -102,11 +105,17 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	  <MauiXaml Update="Views\RecuperarSenhaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+	  <MauiXaml Update="Views\RecuperarSenhaView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
 	  <MauiXaml Update="Views\RelatoriosView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

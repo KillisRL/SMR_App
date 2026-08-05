@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMR_App.Views.CadBonificacoesView">
+    <!-- ScrollView evita que o teclado cubra os botões em telas menores -->
+    <ScrollView>
+        <Grid RowDefinitions="Auto, *" 
+              Padding="20">
+
+            <!-- TÍTULO -->
+            <Label Grid.Row="0" 
+                   Text="NOVA BONIFICAÇÃO" 
+                   FontSize="26" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoTerciario}" 
+                   HorizontalOptions="Center" 
+                   Margin="0,10,0,25" />
+
+            <!-- FORMULÁRIO (Efeito de Cartão) -->
+            <Border Grid.Row="1" 
+                    BackgroundColor="{StaticResource FundoMenu}" 
+                    StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="0" 
+                    Padding="20">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- NOME DA BONIFICAÇÃO -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Nome da Bonificação *" 
+                               FontAttributes="Bold" 
+                               TextColor="#D4AF37" />
+
+                        <!-- Frame usado para criar um fundo contrastante para o Entry -->
+                        <Frame Padding="10,0" 
+                               CornerRadius="8" 
+                               BackgroundColor="{StaticResource FundoPrincipal}" 
+                               BorderColor="Transparent" 
+                               HasShadow="False">
+
+                            <Entry Text="{Binding Nome}" 
+                                   Placeholder="Ex: Desconto de R$ 5,00" 
+                                   PlaceholderColor="Gray"
+                                   TextColor="{StaticResource TextoPrincipal}" />
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- TIPO -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Tipo *" 
+                               FontAttributes="Bold" 
+                               TextColor="#D4AF37" />
+
+                        <Frame Padding="10,0" 
+                               CornerRadius="8" 
+                               BackgroundColor="{StaticResource FundoPrincipal}" 
+                               BorderColor="Transparent" 
+                               HasShadow="False">
+
+                            <Picker ItemsSource="{Binding TiposBonificacao}" 
+                                    SelectedItem="{Binding TipoSelecionado}" 
+                                    Title="Selecione o tipo" 
+                                    TitleColor="Gray"
+                                    TextColor="{StaticResource TextoPrincipal}" />
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- VALOR / QUANTIDADE -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Valor / Quantidade" 
+                               FontAttributes="Bold" 
+                               TextColor="#D4AF37" />
+
+                        <Frame Padding="10,0" 
+                               CornerRadius="8" 
+                               BackgroundColor="{StaticResource FundoPrincipal}" 
+                               BorderColor="Transparent" 
+                               HasShadow="False">
+
+                            <Entry Text="{Binding Valor}" 
+                                   Keyboard="Numeric" 
+                                   Placeholder="0,00" 
+                                   PlaceholderColor="Gray"
+                                   TextColor="{StaticResource TextoPrincipal}" />
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- DESCRIÇÃO -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Descrição" 
+                               FontAttributes="Bold" 
+                               TextColor="#D4AF37" />
+
+                        <Frame Padding="10,0" 
+                               CornerRadius="8" 
+                               BackgroundColor="{StaticResource FundoPrincipal}" 
+                               BorderColor="Transparent" 
+                               HasShadow="False">
+
+                            <Editor Text="{Binding Descricao}" 
+                                    Placeholder="Detalhes ou regras de uso..." 
+                                    PlaceholderColor="Gray"
+                                    HeightRequest="80" 
+                                    TextColor="{StaticResource TextoPrincipal}" />
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- SWITCHES (MGM e ATIVO) -->
+                    <Grid ColumnDefinitions="*, *" 
+                          Margin="0,10,0,0">
+
+                        <!-- SWITCH MGM -->
+                        <HorizontalStackLayout Grid.Column="0" 
+                                               Spacing="10" 
+                                               VerticalOptions="Center">
+
+                            <!-- O OnColor usa o dourado do App -->
+                            <Switch IsToggled="{Binding IsMgm}" 
+                                    OnColor="#D4AF37" 
+                                    ThumbColor="White" />
+
+                            <Label Text="MGM" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- SWITCH ATIVO -->
+                        <HorizontalStackLayout Grid.Column="1" 
+                                               Spacing="10" 
+                                               VerticalOptions="Center">
+
+                            <Switch IsToggled="{Binding IsAtivo}" 
+                                    OnColor="#D4AF37" 
+                                    ThumbColor="White" />
+
+                            <Label Text="Ativo" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <Grid ColumnDefinitions="*, *" 
+                          ColumnSpacing="15" 
+                          Margin="0,20,0,0">
+
+                        <!-- Botão Vazado (Outlined) para Cancelar -->
+                        <Button Grid.Column="0" 
+                                Text="CANCELAR" 
+                                Command="{Binding CancelarCommand}" 
+                                BackgroundColor="Transparent" 
+                                TextColor="#D4AF37" 
+                                BorderColor="#D4AF37" 
+                                BorderWidth="2" 
+                                FontAttributes="Bold" 
+                                CornerRadius="20" />
+
+                        <!-- Botão Preenchido para Salvar -->
+                        <Button Grid.Column="1" 
+                                Text="SALVAR" 
+                                Command="{Binding SalvarCommand}" 
+                                BackgroundColor="#D4AF37" 
+                                TextColor="Black" 
+                                FontAttributes="Bold" 
+                                CornerRadius="20" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

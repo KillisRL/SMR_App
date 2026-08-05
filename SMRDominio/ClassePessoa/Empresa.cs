@@ -15,9 +15,12 @@ namespace SMRDominio.ClassePessoa
         [Required]
         public string? razao_social { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string? nome_fantasia { get; set; }
 =======
 >>>>>>> dfa26fb (criação da service e api de recompensas)
+=======
+>>>>>>> 2ad720e3daa17187a5b64c6d7f8bffd91c473d34
         [Required]
         public string? cnpj {  get; set; }
         public string? cor_padrao { get; set; }
