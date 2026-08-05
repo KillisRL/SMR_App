@@ -80,6 +80,11 @@ namespace SMR_App.ViewModels
             }
 
             await LogarPessoa();
+
+            int idDaEmpresa = ApiServicesSessaoPessoa.PessoaLogada.id_pessoa;
+
+            // Salvamos na memória do celular
+            Preferences.Default.Set("IdEmpresaLogada", idDaEmpresa);
         }
 
         [RelayCommand]

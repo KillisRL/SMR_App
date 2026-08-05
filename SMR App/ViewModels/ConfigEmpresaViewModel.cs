@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using SMR_App.Services;
 
 namespace SMR_App.ViewModels
 {
@@ -22,10 +23,13 @@ namespace SMR_App.ViewModels
         {
             // O Handler com UseProxy = false driba a rede da faculdade!
             var handler = new HttpClientHandler { UseProxy = false };
+
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
             _httpClient = new HttpClient(handler)
             {
                 // Ajuste para o IP/Porta do seu Swagger (use 10.0.2.2 no emulador Android)
-                BaseAddress = new Uri("http://localhost:7190/api/empresa/")
+                BaseAddress = new Uri("https://localhost:7190/")
             };
 
             ImportarClientesCommand = new Command(async () => await ImportarClientesCsvAsync());
@@ -85,15 +89,27 @@ namespace SMR_App.ViewModels
                     // F. Envia a lista para a API
                     if (listaClientes.Count > 0)
                     {
-                        var response = await _httpClient.PostAsJsonAsync("importar", listaClientes);
+                        // 1. Resgata o ID da empresa salvo no momento do Login
+                        // (O número '0' no final é o valor padrão caso ele não encontre nada)
+                        int idEmpresaLogada = ApiServicesSessaoPessoa.PessoaLogada.id_pessoa;
+
+                        // 2. Trava de segurança: se for 0, o usuário não está logado corretamente
+                        if (idEmpresaLogada == 0)
+                        {
+                            await Shell.Current.DisplayAlert("Sessão Expirada", "Não foi possível identificar a empresa. Por favor, faça login novamente.", "OK");
+                            return;
+                        }
+
+                        // 3. Usa a variável dinâmica na URL da API!
+                        var response = await _httpClient.PostAsJsonAsync($"pessoa/{idEmpresaLogada}/importar", listaClientes);
 
                         if (response.IsSuccessStatusCode)
                         {
-                            await Application.Current.MainPage.DisplayAlert("Show!", $"{listaClientes.Count} clientes importados com sucesso na base!", "OK");
+                            await Shell.Current.DisplayAlert("Show!", $"{listaClientes.Count} clientes importados com sucesso na base!", "OK");
                         }
                         else
                         {
-                            await Application.Current.MainPage.DisplayAlert("Ops", "A API recusou a importação. Verifique os logs.", "OK");
+                            await Shell.Current.DisplayAlert("Ops", "A API recusou a importação. Verifique se a empresa existe.", "OK");
                         }
                     }
                     else

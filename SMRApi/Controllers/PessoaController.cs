@@ -532,6 +532,47 @@ namespace SMRApi.Controllers
         }
         #endregion
 
+        #region importar_clientes
+
+        [HttpPost("{idEmpresa}/importar")]
+        public async Task<IActionResult> ImportarClientesCsv(int idEmpresa, [FromBody] List<ClienteImportacaoDTO> clientes)
+        {
+            if (clientes == null || !clientes.Any())
+            {
+                return BadRequest(new { erro = "A lista de clientes está vazia ou no formato incorreto." });
+            }
+
+            try
+            {
+                // Converte a lista de DTOs que veio do MAUI para a lista de entidades do Banco
+                var listaEntidades = clientes.Select(c => new ClienteImportado
+                {
+                    IdEmpresa = idEmpresa,
+                    Nome = c.Nome,
+                    Documento = c.Documento,
+                    DataImportacao = DateTime.Now
+                }).ToList();
+
+                // Adiciona todos de uma vez e salva (Isso é ultra rápido no Entity Framework)
+                await _dbContext.ClientesImportados.AddRangeAsync(listaEntidades);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { mensagem = $"{listaEntidades.Count} clientes importados com sucesso para a empresa {idEmpresa}!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { erro = $"Erro ao importar no banco: {ex.Message}" });
+            }
+        }
+
+        // Coloque a DTO no final do arquivo do Controller, fora da classe do EmpresaController
+        public class ClienteImportacaoDTO
+        {
+            public string Nome { get; set; }
+            public string Documento { get; set; }
+        }
+
+        #endregion
         // ========================================================
         // DTOs PARA AS REQUISIÇÕES
         // ========================================================
