@@ -5,7 +5,7 @@
              ControlTemplate="{StaticResource MainPageTemplate}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="White">
+             BackgroundColor="{StaticResource FundoPrincipal}">
 
     <ScrollView>
         <VerticalStackLayout Spacing="40" Padding="20" Margin="0,20,0,0">
@@ -17,37 +17,61 @@
 
                 <Button Text="RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="0" 
-                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        BackgroundColor="{StaticResource FundoBotao}"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
                         CommandParameter="RecompensasView"/>
 
                 <Button Text="GERENCIAR RECOMPENSAS" 
                         Grid.Row="0" Grid.Column="1" 
-                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        BackgroundColor="{StaticResource FundoBotao}"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
                         CommandParameter="GerenciarRecompensasView"/>
 
                 <Button Text="BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="0" 
-                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        BackgroundColor="{StaticResource FundoBotao}"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
                         CommandParameter="BonificacoesView"/>
 
                 <Button Text="GERENCIAR BONIFICAÇÕES" 
                         Grid.Row="1" Grid.Column="1" 
-                        BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="15" HeightRequest="80"
+                        BackgroundColor="{StaticResource FundoBotao}"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="80"
                         Command="{Binding AbrirTelaCommand}"
                         CommandParameter="GerenciarBonificacoesView"/>
             </Grid>
 
             <Button Text="RELATÓRIOS" 
-                    BackgroundColor="#E0E0E0" TextColor="Black"
-                    CornerRadius="15" HeightRequest="60" WidthRequest="200" HorizontalOptions="Center"
+                    BackgroundColor="{StaticResource FundoBotao}" TextColor="Black"
+                    FontAttributes="Bold"
+                    CornerRadius="15"
+                    HeightRequest="60"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
                     Command="{Binding AbrirTelaCommand}"
                     CommandParameter="RelatoriosView"/>
 
             <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,30">
-                <Label Text="IMPORTAR CLIENTES" FontAttributes="Bold" FontSize="18" TextColor="Black" HorizontalOptions="Center"/>
+                <Label Text="IMPORTAR CLIENTES"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       TextColor="{StaticResource TextoTerciario}" 
+                       HorizontalOptions="Center"/>
                 <Image Source="import_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ImportarClientesCommand}"/>

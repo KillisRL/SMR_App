@@ -33,7 +33,7 @@
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
                             StrokeShape="RoundRectangle 8" 
                             StrokeThickness="0" 
-                            Margin="0,0,0,15" 
+                            Margin="0,0,0,15"
                             Padding="15">
 
                         <Grid ColumnDefinitions="Auto, *">
@@ -136,8 +136,8 @@
 
             <Button Grid.Column="1" 
                     Text="CADASTRAR" 
-                    Command="{Binding AbrirTelaCommand}" 
-                    CommandParameter="view"
+                    Command="{Binding AbrirTelaCommand}"                    
+                    CommandParameter="CadBonificacoesView"
                     BackgroundColor="#D4AF37" 
                     TextColor="Black" 
                     FontAttributes="Bold" 

@@ -13,8 +13,10 @@
         <Color x:Key="FundoPrincipal">#121212</Color>
         <Color x:Key="FundoMenu">#1E1E1E</Color>
         <Color x:Key="FundoInput">#2C2C2E</Color>
+        <Color x:Key="FundoBotao">#FFD700</Color>
         <Color x:Key="TextoPrincipal">#F2F2F7</Color>
         <Color x:Key="TextoSecundario">#8E8E93</Color>
+        <Color x:Key="TextoTerciario">#FFD700</Color>
         <Color x:Key="BordaInput">#3A3A3C</Color>
         <Color x:Key="CorPrimaria">#0A84FF</Color>
         <Color x:Key="CorPerigo">#FF453A</Color>

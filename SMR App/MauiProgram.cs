@@ -23,6 +23,7 @@ namespace SMR_App
             //Serviços
             //builder.Services.AddSingleton<ApiServicesSessaoPessoa>();
             builder.Services.AddSingleton<ApiServicesPessoa>();
+            builder.Services.AddSingleton<ApiServicesBonificacao>();
 
             //ViewModels
             builder.Services.AddTransient<PessoaViewModel>();
@@ -35,6 +36,7 @@ namespace SMR_App
             builder.Services.AddTransient<RelatoriosViewModel>();
             builder.Services.AddTransient<IndicacoesViewModel>();
             builder.Services.AddTransient<ReSenhaViewModel>();
+            builder.Services.AddTransient<CadBoniViewModel>();
 
             //Views
             builder.Services.AddTransient<CadastroPessoaView>();
@@ -47,6 +49,7 @@ namespace SMR_App
             builder.Services.AddTransient<GerenciarRecompensasView>();
             builder.Services.AddTransient<RelatoriosView>();
             builder.Services.AddTransient<IndicacoesView>();
+            builder.Services.AddTransient<CadBonificacoesView>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
