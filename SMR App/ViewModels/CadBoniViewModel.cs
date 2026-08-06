@@ -119,7 +119,7 @@ namespace SMR_App.ViewModels
                 };
 
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
-                // var resultado = await _api.CadastrarBonificacaoService(dadosCadastro, token);
+                var resultado = await _api.CadastrarBonificacaoService(dadosCadastro, token);
 
                 // Simulando Sucesso (Adapte com o seu "resultado.Sucesso")
                 await Application.Current.MainPage.DisplayAlert("Show!", "Bonificação cadastrada com sucesso.", "OK");
