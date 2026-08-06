@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMR_App.Views.CadRecompensaView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <ScrollView>
+        <!-- Grid principal dividindo a tela: Conteúdo (*) e Botões no Rodapé (Auto) -->
+        <Grid RowDefinitions="*, Auto" Padding="20,0,20,20" VerticalOptions="FillAndExpand">
+
+            <!-- LINHA 0: Formulário de Cadastro -->
+            <VerticalStackLayout Grid.Row="0" Spacing="20" Margin="0,20,0,20">
+
+                <!-- Título da Tela -->
+                <Label Text="CADASTRAR RECOMPENSA" 
+                       FontSize="26" 
+                       FontAttributes="Bold" 
+                       TextColor="{StaticResource TextoPrincipal}" 
+                       HorizontalOptions="Center" />
+
+                <!-- Campo: Título -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="TÍTULO *" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextoPrincipal}" />
+
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="50" 
+                            Padding="10,0">
+                        <Entry Text="{Binding Titulo}" 
+                               Placeholder="Ex: Desconto de R$ 20,00" 
+                               PlaceholderColor="Gray" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Campo: Pontos Necessários -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="PONTOS NECESSÁRIOS *" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextoPrincipal}" />
+
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="50" 
+                            Padding="10,0">
+                        <Entry Text="{Binding Pontos}" 
+                               Placeholder="Ex: 50" 
+                               Keyboard="Numeric" 
+                               PlaceholderColor="Gray" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Campo: Status (Ativo / Inativo) -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="STATUS DA RECOMPENSA" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextoPrincipal}" />
+
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            Padding="15,10">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Grid.Column="0" 
+                                   Text="Recompensa Ativa?" 
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   FontSize="16" 
+                                   VerticalOptions="Center" />
+
+                            <Switch Grid.Column="1" 
+                                    IsToggled="{Binding Ativo}" 
+                                    OnColor="#D4AF37" 
+                                    ThumbColor="White" 
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Campo: Descrição -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="DESCRIÇÃO *" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextoPrincipal}" />
+
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="120" 
+                            Padding="10">
+                        <Editor Text="{Binding Descricao}" 
+                                Placeholder="Informe os detalhes ou regras de resgate..." 
+                                PlaceholderColor="Gray" 
+                                TextColor="{StaticResource TextoPrincipal}" 
+                                AutoSize="Disabled" />
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <!-- LINHA 1: Botões Inferiores (Cancelar e Cadastrar) -->
+            <Grid Grid.Row="1" ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
+                <Button Grid.Column="0" 
+                        Text="VOLTAR" 
+                        Clicked="OnVoltarClicked" 
+                        BackgroundColor="#404040" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="20" 
+                        HeightRequest="50" />
+
+                <Button Grid.Column="1" 
+                        Text="SALVAR" 
+                        Command="{Binding CadastrarRecompensaCommand}" 
+                        BackgroundColor="#D4AF37" 
+                        TextColor="Black" 
+                        FontAttributes="Bold" 
+                        CornerRadius="20" 
+                        HeightRequest="50" />
+            </Grid>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

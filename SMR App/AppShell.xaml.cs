@@ -21,6 +21,7 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(IndicacoesView), typeof(IndicacoesView));
             Routing.RegisterRoute(nameof(RecuperarSenhaView), typeof(RecuperarSenhaView));
             Routing.RegisterRoute(nameof(CadBonificacoesView), typeof(CadBonificacoesView));
+            Routing.RegisterRoute(nameof(CadRecompensaView), typeof(CadRecompensaView));
         }
     }
 }

@@ -20,12 +20,16 @@ namespace SMR_App
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            //Serviços
+            // Adiciona a fábrica de HttpClient necessária para os serviços de API
+            builder.Services.AddSingleton<HttpClient>();
+
+            // Serviços
             //builder.Services.AddSingleton<ApiServicesSessaoPessoa>();
             builder.Services.AddSingleton<ApiServicesPessoa>();
             builder.Services.AddSingleton<ApiServicesBonificacao>();
+            builder.Services.AddSingleton<ApiServiceRecompensa>();
 
-            //ViewModels
+            // ViewModels
             builder.Services.AddTransient<PessoaViewModel>();
             builder.Services.AddTransient<PrincipalViewModel>();
             builder.Services.AddTransient<ConfigEmpresaViewModel>();
@@ -37,8 +41,9 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacoesViewModel>();
             builder.Services.AddTransient<ReSenhaViewModel>();
             builder.Services.AddTransient<CadBoniViewModel>();
+            builder.Services.AddTransient<CadRecompensaViewModel>();
 
-            //Views
+            // Views
             builder.Services.AddTransient<CadastroPessoaView>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
@@ -50,6 +55,8 @@ namespace SMR_App
             builder.Services.AddTransient<RelatoriosView>();
             builder.Services.AddTransient<IndicacoesView>();
             builder.Services.AddTransient<CadBonificacoesView>();
+            builder.Services.AddTransient<CadRecompensaView>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -20,6 +20,41 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        [HttpGet("consultar")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarRecompensa([FromQuery] string? titulo, string? descricao, bool? ativo)
+        {
+            try
+            {
+                var listaRecompensa = await (
+                    from recompensa in _dbContext.Recompensas
+                    where
+                        (string.IsNullOrEmpty(titulo) || recompensa.titulo.Contains(titulo)) &&
+                        (string.IsNullOrEmpty(descricao) || recompensa.descricao.Contains(descricao)) &&
+                        (!ativo.HasValue || recompensa.Ativo == ativo)
+                    select new
+                    {
+                        id = recompensa.id,
+                        id_empresa = recompensa.id_empresa,
+                        titulo = recompensa.titulo,
+                        descricao = recompensa.descricao,
+                        ativo = recompensa.Ativo,
+                        pontos_necessarios = recompensa.pontos_necessarios
+                    }).ToListAsync();
+
+
+                if (listaRecompensa.Count <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Nenhuma recompensa encontrada." });
+                }
+
+                return Ok(listaRecompensa);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao consultar recompensas.", Erro = ex.Message });
+            }
+        }
 
         [HttpPost("cadastrar")]
         [Authorize]
