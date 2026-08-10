@@ -1,7 +1,12 @@
-﻿using System;
+﻿using SMRDominio.ClasseBase;
+using SMRDominio.ClasseBonificacao;
+using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 // using SMRDominio.DTOs; // Descomente para importar os DTOs do seu TCC
 
@@ -30,92 +35,150 @@ namespace SMR_App.Services
         // CADASTRAR BONIFICAÇÃO (POST)
         // ==========================================================
         // Troque 'object' pelo seu DTO real, ex: CadastroBonificacaoDTO
-        public async Task<RespostaApi> CadastrarBonificacaoService(object dadosCadastro, string token)
+        public async Task<(bool Sucesso, string Mensagem)> CadastrarBonificacao(Bonificacao bonificacao, string token)
         {
             try
             {
-                // Injeta o Token JWT no cabeçalho da requisição
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                // Dispara o POST para o Controller (Ajuste "api/bonificacao" para a rota real do seu Swagger)
-                var response = await _httpClient.PostAsJsonAsync("api/bonificacao", dadosCadastro);
+                var response = await _httpClient.PostAsJsonAsync("bonificacao/cadastrar", bonificacao);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var retorno = await response.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return new RespostaApi { Sucesso = true, Mensagem = "Bonificação salva na base de dados!" };
-                }
+                    string mensagemSucesso = retorno.Mensagem;
 
-                // Se a API retornar BadRequest ou similar, capturamos a mensagem de erro
-                var erroApi = await response.Content.ReadAsStringAsync();
-                return new RespostaApi { Sucesso = false, Mensagem = $"A API recusou o cadastro: {erroApi}" };
+                    return (true, mensagemSucesso);
+                }
+                string erroApi = retorno.Mensagem;
+                return (false, erroApi);
             }
             catch (Exception ex)
             {
-                return new RespostaApi { Sucesso = false, Mensagem = ex.Message };
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
 
         // ==========================================================
         // ALTERAR BONIFICAÇÃO (PUT)
         // ==========================================================
-        public async Task<RespostaApi> AlterarBonificacaoService(object dadosAlteracao, string token)
+        public async Task<(bool Sucesso, string Mensagem)> AlterarBonificacao(Bonificacao bonificacao, string token)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                // Dispara o PUT
-                var response = await _httpClient.PutAsJsonAsync("api/bonificacao", dadosAlteracao);
+                var response = await _httpClient.PutAsJsonAsync("bonificacao/alterar", bonificacao);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var retorno = await response.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return new RespostaApi { Sucesso = true, Mensagem = "Dados da bonificação atualizados!" };
+                    string mensagemSuceso = retorno.Mensagem;
+                    return (true, mensagemSuceso);
                 }
-
-                var erroApi = await response.Content.ReadAsStringAsync();
-                return new RespostaApi { Sucesso = false, Mensagem = $"Erro da API: {erroApi}" };
+                else
+                {
+                    string mensagemErro = retorno.Mensagem;
+                    return (false, mensagemErro);
+                }
             }
             catch (Exception ex)
             {
-                return new RespostaApi { Sucesso = false, Mensagem = ex.Message };
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
 
         // ==========================================================
         // DELETAR BONIFICAÇÃO (DELETE)
         // ==========================================================
-        public async Task<RespostaApi> DeletarBonificacaoService(int idBonificacao, string token)
+        public async Task<(bool Sucesso, string Mensagem)> DeletarBonificacaoService(int idBonificacao, string token)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 // Passa o ID na rota para deletar do banco
-                var response = await _httpClient.DeleteAsync($"api/bonificacao/{idBonificacao}");
+                var response = await _httpClient.DeleteAsync($"bonificacao/excluir{idBonificacao}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true};
 
+                var retorno = await response.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                
                 if (response.IsSuccessStatusCode)
                 {
-                    return new RespostaApi { Sucesso = true, Mensagem = "Bonificação inativada/excluída!" };
+                    string mensagemSucesso = retorno.Mensagem;
+                    return(true, mensagemSucesso);
                 }
-
-                var erroApi = await response.Content.ReadAsStringAsync();
-                return new RespostaApi { Sucesso = false, Mensagem = $"Erro ao excluir: {erroApi}" };
+                else
+                {
+                    string mensagemErro = retorno.Mensagem;
+                    return (false, mensagemErro);
+                }
             }
             catch (Exception ex)
             {
-                return new RespostaApi { Sucesso = false, Mensagem = ex.Message };
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
-    }
 
-    // ==========================================================
-    // CLASSE AUXILIAR DE RESPOSTA
-    // ==========================================================
-    // Se você já tem uma classe de resposta padrão no seu projeto SMRDominio, 
-    // pode apagar esta classe e usar a sua.
-    public class RespostaApi
-    {
-        public bool Sucesso { get; set; }
-        public string Mensagem { get; set; }
+        // ==========================================================
+        // DELETAR BONIFICAÇÃO (GET)
+        // ==========================================================
+        public async Task<(bool Sucesso, string Mensagem, List<Bonificacao> Dados)> ConsultarBonificacao(string token, string? nome, bool? ativo)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var query = new List<string>();
+
+                // 1. CORREÇÃO: Adicionado o IF para validar se 'nome' não é nulo antes de sanitizar a string
+                if (!string.IsNullOrWhiteSpace(nome))
+                {
+                    query.Add($"nome={Uri.EscapeDataString(nome)}");
+                }
+
+                if (ativo.HasValue)
+                {
+                    query.Add($"ativo={ativo.Value.ToString().ToLower()}");
+                }
+
+                // Monta a URL dinâmica
+                var urlCompleta = query.Any()
+                    ? $"bonificacao/consultar?{string.Join("&", query)}"
+                    : "bonificacao/consultar";
+
+                var resultado = await _httpClient.GetAsync(urlCompleta);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                // 2. CORREÇÃO: Lê o JSON apenas quando necessário, de acordo com o status HTTP
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<Bonificacao>>(options);
+                    return (true, string.Empty, dados ?? new List<Bonificacao>());
+                }
+                else
+                {
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    string mensagemErro = retorno?.Mensagem ?? "Falha ao consultar bonificações.";
+
+                    return (false, mensagemErro, new List<Bonificacao>());
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar bonificação: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.", new List<Bonificacao>());
+            }
+        }
     }
 }

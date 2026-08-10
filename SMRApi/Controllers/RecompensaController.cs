@@ -26,12 +26,19 @@ namespace SMRApi.Controllers
         {
             try
             {
+                var pessoa = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id_pessoa")?.Value;
+                int idPessoa = int.Parse(pessoa);
+                var empresa = await _dbContext.Empresa.Where(e => e.id_pessoa == idPessoa).FirstOrDefaultAsync();
+
+                int idEmpresa = empresa.id;
+
                 var listaRecompensa = await (
                     from recompensa in _dbContext.Recompensas
                     where
                         (string.IsNullOrEmpty(titulo) || recompensa.titulo.Contains(titulo)) &&
                         (string.IsNullOrEmpty(descricao) || recompensa.descricao.Contains(descricao)) &&
-                        (!ativo.HasValue || recompensa.Ativo == ativo)
+                        (!ativo.HasValue || recompensa.Ativo == ativo) &&
+                        (recompensa.id_empresa == idEmpresa)
                     select new
                     {
                         id = recompensa.id,
@@ -39,7 +46,8 @@ namespace SMRApi.Controllers
                         titulo = recompensa.titulo,
                         descricao = recompensa.descricao,
                         ativo = recompensa.Ativo,
-                        pontos_necessarios = recompensa.pontos_necessarios
+                        pontos_necessarios = recompensa.pontos_necessarios,
+                        id_rank = recompensa.id_rank
                     }).ToListAsync();
 
 
@@ -67,14 +75,11 @@ namespace SMRApi.Controllers
 
             try
             {
-                var usuarioClaim = User.FindFirst("id_pessoa")?.Value;
+                var pessoa = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id_pessoa")?.Value;
+                int idPessoa = int.Parse(pessoa);
+                var empresa = await _dbContext.Empresa.Where(e => e.id_pessoa == idPessoa).FirstOrDefaultAsync();
 
-                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
-                {
-                    return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
-                }
-                var empresa = await _dbContext.Empresa
-                    .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
+                int idEmpresa = empresa.id;
 
                 if (empresa == null)
                 {
@@ -83,11 +88,12 @@ namespace SMRApi.Controllers
 
                 var novaRecompensa = new Recompensa
                 {
-                    id_empresa = empresa.id,
+                    id_empresa = idEmpresa,
                     titulo = recompensa.titulo,
                     descricao = recompensa.descricao,
                     pontos_necessarios = recompensa.pontos_necessarios,
-                    Ativo = recompensa.Ativo
+                    Ativo = recompensa.Ativo,
+                    id_rank = recompensa.id_rank
                 };
 
                 _dbContext.Recompensas.Add(novaRecompensa);
@@ -133,7 +139,10 @@ namespace SMRApi.Controllers
                         .SetProperty(u => u.descricao, recompensa.descricao)
                         .SetProperty(u => u.Ativo, recompensa.Ativo)
                         .SetProperty(u => u.pontos_necessarios, recompensa.pontos_necessarios)
+                        .SetProperty(u => u.id_rank,  recompensa.id_rank)
                     );
+                
+                
 
                 if (recompesaAlterar <= 0)
                 {

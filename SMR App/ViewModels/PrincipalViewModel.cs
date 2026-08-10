@@ -21,8 +21,6 @@ namespace SMR_App.ViewModels
             }
         }
 
-        
-
         public PrincipalViewModel()
         {
             ValidarPermissoesDeMenu();

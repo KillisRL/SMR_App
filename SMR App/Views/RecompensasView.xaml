@@ -108,55 +108,102 @@
                             Margin="0,0,0,15"
                             Padding="15">
 
-                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto">
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto" RowSpacing="8">
 
-                            <!-- Título da Recompensa em Dourado -->
-                            <Label Grid.Row="0" Grid.Column="0" 
+                            <!-- LINHA 0, COLUNA 0: Título da Recompensa (Área clicável para alteração) -->
+                            <Label Grid.Row="0" Grid.Column="0"
                                    Text="{Binding titulo}" 
                                    FontAttributes="Bold" 
                                    FontSize="18" 
-                                   TextColor="#D4AF37" />
+                                   TextColor="#D4AF37"
+                                   LineBreakMode="WordWrap"
+                                   VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
 
-                            <!-- Container de Status (Ativo/Inativo) em Destaque -->
+                            <!-- LINHA 0, COLUNA 1: Container de Status (Ativo/Inativo) -->
                             <Border Grid.Row="0" Grid.Column="1" 
                                     StrokeShape="RoundRectangle 4" 
                                     StrokeThickness="0" 
-                                    Padding="8,2" 
+                                    Padding="8,3" 
                                     HorizontalOptions="End" 
                                     VerticalOptions="Start">
                                 <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="True">
+                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
                                         <Setter Property="BackgroundColor" Value="#2E7D32" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="False">
+                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="False">
                                         <Setter Property="BackgroundColor" Value="#C62828" />
                                     </DataTrigger>
                                 </Border.Triggers>
 
-                                <Label Text="{Binding ativo, Converter={StaticResource BoolToStatusConverter}, FallbackValue='INATIVO'}" 
+                                <Label Text="{Binding Ativo, Converter={StaticResource BoolToStatusConverter}, FallbackValue='INATIVO'}" 
                                        FontAttributes="Bold" 
                                        TextColor="White" 
-                                       FontSize="12"/>
+                                       FontSize="11"/>
                             </Border>
 
-                            <!-- Descrição da Recompensa -->
-                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                            <!-- LINHA 1: Descrição (Ocupa as duas colunas para dar espaço ao texto longo) -->
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                    Text="{Binding descricao}" 
                                    TextColor="{StaticResource TextoPrincipal}" 
-                                   FontSize="14" 
-                                   Margin="0,8,0,0" />
+                                   FontSize="14"
+                                   LineBreakMode="WordWrap">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
 
-                            <!-- Pontos / Valor Requerido -->
-                            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="0,12,0,0">
-                                <Label Text="PONTOS NECESSÁRIOS:" 
-                                       TextColor="Gray" 
-                                       FontSize="13" 
-                                       FontAttributes="Bold" />
-                                <Label Text="{Binding pontos_necessarios}" 
-                                       TextColor="#D4AF37" 
-                                       FontSize="14" 
-                                       FontAttributes="Bold" />
-                            </HorizontalStackLayout>
+                            <!-- LINHA 2, COLUNA 0: Detalhes de Rank e Pontos -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="4" VerticalOptions="End">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+
+                                <!-- Rank Mínimo -->
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="RANK MÍNIMO:" 
+                                           TextColor="Gray" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding id_rank, FallbackValue='Geral'}" 
+                                           TextColor="#D4AF37" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+
+                                <!-- Pontos Necessários -->
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="PONTOS NECESSÁRIOS:" 
+                                           TextColor="Gray" 
+                                           FontSize="13" 
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding pontos_necessarios}" 
+                                           TextColor="#D4AF37" 
+                                           FontSize="14" 
+                                           FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- LINHA 2, COLUNA 1: Botão Lixeira (Totalmente isolado na ponta inferior direita) -->
+                            <ImageButton Grid.Row="2" Grid.Column="1"
+                                         Source="lixeirarecompensa.png" 
+                                         BackgroundColor="Transparent"
+                                         HeightRequest="28"
+                                         WidthRequest="28"
+                                         Padding="2"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="End"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirRecompensaCommand}"
+                                         CommandParameter="{Binding .}" />
 
                         </Grid>
                     </Border>

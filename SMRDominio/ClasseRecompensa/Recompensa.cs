@@ -18,6 +18,8 @@ namespace SMRDominio.ClasseRecompensa
         public int id { get; set; }
         public int id_empresa { get; set; }
 
+        [ForeignKey("id_rank")]
+        public Recompensa_Rank? id_rank { get; set; }
         public string? titulo { get; set; }
         public string? descricao { get; set; }
         public int pontos_necessarios { get; set; }

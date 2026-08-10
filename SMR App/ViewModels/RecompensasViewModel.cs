@@ -37,6 +37,61 @@ namespace SMR_App.ViewModels
             await Shell.Current.GoToAsync(nameof(CadRecompensaView));
         }
 
+        [RelayCommand]
+        public async Task ExcluirRecompensa(Recompensa recompensa)
+        {
+            try
+            {
+                bool confimacao = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realmente excluir a recompensa selecionada", "Sim", "Não");
+
+                if(!confimacao)
+                {
+                    return;
+                }
+
+                string token = await SecureStorage.Default.GetAsync("jwt_token"); 
+
+                int codigoRecompensa = recompensa.id;
+
+                var resultado = await _apiServiceRecompensa.ExcluirRecompensa(token, codigoRecompensa);
+
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    return;
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", resultado.Mensagem, "Ok");
+                    return;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível excluir a recompensa selecionada. Erro: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        public async Task AbrirAlteracao(Recompensa recompensa)
+        {
+            bool confimacao = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realizar alteração da Recompensa", "Sim", "Não");
+            if(!confimacao)
+            {
+                return;
+            }
+            var parametro = new Dictionary<string, object>
+            {
+                {"RecompensaSelecionada", recompensa }
+            };
+            await Shell.Current.GoToAsync(nameof(CadRecompensaView),parametro);
+        }
+
+        partial void OnStatusSelecionadoChanged(string value)
+        {
+            _ = ConsultarRecompensas();
+        }
 
         [RelayCommand]
         public async Task ConsultarRecompensas()
@@ -45,8 +100,6 @@ namespace SMR_App.ViewModels
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                var resultado = await _apiServiceRecompensa.ConsultarRecompensas(token, descricao, titulo, ativo);
-
                 if (StatusSelecionado == "Ativos")
                     Ativo = true;
                 else if (StatusSelecionado == "Inativos")
@@ -54,11 +107,12 @@ namespace SMR_App.ViewModels
                 else
                     Ativo = null;
 
+                var resultado = await _apiServiceRecompensa.ConsultarRecompensas(token, Descricao, Titulo, Ativo);
+
                 if (resultado.Sucesso)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        // Agora isso vai funcionar perfeitamente!
                         ListaRecompensa.Clear();
 
                         if (resultado.Dados != null)

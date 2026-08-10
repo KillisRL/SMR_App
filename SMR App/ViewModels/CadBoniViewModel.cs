@@ -4,17 +4,16 @@ using SMRDominio.ClasseBase;
 using SMRDominio.ClasseBonificacao;
 using SMR_App.Services;
 using System.Collections.ObjectModel;
+using SMRDominio.ClasseRecompensa;
 
 namespace SMR_App.ViewModels
 {
-    // Recebe o objeto caso o usuário clique em "Alterar" na tela de listagem
     [QueryProperty(nameof(BonificacaoRecebida), "BonificacaoParaAlterar")]
     public partial class CadBoniViewModel : BaseViewModel
     {
-        [ObservableProperty] private object? _bonificacaoRecebida; // Substitua 'object' pela sua classe/DTO real de Bonificação
+        [ObservableProperty] private Bonificacao? bonificacaoRecebida; // Substitua 'object' pela sua classe/DTO real de Bonificação
 
-        // Substitua pelo seu serviço real de API de Bonificações
-        public readonly ApiServicesBonificacao _api;
+        public readonly ApiServicesBonificacao _apiServicesBonificacao;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TituloPagina))]
@@ -35,54 +34,53 @@ namespace SMR_App.ViewModels
         [ObservableProperty] private string nome;
         [ObservableProperty] private string descricao;
         [ObservableProperty] private decimal valor;
-        [ObservableProperty] private bool isMgm;
-        [ObservableProperty] private bool ativo = true; // Padrão ativado no cadastro
-        [ObservableProperty] private string tipoSelecionado;
-
-        public ObservableCollection<string> TiposDisponiveis { get; }
+        [ObservableProperty] private bool mgm;
+        [ObservableProperty] private bool ativo = true;
+        [ObservableProperty] private TipoBonificacao? tipoSelecionado;
+        [ObservableProperty] private ObservableCollection<TipoBonificacao> tipos = new();
 
         public CadBoniViewModel(ApiServicesBonificacao api)
         {
-            _api = api;
-            AcaoTela = AcaoTela.Cadastro; // Por padrão, a tela abre para cadastro
+            _apiServicesBonificacao = api;
+            AcaoTela = AcaoTela.Cadastro;
+            var listaTipos = Enum.GetValues(typeof(TipoBonificacao)).Cast<TipoBonificacao>();
+            Tipos = new ObservableCollection<TipoBonificacao>(listaTipos);
 
-            TiposDisponiveis = new ObservableCollection<string>
+            if(BonificacaoRecebida != null)
             {
-                "Desconto Fixo (R$)",
-                "Desconto Percentual (%)",
-                "Produto Brinde"
-            };
+                TipoSelecionado = BonificacaoRecebida.Tipo;
+            }
+            else
+            {
+                TipoSelecionado = Tipos.FirstOrDefault();
+            }
         }
 
-        // Método interceptador do Toolkit executado automaticamente quando 'BonificacaoRecebida' é preenchida pela navegação
-        partial void OnBonificacaoRecebidaChanged(object? value) // Substitua 'object' pelo seu tipo real
+        partial void OnBonificacaoRecebidaChanged(Bonificacao? value)
         {
             if (value != null)
             {
                 AcaoTela = AcaoTela.Alteracao;
 
-                // Exemplo de preenchimento dos campos com o objeto recebido:
-                // Id_bonificacao = value.id_bonificacao;
-                // Nome = value.nome;
-                // Descricao = value.descricao;
-                // Valor = value.valor;
-                // IsMgm = value.is_mgm;
-                // Ativo = value.ativo;
-                // TipoSelecionado = value.tipo;
+                // Preenche os campos do formulário para alteração
+                Id_bonificacao = value.Id;
+                Nome = value.Nome;
+                Descricao = value.Descricao;
+                Valor = value.Valor;
+                Mgm = value.Mgm; 
+                Ativo = value.Ativo; 
             }
         }
 
         [RelayCommand]
         private async Task Salvar()
         {
-            // 1. Validações Básicas
-            if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(TipoSelecionado))
+            if (string.IsNullOrEmpty(Nome) || TipoSelecionado == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor, preencha o Nome e o Tipo da bonificação.", "OK");
                 return;
             }
 
-            // 2. Resgata a Empresa Logada para vincular a Bonificação
             int idEmpresaLogada = ApiServicesSessaoPessoa.PessoaLogada?.id_pessoa ?? 0;
             if (idEmpresaLogada == 0)
             {
@@ -90,7 +88,6 @@ namespace SMR_App.ViewModels
                 return;
             }
 
-            // 3. Direcionamento da Ação
             if (AcaoTela == AcaoTela.Cadastro)
             {
                 await CadastrarBonificacao(idEmpresaLogada);
@@ -105,25 +102,31 @@ namespace SMR_App.ViewModels
         {
             try
             {
-                // Objeto simulando seu DTO de envio
-                var dadosCadastro = new
+                var dadosCadastro = new Bonificacao
                 {
-                    id_empresa = idEmpresa,
-                    nome = Nome,
-                    descricao = Descricao,
-                    valor = Valor,
-                    tipo = TipoSelecionado,
-                    is_mgm = IsMgm,
-                    ativo = Ativo,
-                    data_cadastro = DateTime.Now
+                    Id_Empresa = idEmpresa,
+                    Nome = Nome,
+                    Descricao = Descricao,
+                    Valor = Valor,
+                    Tipo = TipoSelecionado.Value,
+                    Mgm = Mgm,
+                    Ativo = Ativo
                 };
 
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
-                var resultado = await _api.CadastrarBonificacaoService(dadosCadastro, token);
 
-                // Simulando Sucesso (Adapte com o seu "resultado.Sucesso")
-                await Application.Current.MainPage.DisplayAlert("Show!", "Bonificação cadastrada com sucesso.", "OK");
-                await Shell.Current.GoToAsync(".."); // Volta para a tela anterior
+                var resultado = await _apiServicesBonificacao.CadastrarBonificacao(dadosCadastro, token);
+
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -135,53 +138,37 @@ namespace SMR_App.ViewModels
         {
             try
             {
-                // Objeto simulando seu DTO de atualização
-                var dadosAlteracao = new
+
+                var dadosAlteracao = new Bonificacao
                 {
-                    id_bonificacao = Id_bonificacao,
-                    id_empresa = idEmpresa,
-                    nome = Nome,
-                    descricao = Descricao,
-                    valor = Valor,
-                    tipo = TipoSelecionado,
-                    is_mgm = IsMgm,
-                    ativo = Ativo
+                   Id = BonificacaoRecebida.Id,
+                   Id_Empresa = idEmpresa,
+                   Tipo = TipoSelecionado.Value,
+                   Nome = Nome,
+                   Descricao = Descricao,
+                   Valor = Valor,
+                   Mgm = Mgm,
+                   Ativo = Ativo
                 };
 
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
-                // var resultado = await _api.AlterarBonificacaoService(dadosAlteracao, token);
 
-                await Application.Current.MainPage.DisplayAlert("Sucesso", "Bonificação atualizada com sucesso!", "OK");
-                await Shell.Current.GoToAsync("..");
+                var resultado = await _apiServicesBonificacao.AlterarBonificacao(dadosAlteracao, token);
+
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha ao salvar: {ex.Message}", "OK");
-            }
-        }
-
-        [RelayCommand]
-        private async Task Excluir()
-        {
-            bool confirmacao = await Application.Current.MainPage.DisplayAlert(
-                "Excluir Bonificação",
-                $"Tem certeza que deseja excluir a bonificação '{Nome}'?",
-                "Sim, Excluir",
-                "Cancelar");
-
-            if (!confirmacao) return;
-
-            try
-            {
-                string token = await SecureStorage.Default.GetAsync("jwt_token");
-                // var resultado = await _api.DeletarBonificacaoService(Id_bonificacao, token);
-
-                await Application.Current.MainPage.DisplayAlert("Excluído", "Bonificação removida com sucesso.", "OK");
-                await Shell.Current.GoToAsync("..");
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao excluir: {ex.Message}", "OK");
             }
         }
 

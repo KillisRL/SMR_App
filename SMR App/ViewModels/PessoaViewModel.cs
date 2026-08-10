@@ -71,23 +71,6 @@ namespace SMR_App.ViewModels
         }
 
         [RelayCommand]
-        private async Task Logar()
-        {
-            if (string.IsNullOrEmpty(Documento) || string.IsNullOrEmpty(Senha_hash))
-            {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos.", "OK");
-                return;
-            }
-
-            await LogarPessoa();
-
-            int idDaEmpresa = ApiServicesSessaoPessoa.PessoaLogada.id_pessoa;
-
-            // Salvamos na memória do celular
-            Preferences.Default.Set("IdEmpresaLogada", idDaEmpresa);
-        }
-
-        [RelayCommand]
         private async Task IrParaCadastro()
         {
             await Shell.Current.GoToAsync(nameof(CadastroPessoaView));
@@ -326,10 +309,17 @@ namespace SMR_App.ViewModels
             }
         }
 
-        private async Task LogarPessoa()
+        [RelayCommand]
+        private async Task Logar()
         {
             try
             {
+                if (string.IsNullOrEmpty(Documento) || string.IsNullOrEmpty(Senha_hash))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos.", "OK");
+                    return;
+                }
+
                 var login = new PessoaLogin
                 {
                     documento = Documento,
@@ -341,6 +331,11 @@ namespace SMR_App.ViewModels
                 {
                     // Salvar dados na Pessoa Global
                     ApiServicesSessaoPessoa.IniciarSessao(pessoaRetornada);
+
+                    int idDaEmpresa = ApiServicesSessaoPessoa.PessoaLogada.id_pessoa;
+
+                    // Salvamos na memória do celular
+                    Preferences.Default.Set("IdEmpresaLogada", idDaEmpresa);
 
                     // Mensagem
                     await Application.Current.MainPage.DisplayAlert($"Sucesso", $"Seja bem-vindo!", "OK");

@@ -13,7 +13,8 @@ namespace SMRInfraestrutura
         public DbSet<SMRDominio.ClassePessoa.Promotor> Promotor { get; set; }
         public DbSet<SMRDominio.ClassePessoa.Empresa> Empresa { get; set; }
         public DbSet<SMRDominio.ClassePessoa.ClienteImportado> ClientesImportados { get; set; }
-        public DbSet<SMRDominio.ClasseRecompensa.Recompensa> Recompensas { get; set; }      
+        public DbSet<SMRDominio.ClasseRecompensa.Recompensa> Recompensas { get; set; }
+        public DbSet<SMRDominio.ClasseBonificacao.Bonificacao> Bonificacoes { get; set; }
         public SMRDBContext(IConfiguration configuracao, DbContextOptions<SMRDBContext> options): base(options)
         {
             _configuracao = configuracao ?? throw new ArgumentNullException(nameof(configuracao));

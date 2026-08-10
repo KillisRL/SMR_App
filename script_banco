@@ -145,6 +145,86 @@ CREATE TABLE IF NOT EXISTS `solicitacao_resgate` (
   CONSTRAINT `2` FOREIGN KEY (`id_recompensa`) REFERENCES `recompensa` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+CREATE TABLE recompensa_rank (
+    id_rank INT PRIMARY KEY,
+    descrição VARCHAR(50) NOT NULL
+);
+
+INSERT INTO recompensa_rank (id_rank, descrição) VALUES 
+(1, 'Bronze'),
+(2, 'Prata'),
+(3, 'Ouro');
+
+
+CREATE TABLE IF NOT EXISTS `bonificacao` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_empresa` INT(11) NOT NULL,
+    `nome` VARCHAR(150) NOT NULL,
+    `descricao` TEXT NULL,
+    `valor` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    `tipo` VARCHAR(50) NOT NULL,
+    `mgm` TINYINT(1) NOT NULL DEFAULT 0,
+    `ativo` TINYINT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id`),
+    KEY `idx_bonificacao_empresa` (`id_empresa`),
+    CONSTRAINT `fk_bonificacao_empresa` 
+        FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 1. Adiciona a coluna id_rank na tabela recompensa
+ALTER TABLE `recompensa` 
+ADD COLUMN `id_rank` INT(11) NULL DEFAULT NULL AFTER `id_empresa`;
+
+-- 2. Adiciona o Índice e a Chave Estrangeira (FK) apontando para a tabela de rank
+-- (Ajuste 'recompensa_rank' e 'id' abaixo caso o nome da sua tabela/PK de rank seja diferente)
+ALTER TABLE `recompensa`
+ADD KEY `idx_recompensa_rank` (`id_rank`),
+ADD CONSTRAINT `fk_recompensa_rank` 
+FOREIGN KEY (`id_rank`) REFERENCES `recompensa_rank` (`id_rank`) 
+ON DELETE SET NULL 
+ON UPDATE CASCADE;
+
+
+CREATE TABLE IF NOT EXISTS `bonificacao` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_empresa` INT(11) NOT NULL,
+    `nome` VARCHAR(150) NOT NULL,
+    `descricao` TEXT NULL,
+    `valor` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    `tipo` VARCHAR(50) NOT NULL,
+    `mgm` TINYINT(1) NOT NULL DEFAULT 0,
+    `ativo` TINYINT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id`),
+    KEY `idx_bonificacao_empresa` (`id_empresa`),
+    CONSTRAINT `fk_bonificacao_empresa` 
+        FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE indicacao_situacao (
+    id_situacao INT PRIMARY KEY,
+    descricao VARCHAR(50) NOT NULL
+);
+
+
+INSERT INTO indicacao_situacao (id_situacao, descricao) VALUES 
+(1, 'Aberto'),
+(2, 'Finalizado'),
+(3, 'Excluído');
+
+-- 1. Adiciona a coluna na tabela indicacao
+ALTER TABLE indicacao 
+ADD COLUMN id_bonificacao INT;
+
+-- 2. Cria a restrição de chave estrangeira (FK) apontando para a tabela bonificacao
+ALTER TABLE indicacao 
+ADD CONSTRAINT fk_indicacao_bonificacao 
+FOREIGN KEY (id_bonificacao) REFERENCES bonificacao(id);
+
 -- Exportação de dados foi desmarcado.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

@@ -19,6 +19,16 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        [HttpGet ("consultar-empresa")]
+        [Authorize]
+        public async Task ConsultarEmpresa([FromQuery] string? nomeEmpresa)
+        {
+            try 
+            {
+                var listaEmpresas = await 
+            }
+        }
+
         #region cadastrar
         [HttpPost("cadastrar")]
         [AllowAnonymous]

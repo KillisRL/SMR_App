@@ -62,32 +62,67 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- Campo: Status (Ativo / Inativo) -->
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="STATUS DA RECOMPENSA" 
-                           FontSize="14" 
-                           FontAttributes="Bold" 
-                           TextColor="{StaticResource TextoPrincipal}" />
+                <!-- LINHA LADO A LADO: Rank e Status da Recompensa -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
 
-                    <Border BackgroundColor="{StaticResource FundoMenu}" 
-                            StrokeShape="RoundRectangle 8" 
-                            StrokeThickness="0" 
-                            Padding="15,10">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <Label Grid.Column="0" 
-                                   Text="Recompensa Ativa?" 
-                                   TextColor="{StaticResource TextoPrincipal}" 
-                                   FontSize="16" 
-                                   VerticalOptions="Center" />
+                    <!-- COLUNA 0: Rank da Recompensa -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="QUAL O RANK? *" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextoPrincipal}" />
 
-                            <Switch Grid.Column="1" 
-                                    IsToggled="{Binding Ativo}" 
-                                    OnColor="#D4AF37" 
-                                    ThumbColor="White" 
+                        <Border BackgroundColor="{StaticResource FundoMenu}" 
+                                StrokeShape="RoundRectangle 8" 
+                                StrokeThickness="0" 
+                                HeightRequest="50" 
+                                Padding="10,0">
+                            <Picker ItemsSource="{Binding Ranks}"
+                                    SelectedItem="{Binding RankSelecionado}"
+                                    TitleColor="Gray"
+                                    TextColor="{StaticResource TextoPrincipal}"
                                     VerticalOptions="Center" />
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- COLUNA 1: Status (Ativo / Inativo) -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="STATUS" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextoPrincipal}" />
+
+                        <Border BackgroundColor="{StaticResource FundoMenu}" 
+                                StrokeShape="RoundRectangle 8" 
+                                StrokeThickness="0" 
+                                HeightRequest="50"
+                                Padding="12,0">
+                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                
+    
+
+
+                                <Switch Grid.Column="2" 
+                                        IsToggled="{Binding Ativo}" 
+                                        OnColor="#D4AF37" 
+                                        Margin="0,0,0,0"
+                                        ThumbColor="White" 
+                                        VerticalOptions="Start" />
+
+                                <Label Grid.Column="3"
+                                       HorizontalTextAlignment="End"
+                                       VerticalTextAlignment="Center"
+                                       Margin="0,10,30,0"
+                                       Text="Ativo"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource TextoPrincipal}" 
+                                       FontSize="14" 
+                                       VerticalOptions="Start" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                </Grid>
 
                 <!-- Campo: Descrição -->
                 <VerticalStackLayout Spacing="5">
@@ -111,7 +146,7 @@
 
             </VerticalStackLayout>
 
-            <!-- LINHA 1: Botões Inferiores (Cancelar e Cadastrar) -->
+            <!-- LINHA 1: Botões Inferiores (Voltar e Salvar) -->
             <Grid Grid.Row="1" ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
                 <Button Grid.Column="0" 
                         Text="VOLTAR" 
@@ -124,7 +159,7 @@
 
                 <Button Grid.Column="1" 
                         Text="SALVAR" 
-                        Command="{Binding CadastrarRecompensaCommand}" 
+                        Command="{Binding CadastrarOuAlterarRecompensaCommand}" 
                         BackgroundColor="#D4AF37" 
                         TextColor="Black" 
                         FontAttributes="Bold" 

@@ -2,8 +2,8 @@
 {
     public enum TipoBonificacao
     {
-        DescontoFixo,
-        Percentual,
-        Brinde
+        DescontoFixo = 1,
+        Percentual = 2,
+        Brinde = 3
     }
 }

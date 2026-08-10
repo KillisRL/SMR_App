@@ -2,51 +2,140 @@
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using SMRDominio.ClasseBonificacao;
-using SMR_App.Services; // Assumindo que ApiServicesSessaoPessoa está aqui
+using SMR_App.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SMR_App.Views; // Assumindo que ApiServicesSessaoPessoa está aqui
 
 namespace SMR_App.ViewModels
 {
-    public class BonificacoesViewModel : BaseViewModel
+    public partial class BonificacoesViewModel : BaseViewModel
     {
-        // Lista observável que a interface vai "escutar"
-        public ObservableCollection<Bonificacao> ListaBonificacoes { get; set; }
+        private readonly ApiServicesBonificacao _apiServicesBonificacao;
 
-        public string NomeUsuario { get; set; }
+        [ObservableProperty] private ObservableCollection<Bonificacao> listaBonificacao = new();
 
-        public ICommand CadastrarCommand { get; }
-        public ICommand AlterarCommand { get; }
+        public List<string> OpcoesStatus { get; } = new List<string> { "Todos", "Ativos", "Inativos" };
+        [ObservableProperty] private string? statusSelecionado = "Todos";
 
-        public BonificacoesViewModel()
+        [ObservableProperty] private string? nome;
+        [ObservableProperty] private bool? ativo;
+
+        public BonificacoesViewModel(ApiServicesBonificacao apiServicesBonificacao)
         {
-            // Pegando o nome do usuário logado (Ajuste conforme a sua classe real)
-            NomeUsuario = "Ueler Bernardo"; // Substitua por: ApiServicesSessaoPessoa.PessoaLogada.Nome;
-
-            ListaBonificacoes = new ObservableCollection<Bonificacao>();
-
-            CadastrarCommand = new Command(ExecuteCadastrar);
-            AlterarCommand = new Command(ExecuteAlterar);
-
-            CarregarDados();
+            _apiServicesBonificacao = apiServicesBonificacao;
         }
 
-        private void CarregarDados()
+        [RelayCommand]
+        public async Task ExcluirBonificacao(Bonificacao bonificacao)
         {
-            // Aqui futuramente você fará o GET na sua API REST.
-            // Por enquanto, dados mockados para testar o visual igual ao da imagem:
-            ListaBonificacoes.Add(new Bonificacao { Id = 1, Nome = "DESCONTO DE 5 REAIS", IsMgm = true, IsAtivo = false });
-            ListaBonificacoes.Add(new Bonificacao { Id = 2, Nome = "PRODUTO BRINDE", IsMgm = false, IsAtivo = true });
+            try
+            {
+                bool confirmacao = await Application.Current.MainPage.DisplayAlert("Anteção", "Deseja realmente excluir o registro selecionado", "Sim", "Não");
+
+                if(!confirmacao)
+                {
+                    return;
+                }
+
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                int codigoBonificacao = bonificacao.Id;
+
+                var resultado = await _apiServicesBonificacao.DeletarBonificacaoService(codigoBonificacao, token);
+                
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    ConsultarBonificacao();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", resultado.Mensagem, "Ok");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível excluir a bonificação. Erro: {ex.Message}", "OK");
+            }
         }
 
-        private async void ExecuteCadastrar()
+        [RelayCommand]
+        public async Task AbrirCadastro()
         {
-            // Lógica para ir para a tela de cadastro
-            await Shell.Current.DisplayAlert("Ação", "Navegar para tela de Cadastro", "OK");
+            await Shell.Current.GoToAsync(nameof(CadBonificacoesView));
+        }
+        partial void OnStatusSelecionadoChanged(string? value)
+        {
+            _ = ConsultarBonificacao();
+        }
+        [RelayCommand]
+        public async Task AbrirAlteracao(Bonificacao bonificacaoSelecionada)
+        {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja alterar o registro selecionado?", "Sim", "Não");
+
+            if(!confirmar)
+            {
+                return;
+            }
+
+
+            var parametro = new Dictionary<string, object>
+            {
+                {"BonificacaoParaAlterar",  bonificacaoSelecionada}
+            };
+            await Shell.Current.GoToAsync(nameof(CadBonificacoesView), parametro);
         }
 
-        private async void ExecuteAlterar()
+        [RelayCommand]
+        public async Task ConsultarBonificacao()
         {
-            // Lógica para alterar (depende de como você quer selecionar o item)
-            await Shell.Current.DisplayAlert("Ação", "Selecione um item para alterar", "OK");
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                // Mapeia o filtro de Status antes da chamada
+                if (StatusSelecionado == "Ativos")
+                    Ativo = true;
+                else if (StatusSelecionado == "Inativos")
+                    Ativo = false;
+                else
+                    Ativo = null;
+
+                var resultado = await _apiServicesBonificacao.ConsultarBonificacao(token, Nome, Ativo);
+
+                if (resultado.Sucesso)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        ListaBonificacao.Clear();
+
+                        if (resultado.Dados != null)
+                        {
+                            foreach (var item in resultado.Dados)
+                            {
+                                ListaBonificacao.Add(item);
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(resultado.Mensagem) && resultado.Mensagem.Contains("Não foi encontrado"))
+                    {
+                        MainThread.BeginInvokeOnMainThread(() => ListaBonificacao.Clear());
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível carregar as bonificações. Erro: {ex.Message}", "OK");
+            }
         }
     }
 }
