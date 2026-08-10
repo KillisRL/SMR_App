@@ -1,234 +1,348 @@
--- --------------------------------------------------------
--- Servidor:                     127.0.0.1
--- Versão do servidor:           12.2.2-MariaDB - MariaDB Server
--- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.16.0.7229
--- --------------------------------------------------------
+-- ============================================================
+-- SCRIPT CONSOLIDADO DO BANCO
+-- ============================================================
+-- Ordem organizada conforme dependências das Foreign Keys.
+--
+-- Estrutura:
+--   pessoa_tipo
+--      └── pessoa
+--           ├── empresa
+--           └── promotor
+--                └── indicacao
+--                     └── bonificacao
+--
+--   empresa
+--      ├── recompensa
+--      │    └── recompensa_rank
+--      └── bonificacao
+--
+-- ============================================================
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Copiando estrutura para tabela dbsmr.cliente_importado
-CREATE TABLE IF NOT EXISTS `cliente_importado` (
-  `id_cliente_importado` int(11) NOT NULL AUTO_INCREMENT,
-  `id_empresa` int(11) NOT NULL,
-  `nome` varchar(150) NOT NULL,
-  `documento` varchar(20) NOT NULL,
-  `data_importacao` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id_cliente_importado`),
-  KEY `idx_valida_mgm` (`id_empresa`,`documento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+-- ============================================================
+-- 1. TIPOS DE PESSOA
+-- ============================================================
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela dbsmr.empresa
-CREATE TABLE IF NOT EXISTS `empresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `razao_social` varchar(150) DEFAULT NULL,
-  `cnpj` varchar(18) NOT NULL,
-  `cor_padrao` varchar(7) DEFAULT '#00A0FF',
-  `telefone1` varchar(50) DEFAULT NULL,
-  `telefone2` varchar(50) DEFAULT NULL,
-  `id_pessoa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cnpj` (`cnpj`),
-  KEY `id_pessoa` (`id_pessoa`),
-  CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela dbsmr.indicacao
-CREATE TABLE IF NOT EXISTS `indicacao` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_promotor_indicou` int(11) NOT NULL,
-  `nome_indicado` varchar(100) NOT NULL,
-  `telefone_indicado` varchar(20) NOT NULL,
-  `status_indicacao` enum('Pendente','Validada','Cancelada') DEFAULT 'Pendente',
-  `data_indicacao` datetime DEFAULT current_timestamp(),
-  `data_validacao` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_promotor_indicou` (`id_promotor_indicou`),
-  CONSTRAINT `1` FOREIGN KEY (`id_promotor_indicou`) REFERENCES `promotor` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela dbsmr.pessoa
-CREATE TABLE IF NOT EXISTS `pessoa` (
-  `id_pessoa` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pessoa_tipo` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `senha_hash` varchar(255) NOT NULL,
-  `data_cadastro` datetime DEFAULT current_timestamp(),
-  `ativo` tinyint(1) DEFAULT 1,
-  `nome` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`id_pessoa`) USING BTREE,
-  UNIQUE KEY `email` (`email`),
-  KEY `id_pessoa_tipo` (`id_pessoa_tipo`),
-  CONSTRAINT `1` FOREIGN KEY (`id_pessoa_tipo`) REFERENCES `pessoa_tipo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela dbsmr.pessoa_tipo
 CREATE TABLE IF NOT EXISTS `pessoa_tipo` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    `id` INT(11) NOT NULL,
+    `descricao` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
 
--- Exportação de dados foi desmarcado.
 
--- Copiando estrutura para tabela dbsmr.promotor
+-- ============================================================
+-- 2. PESSOA
+-- Depende de: pessoa_tipo
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `pessoa` (
+    `id_pessoa` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_pessoa_tipo` INT(11) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `senha_hash` VARCHAR(255) NOT NULL,
+    `data_cadastro` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `ativo` TINYINT(1) DEFAULT 1,
+    `nome` VARCHAR(150) DEFAULT NULL,
+
+    PRIMARY KEY (`id_pessoa`),
+    UNIQUE KEY `uk_pessoa_email` (`email`),
+    KEY `idx_pessoa_tipo` (`id_pessoa_tipo`),
+
+    CONSTRAINT `fk_pessoa_tipo`
+        FOREIGN KEY (`id_pessoa_tipo`)
+        REFERENCES `pessoa_tipo` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 3. EMPRESA
+-- Depende de: pessoa
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `empresa` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `razao_social` VARCHAR(150) DEFAULT NULL,
+    `cnpj` VARCHAR(18) NOT NULL,
+    `cor_padrao` VARCHAR(7) DEFAULT '#00A0FF',
+    `telefone1` VARCHAR(50) DEFAULT NULL,
+    `telefone2` VARCHAR(50) DEFAULT NULL,
+    `id_pessoa` INT(11) DEFAULT NULL,
+
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_empresa_cnpj` (`cnpj`),
+    KEY `idx_empresa_pessoa` (`id_pessoa`),
+
+    CONSTRAINT `fk_empresa_pessoa`
+        FOREIGN KEY (`id_pessoa`)
+        REFERENCES `pessoa` (`id_pessoa`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 4. PROMOTOR
+-- Depende de: pessoa
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS `promotor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pessoa` int(11) NOT NULL,
-  `cpf` varchar(14) DEFAULT NULL,
-  `pontos_acumulados` int(11) DEFAULT 0,
-  `celular` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cpf` (`cpf`),
-  KEY `id_pessoa` (`id_pessoa`),
-  CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_pessoa` INT(11) NOT NULL,
+    `cpf` VARCHAR(14) DEFAULT NULL,
+    `pontos_acumulados` INT(11) DEFAULT 0,
+    `celular` VARCHAR(50) DEFAULT NULL,
 
--- Exportação de dados foi desmarcado.
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_promotor_cpf` (`cpf`),
+    KEY `idx_promotor_pessoa` (`id_pessoa`),
 
--- Copiando estrutura para tabela dbsmr.recompensa
+    CONSTRAINT `fk_promotor_pessoa`
+        FOREIGN KEY (`id_pessoa`)
+        REFERENCES `pessoa` (`id_pessoa`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 5. RANK DE RECOMPENSAS
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `recompensa_rank` (
+    `id_rank` INT(11) NOT NULL,
+    `descricao` VARCHAR(50) NOT NULL,
+
+    PRIMARY KEY (`id_rank`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 6. DADOS INICIAIS DO RANK
+-- ============================================================
+
+INSERT INTO `recompensa_rank` (`id_rank`, `descricao`)
+VALUES
+    (1, 'Bronze'),
+    (2, 'Prata'),
+    (3, 'Ouro');
+
+
+-- ============================================================
+-- 7. RECOMPENSA
+-- Depende de: empresa e recompensa_rank
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS `recompensa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_empresa` int(11) NOT NULL,
-  `titulo` varchar(100) NOT NULL,
-  `descricao` varchar(255) DEFAULT NULL,
-  `pontos_necessarios` int(11) NOT NULL,
-  `ativo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `id_empresa` (`id_empresa`),
-  CONSTRAINT `1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_empresa` INT(11) NOT NULL,
+    `id_rank` INT(11) DEFAULT NULL,
+    `titulo` VARCHAR(100) NOT NULL,
+    `descricao` VARCHAR(255) DEFAULT NULL,
+    `pontos_necessarios` INT(11) NOT NULL,
+    `ativo` TINYINT(1) DEFAULT 1,
 
--- Exportação de dados foi desmarcado.
+    PRIMARY KEY (`id`),
+    KEY `idx_recompensa_empresa` (`id_empresa`),
+    KEY `idx_recompensa_rank` (`id_rank`),
 
--- Copiando estrutura para tabela dbsmr.recuperacao_senha
-CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
-  `id_recuperacao` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(150) NOT NULL,
-  `codigo` varchar(6) NOT NULL,
-  `data_geracao` datetime DEFAULT current_timestamp(),
-  `data_expiracao` datetime NOT NULL,
-  `utilizado` tinyint(1) DEFAULT 0,
-  PRIMARY KEY (`id_recuperacao`),
-  KEY `idx_valida_codigo` (`email`,`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    CONSTRAINT `fk_recompensa_empresa`
+        FOREIGN KEY (`id_empresa`)
+        REFERENCES `empresa` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
--- Exportação de dados foi desmarcado.
+    CONSTRAINT `fk_recompensa_rank`
+        FOREIGN KEY (`id_rank`)
+        REFERENCES `recompensa_rank` (`id_rank`)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
 
--- Copiando estrutura para tabela dbsmr.solicitacao_resgate
+
+-- ============================================================
+-- 8. BONIFICAÇÃO
+-- Depende de: empresa
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `bonificacao` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_empresa` INT(11) NOT NULL,
+    `nome` VARCHAR(150) NOT NULL,
+    `descricao` TEXT DEFAULT NULL,
+    `valor` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `tipo` VARCHAR(50) NOT NULL,
+    `mgm` TINYINT(1) NOT NULL DEFAULT 0,
+    `ativo` TINYINT(1) NOT NULL DEFAULT 1,
+
+    PRIMARY KEY (`id`),
+    KEY `idx_bonificacao_empresa` (`id_empresa`),
+
+    CONSTRAINT `fk_bonificacao_empresa`
+        FOREIGN KEY (`id_empresa`)
+        REFERENCES `empresa` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 9. SITUAÇÃO DA INDICAÇÃO
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `indicacao_situacao` (
+    `id_situacao` INT(11) NOT NULL,
+    `descricao` VARCHAR(50) NOT NULL,
+
+    PRIMARY KEY (`id_situacao`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 10. DADOS INICIAIS DA SITUAÇÃO DA INDICAÇÃO
+-- ============================================================
+
+INSERT INTO `indicacao_situacao` (`id_situacao`, `descricao`)
+VALUES
+    (1, 'Aberto'),
+    (2, 'Finalizado'),
+    (3, 'Excluído');
+
+
+-- ============================================================
+-- 11. INDICAÇÃO
+-- Depende de: promotor e bonificacao
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `indicacao` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_promotor_indicou` INT(11) NOT NULL,
+    `id_bonificacao` INT(11) DEFAULT NULL,
+    `nome_indicado` VARCHAR(100) NOT NULL,
+    `telefone_indicado` VARCHAR(20) NOT NULL,
+    `status_indicacao` ENUM(
+        'Pendente',
+        'Validada',
+        'Cancelada'
+    ) DEFAULT 'Pendente',
+    `data_indicacao` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `data_validacao` DATETIME DEFAULT NULL,
+
+    PRIMARY KEY (`id`),
+    KEY `idx_indicacao_promotor` (`id_promotor_indicou`),
+    KEY `idx_indicacao_bonificacao` (`id_bonificacao`),
+
+    CONSTRAINT `fk_indicacao_promotor`
+        FOREIGN KEY (`id_promotor_indicou`)
+        REFERENCES `promotor` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_indicacao_bonificacao`
+        FOREIGN KEY (`id_bonificacao`)
+        REFERENCES `bonificacao` (`id`)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 12. SOLICITAÇÃO DE RESGATE
+-- Depende de: promotor e recompensa
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS `solicitacao_resgate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_promotor` int(11) NOT NULL,
-  `id_recompensa` int(11) NOT NULL,
-  `data_solicitacao` datetime DEFAULT current_timestamp(),
-  `status_solicitacao` enum('Solicitada','Validada','Cancelada') DEFAULT 'Solicitada',
-  `data_validacao` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_promotor` (`id_promotor`),
-  KEY `id_recompensa` (`id_recompensa`),
-  CONSTRAINT `1` FOREIGN KEY (`id_promotor`) REFERENCES `promotor` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `2` FOREIGN KEY (`id_recompensa`) REFERENCES `recompensa` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
-CREATE TABLE recompensa_rank (
-    id_rank INT PRIMARY KEY,
-    descrição VARCHAR(50) NOT NULL
-);
-
-INSERT INTO recompensa_rank (id_rank, descrição) VALUES 
-(1, 'Bronze'),
-(2, 'Prata'),
-(3, 'Ouro');
-
-
-CREATE TABLE IF NOT EXISTS `bonificacao` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_promotor` INT(11) NOT NULL,
+    `id_recompensa` INT(11) NOT NULL,
+    `data_solicitacao` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `status_solicitacao` ENUM(
+        'Solicitada',
+        'Validada',
+        'Cancelada'
+    ) DEFAULT 'Solicitada',
+    `data_validacao` DATETIME DEFAULT NULL,
+
+    PRIMARY KEY (`id`),
+    KEY `idx_resgate_promotor` (`id_promotor`),
+    KEY `idx_resgate_recompensa` (`id_recompensa`),
+
+    CONSTRAINT `fk_resgate_promotor`
+        FOREIGN KEY (`id_promotor`)
+        REFERENCES `promotor` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_resgate_recompensa`
+        FOREIGN KEY (`id_recompensa`)
+        REFERENCES `recompensa` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- 13. CLIENTES IMPORTADOS
+-- Não possui FK no script original
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `cliente_importado` (
+    `id_cliente_importado` INT(11) NOT NULL AUTO_INCREMENT,
     `id_empresa` INT(11) NOT NULL,
     `nome` VARCHAR(150) NOT NULL,
-    `descricao` TEXT NULL,
-    `valor` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    `tipo` VARCHAR(50) NOT NULL,
-    `mgm` TINYINT(1) NOT NULL DEFAULT 0,
-    `ativo` TINYINT(1) NOT NULL DEFAULT 1,
-    PRIMARY KEY (`id`),
-    KEY `idx_bonificacao_empresa` (`id_empresa`),
-    CONSTRAINT `fk_bonificacao_empresa` 
-        FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) 
-        ON DELETE CASCADE 
-        ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `documento` VARCHAR(20) NOT NULL,
+    `data_importacao` DATETIME DEFAULT CURRENT_TIMESTAMP,
 
--- 1. Adiciona a coluna id_rank na tabela recompensa
-ALTER TABLE `recompensa` 
-ADD COLUMN `id_rank` INT(11) NULL DEFAULT NULL AFTER `id_empresa`;
-
--- 2. Adiciona o Índice e a Chave Estrangeira (FK) apontando para a tabela de rank
--- (Ajuste 'recompensa_rank' e 'id' abaixo caso o nome da sua tabela/PK de rank seja diferente)
-ALTER TABLE `recompensa`
-ADD KEY `idx_recompensa_rank` (`id_rank`),
-ADD CONSTRAINT `fk_recompensa_rank` 
-FOREIGN KEY (`id_rank`) REFERENCES `recompensa_rank` (`id_rank`) 
-ON DELETE SET NULL 
-ON UPDATE CASCADE;
+    PRIMARY KEY (`id_cliente_importado`),
+    KEY `idx_cliente_importado_empresa_documento`
+        (`id_empresa`, `documento`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `bonificacao` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `id_empresa` INT(11) NOT NULL,
-    `nome` VARCHAR(150) NOT NULL,
-    `descricao` TEXT NULL,
-    `valor` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    `tipo` VARCHAR(50) NOT NULL,
-    `mgm` TINYINT(1) NOT NULL DEFAULT 0,
-    `ativo` TINYINT(1) NOT NULL DEFAULT 1,
-    PRIMARY KEY (`id`),
-    KEY `idx_bonificacao_empresa` (`id_empresa`),
-    CONSTRAINT `fk_bonificacao_empresa` 
-        FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) 
-        ON DELETE CASCADE 
-        ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
+-- ============================================================
+-- 14. RECUPERAÇÃO DE SENHA
+-- Não possui FK no script original
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `recuperacao_senha` (
+    `id_recuperacao` INT(11) NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(150) NOT NULL,
+    `codigo` VARCHAR(6) NOT NULL,
+    `data_geracao` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `data_expiracao` DATETIME NOT NULL,
+    `utilizado` TINYINT(1) DEFAULT 0,
+
+    PRIMARY KEY (`id_recuperacao`),
+    KEY `idx_recuperacao_email_codigo`
+        (`email`, `codigo`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE indicacao_situacao (
-    id_situacao INT PRIMARY KEY,
-    descricao VARCHAR(50) NOT NULL
-);
-
-
-INSERT INTO indicacao_situacao (id_situacao, descricao) VALUES 
-(1, 'Aberto'),
-(2, 'Finalizado'),
-(3, 'Excluído');
-
--- 1. Adiciona a coluna na tabela indicacao
-ALTER TABLE indicacao 
-ADD COLUMN id_bonificacao INT;
-
--- 2. Cria a restrição de chave estrangeira (FK) apontando para a tabela bonificacao
-ALTER TABLE indicacao 
-ADD CONSTRAINT fk_indicacao_bonificacao 
-FOREIGN KEY (id_bonificacao) REFERENCES bonificacao(id);
-
--- Exportação de dados foi desmarcado.
-
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+-- ============================================================
+-- FIM DO SCRIPT
+-- ============================================================
