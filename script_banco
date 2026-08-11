@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `bonificacao` (
     `nome` VARCHAR(150) NOT NULL,
     `descricao` TEXT DEFAULT NULL,
     `valor` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    `tipo` VARCHAR(50) NOT NULL,
+    `tipo` INT NOT NULL,
     `mgm` TINYINT(1) NOT NULL DEFAULT 0,
     `ativo` TINYINT(1) NOT NULL DEFAULT 1,
 
