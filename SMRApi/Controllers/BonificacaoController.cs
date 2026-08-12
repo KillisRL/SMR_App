@@ -107,28 +107,23 @@ namespace SMRApi.Controllers
                 var empresa = await _dbContext.Empresa.FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
 
                 int idEmpresaFinal = empresa != null ? empresa.id : idPessoaLogada;
-                var query = _dbContext.Bonificacoes.AsNoTracking().Where(b => b.Id_Empresa == idEmpresaFinal);
-
-                if (!string.IsNullOrWhiteSpace(nome))
-                {
-                    query = query.Where(b => b.Nome != null && b.Nome.Contains(nome));
-                }
-
-                if (ativo.HasValue)
-                {
-                    query = query.Where(b => b.Ativo == ativo.Value);
-                }
-                var listaBonificacao = await query.Select(bonificacao => new
-                {
-                    Id = bonificacao.Id,
-                    Id_empresa = bonificacao.Id_Empresa,
-                    Nome = bonificacao.Nome,
-                    Descricao = bonificacao.Descricao,
-                    Valor = bonificacao.Valor,
-                    Tipo = bonificacao.Tipo,
-                    Mgm = bonificacao.Mgm,   
-                    Ativo = bonificacao.Ativo 
-                }).ToListAsync();
+               
+                var listaBonificacao = await (
+                    from bonificacao in _dbContext.Bonificacoes
+                    where (bonificacao.Id_Empresa == idEmpresaFinal) &&
+                    (!ativo.HasValue || bonificacao.Ativo == ativo) &&
+                    (string.IsNullOrEmpty(nome) || bonificacao.Nome.Contains(nome))
+                    select new
+                    {
+                        Id = bonificacao.Id,
+                        Id_empresa = bonificacao.Id_Empresa,
+                        Nome = bonificacao.Nome,
+                        Descricao = bonificacao.Descricao,
+                        Valor = bonificacao.Valor,
+                        Tipo = bonificacao.Tipo,
+                        Mgm = bonificacao.Mgm,
+                        Ativo = bonificacao.Ativo
+                    }).ToListAsync();
 
                 return Ok(listaBonificacao);
             }
@@ -180,6 +175,41 @@ namespace SMRApi.Controllers
             {
                 var detalhe = ex.InnerException?.Message ?? ex.Message;
                 return StatusCode(500, new { Mensagem = "Erro ao cadastrar bonificação.", Erro = detalhe });
+            }
+        }
+
+        [HttpGet("consultar-indicacao{id}")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarBonificacaoIndicacao(int codigoEmpresa)
+        {
+            try
+            {
+                if(codigoEmpresa <= 0 )
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para consulta" });
+                }
+
+                var listaBonificacaoEmpresa = await (
+                    from bonificacao in _dbContext.Bonificacoes
+                    where (bonificacao.Id_Empresa == codigoEmpresa)
+                    select new
+                    {
+                        Id = bonificacao.Id,
+                        Id_Empresa = bonificacao.Id_Empresa,
+                        Nome = bonificacao.Nome,
+                        Descricao = bonificacao.Descricao,
+                        Valor = bonificacao.Valor,
+                        Tipo = bonificacao.Tipo,
+                        Mgm = bonificacao.Mgm,
+                        Ativo = bonificacao.Ativo
+                    }).ToListAsync();
+
+                return Ok(listaBonificacaoEmpresa);
+            }
+            catch(Exception ex)
+            {
+                var detalhe = ex.InnerException?.Message ?? ex.Message;
+                return StatusCode(500, new { Mensagem = "Erro ao consultar bonificação.", Erro = detalhe });
             }
         }
     }

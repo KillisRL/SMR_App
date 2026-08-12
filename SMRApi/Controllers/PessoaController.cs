@@ -18,14 +18,35 @@ namespace SMRApi.Controllers
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
+        
         [HttpGet ("consultar-empresa")]
         [Authorize]
-        public async Task ConsultarEmpresa([FromQuery] string? nomeEmpresa)
+        public async Task<IActionResult> ConsultarEmpresa([FromQuery] string? razaoSocial)
         {
             try 
             {
-                var listaEmpresas = await 
+                var listaEmpresas = await (
+                    from empresa in _dbContext.Empresa
+                    where (string.IsNullOrEmpty(razaoSocial) || empresa.razao_social.Contains(razaoSocial))
+
+                    select new
+                    {
+                        id = empresa.id,
+                        razao_social = empresa.razao_social,
+                        cnpj = empresa.cnpj,
+
+                    }).ToListAsync();
+
+                if(listaEmpresas.Count <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Nenhuma empresa encontrada" });
+                }
+
+                return Ok(listaEmpresas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao consultar empresas.", Erro = ex.Message });
             }
         }
 

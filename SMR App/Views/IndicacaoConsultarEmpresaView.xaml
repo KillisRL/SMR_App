@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             x:Class="SMR_App.Views.IndicacaoConsultarEmpresaView"
+             x:DataType="viewmodels:IndicacaoConsultarEmpresaViewModel"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <!-- Grid principal divide a tela: Pesquisa (Auto), Lista/Cards (*), Botão Rodapé (Auto) -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <!-- ========================================== -->
+        <!-- LINHA 0: Barra de Pesquisa                 -->
+        <!-- ========================================== -->
+        <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
+            <Label Text="Pesquisa" 
+                   FontAttributes="Bold" 
+                   FontSize="16" 
+                   TextColor="{StaticResource TextoPrincipal}" />
+
+            <Border BackgroundColor="{StaticResource FundoMenu}" 
+                    StrokeShape="RoundRectangle 25" 
+                    StrokeThickness="0" 
+                    HeightRequest="50" 
+                    Padding="10,0">
+                <SearchBar x:Name="SearchBarPesquisa"
+                           Text="{Binding RazaoSocial}"
+                           Placeholder="Digite para buscar..." 
+                           PlaceholderColor="Gray"
+                           TextColor="{StaticResource TextoPrincipal}"
+                           BackgroundColor="Transparent" 
+                           CancelButtonColor="{StaticResource TextoPrincipal}"
+                           SearchCommand="{Binding ConsultarEmpresaCommand}" />
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ========================================== -->
+        <!-- LINHA 1: Lista de Empresas (Grid 2 Colunas)-->
+        <!-- ========================================== -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaEmpresa}" 
+                        SelectionMode="None">
+
+            <CollectionView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding AbrirCadastroCommand}" CommandParameter="{Binding .}"/>
+            </CollectionView.GestureRecognizers>
+            <!-- Define o layout em Grid com 2 colunas -->
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 Span="2" 
+                                 HorizontalItemSpacing="15" 
+                                 VerticalItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
+                    <Label Text="Nenhuma empresa encontrada." 
+                           TextColor="Gray" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Card da Empresa -->
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                StrokeShape="RoundRectangle 15" 
+                StrokeThickness="0" 
+                MinimumHeightRequest="110" 
+                Padding="12">
+                        <!-- Container Vertical para alinhar Razão Social e CNPJ -->
+                        <VerticalStackLayout VerticalOptions="Center" 
+                                 HorizontalOptions="Center" 
+                                 Spacing="6">
+
+                            <!-- RAZÃO SOCIAL -->
+                            <Label Text="{Binding razao_social}" 
+                       FontAttributes="Bold" 
+                       FontSize="14" 
+                       TextColor="{StaticResource TextoPrincipal}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       MaxLines="2" />
+
+                            <!-- CNPJ -->
+                            <Label Text="{Binding cnpj, StringFormat='CNPJ: {0}'}" 
+                       FontSize="11" 
+                       FontAttributes="Bold"
+                       TextColor="Gray"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="NoWrap" />
+
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- ========================================== -->
+        <!-- LINHA 2: Botão de Ação no Rodapé           -->
+        <!-- ========================================== -->
+        <Grid Grid.Row="2" Margin="0,15,0,0">
+            <Button Text="RESGATAR&#10;RECOMPENSA" 
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="15" 
+                    HeightRequest="60" 
+                    WidthRequest="160"
+                    HorizontalOptions="End"
+                    Padding="10"
+                    LineBreakMode="WordWrap" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

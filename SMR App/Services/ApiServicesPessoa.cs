@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Net.Http.Headers;
+using SMRDominio.ClasseBase;
+using System.Globalization;
 
 namespace SMR_App.Services
 {
@@ -22,6 +24,42 @@ namespace SMR_App.Services
             {
                 BaseAddress =  new Uri(baseURL)
             };
+
+        }
+
+        public async Task<(bool Sucesso, List<Empresa> Dados, string Mensagem)> ConsultarEmpresa(string? token,  string? razaoSocial)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var parametro = new List<string> { $"razaoSocial={razaoSocial}" };
+
+                var url = $"pessoa/consultar-empresa?{string.Join("&", parametro)}";
+
+                var resultado = await _httpClient.GetAsync(url);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if(resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<Empresa>>(options);
+
+                    return (true, dados, string.Empty);
+                }
+                else
+                {
+
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    string mensagemErro = retorno.Mensagem;
+                    return (false, null, mensagemErro);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
+                return (false,null, "Servidor indisponível no momento.");
+            }
 
         }
         public async Task<(bool Sucesso, string Mensagem)> CadastrarPessoaService(CadastroPessoaDTO dto)

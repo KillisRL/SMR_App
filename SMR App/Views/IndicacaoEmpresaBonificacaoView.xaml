@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             x:Class="SMR_App.Views.IndicacaoEmpresaBonificacaoView"
+             x:DataType="viewmodels:IndicacaoEmpresaBonificacaoViewModel"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <!-- Estrutura Principal: Cabeçalho com Nome da Empresa (Auto) e Lista de Bonificações (*) -->
+    <Grid RowDefinitions="Auto, *" Padding="20">
+
+        <!-- ========================================== -->
+        <!-- LINHA 0: Nome da Empresa em Destaque Superior -->
+        <!-- ========================================== -->
+        <VerticalStackLayout Grid.Row="0" Spacing="6" Margin="0,10,0,25" HorizontalOptions="Center">
+
+            <Label Text="BONIFICAÇÕES DISPONÍVEIS" 
+                   FontSize="13" 
+                   FontAttributes="Bold" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" 
+                   CharacterSpacing="1" />
+
+            <!-- Nome da Empresa Grande e Centralizado -->
+            <Label Text="{Binding EmpresaIndicacao.razao_social}" 
+                   FontSize="26" 
+                   FontAttributes="Bold" 
+                   TextColor="#D4AF37" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center" 
+                   LineBreakMode="WordWrap" />
+
+            <Border BackgroundColor="#D4AF37" 
+                    HeightRequest="2" 
+                    WidthRequest="60" 
+                    Margin="0,5,0,0" 
+                    HorizontalOptions="Center" 
+                    StrokeThickness="0" />
+        </VerticalStackLayout>
+
+        <!-- ========================================== -->
+        <!-- LINHA 1: Lista de Bonificações             -->
+        <!-- ========================================== -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaBonificacao}" 
+                        SelectionMode="Single">
+
+            <!-- Estado Vazio (Nenhuma Bonificação Encontrada) -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,40,0,0">
+                    <Label Text="Nenhuma bonificação cadastrada para esta empresa." 
+                           TextColor="Gray" 
+                           FontSize="15" 
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <!-- Card de Bonificação -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 12" 
+                            StrokeThickness="0" 
+                            Margin="0,0,0,15" 
+                            Padding="15">
+
+                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+
+                            <!-- ID/Número em Dourado -->
+                            <Label Grid.Column="0" 
+                                   Text="{Binding Id}" 
+                                   FontSize="32" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#D4AF37" 
+                                   VerticalOptions="Center" />
+
+                            <!-- Conteúdo do Card -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="6">
+
+                                <!-- Nome da Bonificação -->
+                                <Label Text="{Binding Nome}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="{StaticResource TextoPrincipal}" 
+                                       LineBreakMode="WordWrap" />
+
+                                <!-- Descrição (se houver) -->
+                                <Label Text="{Binding Descricao}" 
+                                       FontSize="13" 
+                                       TextColor="Gray" 
+                                       LineBreakMode="WordWrap" 
+                                       IsVisible="{Binding Descricao}" />
+
+                                <!-- Detalhes: Tipo e Valor -->
+                                <HorizontalStackLayout Spacing="20" Margin="0,4,0,0">
+
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="Tipo:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
+                                        <Label Text="{Binding Tipo}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="Valor:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
+                                        <Label Text="{Binding Valor, StringFormat='R$ {0:N2}'}" FontSize="12" FontAttributes="Bold" TextColor="#D4AF37" />
+                                    </HorizontalStackLayout>
+
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

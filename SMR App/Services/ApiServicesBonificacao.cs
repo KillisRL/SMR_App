@@ -177,8 +177,39 @@ namespace SMR_App.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao consultar bonificação: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor.", new List<Bonificacao>());
+                return (false, "Falha de comunicação com o servidor.", null);
             }
         }
+
+        public async Task<(bool Sucesso, List<Bonificacao> Dados, string Mensagem)> ConsultarBonificacaoIndicacao(string token, int codigoEmpresa)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resultado = await _httpClient.GetAsync($"bonificacao/casultar-indicacao{codigoEmpresa}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<Bonificacao>>(options);
+
+                    return (true, dados ?? new List<Bonificacao>(), string.Empty);
+                }
+                else
+                {
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    string mensagem = retorno.Mensagem;
+                    return (false, null, mensagem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar bonificação: {ex.Message}");
+                return (false, null, "Falha de comunicação com o servidor");
+            }
+        }
+
     }
 }
