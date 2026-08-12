@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             xmlns:classesBonificacao="clr-namespace:SMRDominio.ClasseBonificacao;assembly=SMRDominio"
              x:Class="SMR_App.Views.IndicacaoEmpresaBonificacaoView"
              x:DataType="viewmodels:IndicacaoEmpresaBonificacaoViewModel"
              ControlTemplate="{StaticResource MainPageTemplate}"
@@ -61,7 +62,7 @@
 
             <!-- Card de Bonificação -->
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="classesBonificacao:Bonificacao">
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
                             StrokeShape="RoundRectangle 12" 
                             StrokeThickness="0" 
@@ -76,7 +77,13 @@
                                    FontSize="32" 
                                    FontAttributes="Bold" 
                                    TextColor="#D4AF37" 
-                                   VerticalOptions="Center" />
+                                   VerticalOptions="Center">
+
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+
+                            </Label>
 
                             <!-- Conteúdo do Card -->
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="6">
@@ -86,26 +93,42 @@
                                        FontSize="16" 
                                        FontAttributes="Bold" 
                                        TextColor="{StaticResource TextoPrincipal}" 
-                                       LineBreakMode="WordWrap" />
+                                       LineBreakMode="WordWrap">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
                                 <!-- Descrição (se houver) -->
                                 <Label Text="{Binding Descricao}" 
                                        FontSize="13" 
                                        TextColor="Gray" 
                                        LineBreakMode="WordWrap" 
-                                       IsVisible="{Binding Descricao}" />
+                                       IsVisible="{Binding Descricao}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
                                 <!-- Detalhes: Tipo e Valor -->
                                 <HorizontalStackLayout Spacing="20" Margin="0,4,0,0">
 
                                     <HorizontalStackLayout Spacing="4">
                                         <Label Text="Tipo:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
-                                        <Label Text="{Binding Tipo}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                                        <Label Text="{Binding Tipo}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </HorizontalStackLayout>
 
                                     <HorizontalStackLayout Spacing="4">
                                         <Label Text="Valor:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
-                                        <Label Text="{Binding Valor, StringFormat='R$ {0:N2}'}" FontSize="12" FontAttributes="Bold" TextColor="#D4AF37" />
+                                        <Label Text="{Binding Valor, StringFormat='R$ {0:N2}'}" FontSize="12" FontAttributes="Bold" TextColor="#D4AF37">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </HorizontalStackLayout>
 
                                 </HorizontalStackLayout>
@@ -116,6 +139,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentPage>
