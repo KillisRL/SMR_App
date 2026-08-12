@@ -239,7 +239,7 @@
 
             <Button Grid.Column="0" 
                     Text="VOLTAR" 
-                    Command="{Binding VoltarCommand}" 
+                    Command="{Binding VoltarTela}" 
                     BackgroundColor="#404040" 
                     TextColor="White" 
                     FontAttributes="Bold" 
