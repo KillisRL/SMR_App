@@ -99,14 +99,14 @@ namespace SMR_App.Services
         // ==========================================================
         // DELETAR BONIFICAÇÃO (DELETE)
         // ==========================================================
-        public async Task<(bool Sucesso, string Mensagem)> DeletarBonificacaoService(int idBonificacao, string token)
+        public async Task<(bool Sucesso, string Mensagem)> DeletarBonificacaoService(int codigoBonificacao, string token)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 // Passa o ID na rota para deletar do banco
-                var response = await _httpClient.DeleteAsync($"bonificacao/excluir{idBonificacao}");
+                var response = await _httpClient.DeleteAsync($"bonificacao/excluir/{codigoBonificacao}");
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true};
 
                 var retorno = await response.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
@@ -130,7 +130,7 @@ namespace SMR_App.Services
         }
 
         // ==========================================================
-        // DELETAR BONIFICAÇÃO (GET)
+        // CONSULTAR BONIFICAÇÃO (GET)
         // ==========================================================
         public async Task<(bool Sucesso, string Mensagem, List<Bonificacao> Dados)> ConsultarBonificacao(string token, string? nome, bool? ativo)
         {

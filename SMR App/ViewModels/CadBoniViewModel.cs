@@ -46,14 +46,8 @@ namespace SMR_App.ViewModels
             var listaTipos = Enum.GetValues(typeof(TipoBonificacao)).Cast<TipoBonificacao>();
             Tipos = new ObservableCollection<TipoBonificacao>(listaTipos);
 
-            if(BonificacaoRecebida != null)
-            {
-                TipoSelecionado = BonificacaoRecebida.Tipo;
-            }
-            else
-            {
-                TipoSelecionado = Tipos.FirstOrDefault();
-            }
+            TipoSelecionado = Tipos.FirstOrDefault();
+
         }
 
         partial void OnBonificacaoRecebidaChanged(Bonificacao? value)
@@ -67,17 +61,18 @@ namespace SMR_App.ViewModels
                 Nome = value.Nome;
                 Descricao = value.Descricao;
                 Valor = value.Valor;
-                Mgm = value.Mgm; 
-                Ativo = value.Ativo; 
+                TipoSelecionado = BonificacaoRecebida.Tipo;
+                Mgm = value.Mgm;
+                Ativo = value.Ativo;
             }
         }
 
         [RelayCommand]
         private async Task Salvar()
         {
-            if (string.IsNullOrEmpty(Nome) || TipoSelecionado == null)
+            if (string.IsNullOrEmpty(Nome) || TipoSelecionado == null || string.IsNullOrEmpty(Descricao))
             {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor, preencha o Nome e o Tipo da bonificação.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor, preencha todos os campos", "OK");
                 return;
             }
 
@@ -117,7 +112,7 @@ namespace SMR_App.ViewModels
 
                 var resultado = await _apiServicesBonificacao.CadastrarBonificacao(dadosCadastro, token);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
                     await Shell.Current.GoToAsync("..");
@@ -141,21 +136,21 @@ namespace SMR_App.ViewModels
 
                 var dadosAlteracao = new Bonificacao
                 {
-                   Id = BonificacaoRecebida.Id,
-                   Id_Empresa = idEmpresa,
-                   Tipo = TipoSelecionado.Value,
-                   Nome = Nome,
-                   Descricao = Descricao,
-                   Valor = Valor,
-                   Mgm = Mgm,
-                   Ativo = Ativo
+                    Id = BonificacaoRecebida.Id,
+                    Id_Empresa = idEmpresa,
+                    Tipo = TipoSelecionado.Value,
+                    Nome = Nome,
+                    Descricao = Descricao,
+                    Valor = Valor,
+                    Mgm = Mgm,
+                    Ativo = Ativo
                 };
 
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
                 var resultado = await _apiServicesBonificacao.AlterarBonificacao(dadosAlteracao, token);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
                     await Shell.Current.GoToAsync("..");

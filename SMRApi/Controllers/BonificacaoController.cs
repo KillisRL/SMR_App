@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SMRDominio.ClasseBonificacao;
 using SMRDominio.ClassePessoa;
+using SMRDominio.ClasseIndicacao;
 using SMRInfraestrutura;
 
 namespace SMRApi.Controllers
@@ -18,7 +19,7 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        [HttpDelete("excluir{id}")]
+        [HttpDelete("excluir/{codigoBonificacao}")]
         [Authorize]
         public async Task<IActionResult> ExcluirBonificacao(int codigoBonificacao)
         {
@@ -30,6 +31,17 @@ namespace SMRApi.Controllers
                 var empresa = await _dbContext.Empresa.Where(e => e.id_pessoa == idPessoa).FirstOrDefaultAsync();
 
                 int idEmpresa = empresa.id;
+
+                bool possuiIndicacao = await _dbContext.Indicacao
+                .AnyAsync(i => i.Id_Bonificacao == codigoBonificacao);
+
+                if (possuiIndicacao)
+                {
+                    return Conflict(new
+                    {
+                        Mensagem = "Não é possível excluir esta bonificação, pois ela já possui indicações registradas."
+                    });
+                }
 
                 var bonificacaoExcluida = await _dbContext.Bonificacoes
                     .Where(b => b.Id == codigoBonificacao && b.Id_Empresa == idEmpresa).ExecuteDeleteAsync();
