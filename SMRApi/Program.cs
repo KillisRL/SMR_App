@@ -69,9 +69,11 @@ builder.Services.AddDbContext<SMRDBContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
-
+app.UseStaticFiles();
+app.UseRouting();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

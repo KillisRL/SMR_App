@@ -1,0 +1,193 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smr app\\viewmodels\\indicacaovalidarqrcodeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\viewmodels\\indicacaovalidarqrcodeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smrdominio\\classeindicacao\\indicacaoretornoapienviada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classeindicacao\\indicacaoretornoapienviada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smr app\\services\\apiserviceindicacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\services\\apiserviceindicacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smrapi\\controllers\\indicacaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\indicacaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smr app\\views\\indicacaovalidarqrcodeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\indicacaovalidarqrcodeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smrdominio\\classeindicacao\\indicacaostatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C385FDAA-D8C0-448E-821A-7ED66161A708}|SMRDominio\\SMRDominio.csproj|solutionrelative:smrdominio\\classeindicacao\\indicacaostatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smr app\\views\\indicacaodetalhesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\indicacaodetalhesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smrapi\\controllers\\validacaowebcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D07AE3E-FE5E-47FD-AEAB-2139D75A6F16}|SMRApi\\SMRApi.csproj|solutionrelative:smrapi\\controllers\\validacaowebcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|c:\\users\\ueler\\desktop\\tcc\\smr_app\\smr app\\views\\cadbonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{53B06E43-56B0-4759-9C0A-B186EFBFF604}|SMR App\\SMR App.csproj|solutionrelative:smr app\\views\\cadbonificacoesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 238,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{21457f7c-a428-477e-ae6d-e2b608734650}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IndicacaoRetornoApiEnviada.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRDominio\\ClasseIndicacao\\IndicacaoRetornoApiEnviada.cs",
+              "RelativeDocumentMoniker": "SMRDominio\\ClasseIndicacao\\IndicacaoRetornoApiEnviada.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRDominio\\ClasseIndicacao\\IndicacaoRetornoApiEnviada.cs",
+              "RelativeToolTip": "SMRDominio\\ClasseIndicacao\\IndicacaoRetornoApiEnviada.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAuwA0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T23:12:26.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApiServiceIndicacao.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Services\\ApiServiceIndicacao.cs",
+              "RelativeDocumentMoniker": "SMR App\\Services\\ApiServiceIndicacao.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Services\\ApiServiceIndicacao.cs",
+              "RelativeToolTip": "SMR App\\Services\\ApiServiceIndicacao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T23:07:28.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IndicacaoController.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRApi\\Controllers\\IndicacaoController.cs",
+              "RelativeDocumentMoniker": "SMRApi\\Controllers\\IndicacaoController.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRApi\\Controllers\\IndicacaoController.cs",
+              "RelativeToolTip": "SMRApi\\Controllers\\IndicacaoController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAD0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T22:44:31.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IndicacaoStatus.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRDominio\\ClasseIndicacao\\IndicacaoStatus.cs",
+              "RelativeDocumentMoniker": "SMRDominio\\ClasseIndicacao\\IndicacaoStatus.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRDominio\\ClasseIndicacao\\IndicacaoStatus.cs",
+              "RelativeToolTip": "SMRDominio\\ClasseIndicacao\\IndicacaoStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T22:43:54.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IndicacaoDetalhesView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\IndicacaoDetalhesView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\IndicacaoDetalhesView.xaml",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\IndicacaoDetalhesView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\IndicacaoDetalhesView.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-18T22:43:47.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IndicacaoValidarQrCodeView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\IndicacaoValidarQrCodeView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\IndicacaoValidarQrCodeView.xaml",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\IndicacaoValidarQrCodeView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\IndicacaoValidarQrCodeView.xaml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAAEwAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-18T22:26:49.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IndicacaoValidarQrCodeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\ViewModels\\IndicacaoValidarQrCodeViewModel.cs",
+              "RelativeDocumentMoniker": "SMR App\\ViewModels\\IndicacaoValidarQrCodeViewModel.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\ViewModels\\IndicacaoValidarQrCodeViewModel.cs",
+              "RelativeToolTip": "SMR App\\ViewModels\\IndicacaoValidarQrCodeViewModel.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwCIAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T22:18:34.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CadBonificacoesView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\CadBonificacoesView.xaml",
+              "RelativeDocumentMoniker": "SMR App\\Views\\CadBonificacoesView.xaml",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMR App\\Views\\CadBonificacoesView.xaml",
+              "RelativeToolTip": "SMR App\\Views\\CadBonificacoesView.xaml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-18T22:31:31.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ValidacaoWebController.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRApi\\Controllers\\ValidacaoWebController.cs",
+              "RelativeDocumentMoniker": "SMRApi\\Controllers\\ValidacaoWebController.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\TCC\\SMR_App\\SMRApi\\Controllers\\ValidacaoWebController.cs",
+              "RelativeToolTip": "SMRApi\\Controllers\\ValidacaoWebController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T22:19:22.589Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

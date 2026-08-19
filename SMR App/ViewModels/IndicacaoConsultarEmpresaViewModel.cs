@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SMR_App.Services;
+using SMR_App.Views;
 using SMRDominio.ClassePessoa;
 using System;
 using System.Collections.ObjectModel;
@@ -25,7 +26,7 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         public async Task AbrirCadastro(Empresa empresaSelecionada)
         {
-            bool confirmacao = await Application.Current.MainPage.DisplayAlert("Atenção", $"Deseja realizar indicação para empresa{empresaSelecionada.razao_social}?","Sim", "Não");
+            bool confirmacao = await Application.Current.MainPage.DisplayAlert("Atenção", $"Deseja realizar indicação para empresa \"{empresaSelecionada.razao_social}\"?","Sim", "Não");
 
             if(!confirmacao)
             {
@@ -37,7 +38,7 @@ namespace SMR_App.ViewModels
                 {"EmpresaIndicacao", empresaSelecionada }
             };
 
-            //await Shell.Current.GoToAsync(nameof(IndicacaoEmpresaBonificacaoView), parametro);
+            await Shell.Current.GoToAsync(nameof(IndicacaoEmpresaBonificacaoView), parametro);
         }
 
         [RelayCommand]
