@@ -75,7 +75,13 @@
                 <Label Text="Validar Indicado"
                        FontSize="Title"
                        TextColor="{StaticResource TextoPrincipal}"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirTelaCommand}" CommandParameter="IndicacaoValidarQrCodeView"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
 
             </VerticalStackLayout>
         </Frame>

@@ -23,6 +23,12 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(CadBonificacoesView), typeof(CadBonificacoesView));
             Routing.RegisterRoute(nameof(CadRecompensaView), typeof(CadRecompensaView));
             Routing.RegisterRoute(nameof(IndicacaoConsultarEmpresaView), typeof(IndicacaoConsultarEmpresaView));
+            Routing.RegisterRoute(nameof(IndicacaoEmpresaBonificacaoView), typeof(IndicacaoEmpresaBonificacaoView));
+            Routing.RegisterRoute(nameof(IndicacaoCadastroView), typeof(IndicacaoCadastroView));
+            Routing.RegisterRoute(nameof(IndicacaoDetalhesView), typeof(IndicacaoDetalhesView));
+            Routing.RegisterRoute(nameof(IndicacaoValidarQrCodeView), typeof(IndicacaoValidarQrCodeView));
+
+
         }
     }
 }

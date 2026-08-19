@@ -54,6 +54,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.21" />
 
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+
+		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,10 +84,19 @@
 		<MauiXaml Update="Views\GerenciarRecompensasView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\IndicacaoCadastroView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\IndicacaoConsultarEmpresaView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\IndicacaoDetalhesView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\IndicacaoEmpresaBonificacaoView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\IndicacaoValidarQrCodeView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\IndicacoesView.xaml">

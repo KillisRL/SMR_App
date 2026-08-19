@@ -80,7 +80,9 @@
                                    VerticalOptions="Center">
 
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                    <TapGestureRecognizer 
+    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoEmpresaBonificacaoViewModel}}, Path=AbrirCadastroIndicacaoCommand}" 
+    CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
 
                             </Label>
@@ -95,7 +97,9 @@
                                        TextColor="{StaticResource TextoPrincipal}" 
                                        LineBreakMode="WordWrap">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer 
+    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoEmpresaBonificacaoViewModel}}, Path=AbrirCadastroIndicacaoCommand}" 
+    CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
 
@@ -106,7 +110,9 @@
                                        LineBreakMode="WordWrap" 
                                        IsVisible="{Binding Descricao}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer 
+    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoEmpresaBonificacaoViewModel}}, Path=AbrirCadastroIndicacaoCommand}" 
+    CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
 
@@ -117,7 +123,9 @@
                                         <Label Text="Tipo:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
                                         <Label Text="{Binding Tipo}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                                <TapGestureRecognizer 
+    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoEmpresaBonificacaoViewModel}}, Path=AbrirCadastroIndicacaoCommand}" 
+    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </HorizontalStackLayout>
@@ -126,7 +134,9 @@
                                         <Label Text="Valor:" FontSize="12" FontAttributes="Bold" TextColor="Gray" />
                                         <Label Text="{Binding Valor, StringFormat='R$ {0:N2}'}" FontSize="12" FontAttributes="Bold" TextColor="#D4AF37">
                                             <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding AbrirCadastroIndicacaoCommand}" CommandParameter="{Binding .}"/>
+                                                <TapGestureRecognizer 
+    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoEmpresaBonificacaoViewModel}}, Path=AbrirCadastroIndicacaoCommand}" 
+    CommandParameter="{Binding .}" />
                                             </Label.GestureRecognizers>
                                         </Label>
                                     </HorizontalStackLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             x:Class="SMR_App.Views.IndicacaoValidarQrCodeView"
+             x:DataType="viewmodels:IndicacaoValidarQrCodeViewModel"
+             Title="Validar Voucher"
+             BackgroundColor="#121212">
+
+    <Grid RowDefinitions="Auto, *, Auto, Auto">
+
+        <!-- 1. CABEÇALHO -->
+        <VerticalStackLayout Grid.Row="0" Padding="20,10,20,5" Spacing="4">
+            <Label Text="ESCANEAR QR CODE" 
+                   FontSize="20" 
+                   FontAttributes="Bold" 
+                   TextColor="#D4AF37" 
+                   HorizontalOptions="Center" />
+            <Label Text="Aponte a câmera para o QR Code ou digite o código abaixo" 
+                   FontSize="12" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <!-- 2. CÂMERA DE LEITURA -->
+        <Border Grid.Row="1" 
+                Margin="20,10" 
+                Stroke="#D4AF37" 
+                StrokeThickness="2" 
+                StrokeShape="RoundRectangle 16"
+                Padding="0">
+
+            <zxing:CameraBarcodeReaderView
+                x:Name="barcodeView"
+                BarcodesDetected="BarcodeReader_BarcodesDetected"
+                IsDetecting="{Binding IsDetecting}" />
+        </Border>
+
+        <!-- 3. CAMPO PARA CÓDIGO MANUAL -->
+        <VerticalStackLayout Grid.Row="2" Padding="20,5" Spacing="6">
+            <Label Text="Código da Indicação (Manual)" 
+                   FontSize="12" 
+                   TextColor="Gray" />
+
+            <Border BackgroundColor="#1E1E1E" 
+                    Stroke="#333333"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10" 
+                    HeightRequest="50" 
+                    Padding="15,0">
+                <Entry Text="{Binding CodigoValidacao}" 
+                       Placeholder="Ex: 1ADF9A91" 
+                       PlaceholderColor="#555555"
+                       TextColor="#FFFFFF" 
+                       FontAttributes="Bold"
+                       CharacterSpacing="1.5"
+                       TextTransform="Uppercase"
+                       VerticalOptions="Center" />
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- 4. RODAPÉ COM AÇÕES / STATUS -->
+        <VerticalStackLayout Grid.Row="3" Padding="20,10,20,25" Spacing="10">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}" 
+                               Color="#D4AF37" 
+                               HorizontalOptions="Center" />
+
+            <!-- Botão para validar o código digitado manualmente -->
+            <Button Text="VALIDAR CÓDIGO DIGITADO" 
+                    Command="{Binding ProcessarIndicacaoCodigoCommand}"
+                    BackgroundColor="#D4AF37"
+                    TextColor="#121212"
+                    FontAttributes="Bold"
+                    CornerRadius="20"
+                    HeightRequest="48" />
+
+            <Button Text="CANCELAR" 
+                    Command="{Binding CancelarCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="Gray"
+                    BorderColor="#444444"
+                    BorderWidth="1"
+                    CornerRadius="20"
+                    HeightRequest="45" />
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

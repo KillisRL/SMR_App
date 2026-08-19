@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SMR_App.Services;
+using SMR_App.Views;
 using SMRDominio.ClasseBonificacao;
 using SMRDominio.ClassePessoa;
 using System;
@@ -23,7 +24,26 @@ namespace SMR_App.ViewModels
         public IndicacaoEmpresaBonificacaoViewModel(ApiServicesBonificacao apiServicesBonificacao)
         {
             _apiServicesBonificacao = apiServicesBonificacao;
+            _ = ConsultarBonificacaoEmpresa();
         }
+
+        [RelayCommand]
+        public async Task AbrirCadastroIndicacao(Bonificacao bonificacao)
+        {
+            if(bonificacao == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Dados inválido para o cadastro da bonificação.", "Ok");
+                return;
+            }
+            var parametro = new Dictionary<string, object>
+            {
+                {"BonificacaoEnviada", bonificacao }
+            };
+
+            await Shell.Current.GoToAsync(nameof(IndicacaoCadastroView), parametro);
+
+        }
+
 
         [RelayCommand]
         public async Task ConsultarBonificacaoEmpresa()
