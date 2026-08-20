@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using SMR_App.Services;
+using ZXing.Net.Maui.Controls;
 using SMR_App.ViewModels;
 using SMR_App.Views;
 
@@ -14,6 +15,7 @@ namespace SMR_App
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -28,6 +30,7 @@ namespace SMR_App
             builder.Services.AddSingleton<ApiServicesPessoa>();
             builder.Services.AddSingleton<ApiServicesBonificacao>();
             builder.Services.AddSingleton<ApiServiceRecompensa>();
+            builder.Services.AddSingleton<ApiServiceIndicacao>();
 
             // ViewModels
             builder.Services.AddTransient<PessoaViewModel>();
@@ -43,6 +46,11 @@ namespace SMR_App
             builder.Services.AddTransient<CadBoniViewModel>();
             builder.Services.AddTransient<CadRecompensaViewModel>();
             builder.Services.AddTransient<IndicacaoConsultarEmpresaViewModel>();
+            builder.Services.AddTransient<IndicacaoEmpresaBonificacaoViewModel>();
+            builder.Services.AddTransient<IndicacaoCadastroViewModel>();
+            builder.Services.AddTransient<IndicacaoDetalhesViewModel>();
+            builder.Services.AddTransient<IndicacaoValidarQrCodeViewModel>();
+
 
 
             // Views
@@ -59,6 +67,10 @@ namespace SMR_App
             builder.Services.AddTransient<CadBonificacoesView>();
             builder.Services.AddTransient<CadRecompensaView>();
             builder.Services.AddTransient<IndicacaoConsultarEmpresaView>();
+            builder.Services.AddTransient<IndicacaoEmpresaBonificacaoView>();
+            builder.Services.AddTransient<IndicacaoCadastroView>();
+            builder.Services.AddTransient<IndicacaoDetalhesView>();
+            builder.Services.AddTransient<IndicacaoValidarQrCodeView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -190,7 +190,7 @@ namespace SMRApi.Controllers
             }
         }
 
-        [HttpGet("consultar-indicacao{id}")]
+        [HttpGet("consultar-indicacao/{codigoEmpresa}")]
         [Authorize]
         public async Task<IActionResult> ConsultarBonificacaoIndicacao(int codigoEmpresa)
         {

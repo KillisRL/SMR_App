@@ -19,11 +19,25 @@ namespace SMR_App.Services
 
         public ApiServiceRecompensa(HttpClient httpClient)
         {
-            string baseURL = "https://localhost:7190/";
+            // Define os endereços
+            string urlLocal = "https://localhost:7190/";
+            string urlProducao = "https://Api-smr-backend-env.eba-fihsn5vm.sa-east-1.elasticbeanstalk.com/";
 
-            var handler = new HttpClientHandler();
+            // Lógica inteligente: 
+            // Se for Android, usa a AWS. Se for Windows (ou outro), usa Localhost.
+            string baseURL = (DeviceInfo.Platform == DevicePlatform.Android)
+                ? urlProducao
+                : urlLocal;
 
-            handler.UseProxy = false;
+            var handler = new HttpClientHandler
+            {
+                UseProxy = false
+            };
+
+#if DEBUG
+            // Ignora o certificado SSL apenas em modo Debug para facilitar a vida
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+#endif
 
             _httpClient = new HttpClient(handler)
             {
