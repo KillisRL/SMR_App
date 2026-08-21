@@ -102,7 +102,7 @@ namespace SMRApi.Controllers
                     indicacao.Status_Indicacao = IndicacaoStatus.Enviada;
                     await _dbContext.SaveChangesAsync();
 
-                    string linkBase = $"{Request.Scheme}://{Request.Host}indicacao/validar/{indicacao.Codigo_Validacao}";
+                    string linkBase = $"{Request.Scheme}://{Request.Host}/indicacao/validar/{indicacao.Codigo_Validacao}";
 
                     return Ok(new
                     {

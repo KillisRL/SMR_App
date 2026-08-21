@@ -4,6 +4,7 @@ using SMR_App.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SMR_App.Views;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,13 +37,24 @@ namespace SMR_App.ViewModels
 
                 if (resultado.Sucesso)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Dados.Mensagem, "Ok");
 
                     var parametro = new Dictionary<string, object>
                     {
-                        {"CodigoIndicacao",  }
+                        {"DadosValidacao", resultado.Dados.IDIndicacao}
+                    };
+
+                    await Shell.Current.GoToAsync(nameof(IndicacaoDetalhesView), parametro);
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
                     }
                 }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao validar: {ex.Message}", "Ok");
+                IsDetecting = true;
             }
         }
 

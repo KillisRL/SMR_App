@@ -69,8 +69,8 @@
                                HorizontalOptions="Center" />
 
             <!-- Botão para validar o código digitado manualmente -->
-            <Button Text="VALIDAR CÓDIGO DIGITADO" 
-                    Command="{Binding ProcessarIndicacaoCodigoCommand}"
+            <Button Text="CONSULTAR INDICAÇÃO" 
+                    Command="{Binding IndicacaoConsultarCodigoCommand}"
                     BackgroundColor="#D4AF37"
                     TextColor="#121212"
                     FontAttributes="Bold"
