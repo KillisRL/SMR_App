@@ -49,14 +49,15 @@ namespace SMR_App.ViewModels
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
+                    }
                 }
-            }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao validar: {ex.Message}", "Ok");
                 IsDetecting = true;
             }
         }
+
 
         [RelayCommand]
         public async Task ProcessarIndicacaoCodigo()

@@ -172,30 +172,29 @@
 
                 <!-- BOTÃO: ENVIAR INDICAÇÃO (Promotor) -->
                 <Button Text="ENVIAR INDICAÇÃO" 
-                        Command="{Binding IndicacaoAlterarSituacaoCommand}"
-                        CommandParameter="{x:Static enums:IndicacaoStatus.Enviada}"
-                        BackgroundColor="Transparent" 
-                        TextColor="#D4AF37" 
-                        BorderColor="#D4AF37" 
-                        BorderWidth="2" 
-                        FontAttributes="Bold" 
-                        CornerRadius="20" 
-                        HeightRequest="50" 
-                        Margin="0,10,0,0" 
-                        IsVisible="{Binding PodeVisualizar}" />
+                         Command="{Binding IndicacaoAlterarSituacaoCommand}"
+                         CommandParameter="{x:Static enums:IndicacaoStatus.Enviada}"
+                         BackgroundColor="Transparent" 
+                         TextColor="#D4AF37" 
+                         BorderColor="#D4AF37" 
+                         BorderWidth="2" 
+                         FontAttributes="Bold" 
+                         CornerRadius="20" 
+                         HeightRequest="50" 
+                         Margin="0,10,0,0" 
+                         IsVisible="{Binding PodeVisualizar}" />
 
                 <!-- BOTÃO: CANCELAR (Comum) -->
                 <Button Text="CANCELAR INDICAÇÃO" 
                         Command="{Binding IndicacaoAlterarSituacaoCommand}"
                         CommandParameter="{x:Static enums:IndicacaoStatus.Cancelada}"
                         BackgroundColor="Transparent" 
-                        TextColor="#e74c3c" 
-                        BorderColor="#e74c3c" 
+                        TextColor="#e74c3c"
+                        BorderColor="#e74c3c"
                         BorderWidth="2" 
                         FontAttributes="Bold" 
                         CornerRadius="20" 
-                        HeightRequest="50" 
-                        Margin="0,5,0,20" />
+                        HeightRequest="50" />
 
             </VerticalStackLayout>
         </Grid>

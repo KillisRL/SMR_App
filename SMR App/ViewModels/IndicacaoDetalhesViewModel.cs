@@ -25,6 +25,8 @@ namespace SMR_App.ViewModels
         {
             _apiServiceIndicacao = apiServiceIndicacao;
         }
+
+        // 🚀 Disparado automaticamente se vier "CodigoIndicacao"
         partial void OnCodigoIndicacaoChanged(int value)
         {
             if (value > 0)
@@ -32,6 +34,8 @@ namespace SMR_App.ViewModels
                 VerificarEProcessarCarregamento();
             }
         }
+
+        // 🚀 Disparado automaticamente se vier "DadosValidacao" (vindo do QR Code)
         partial void OnDadosValidacaoChanged(int value)
         {
             if (value > 0)
@@ -39,12 +43,14 @@ namespace SMR_App.ViewModels
                 VerificarEProcessarCarregamento();
             }
         }
+
+        // Propriedade auxiliar para pegar o ID real independentemente de onde veio
         private int ObterIdAtivo() => DadosValidacao > 0 ? DadosValidacao : CodigoIndicacao;
 
         private void VerificarEProcessarCarregamento()
         {
             DefinirModoTela();
-            _ = IndicacaConsultarDetalhes(); 
+            _ = IndicacaConsultarDetalhes(); // Executa a consulta em segundo plano
         }
 
         public void DefinirModoTela()
@@ -61,60 +67,6 @@ namespace SMR_App.ViewModels
                 PodeVisualizarValidacao = false; // Oculta o botão da empresa
             }
         }
-
-        [RelayCommand]
-        public async Task IndicacaoAlterarSituacao(IndicacaoStatus indicacaoStatus)
-        {
-            try
-            {
-                if (CodigoIndicacao <= 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "Código da indicação inválido.", "Ok");
-                    return;
-                }
-
-                string token = await SecureStorage.Default.GetAsync("jwt_token");
-
-                var resultado = await _apiServiceIndicacao.IndicacaoAlterarStatus(token, CodigoIndicacao, indicacaoStatus);
-
-                if (resultado.Sucesso && resultado.Dados != null)
-                {
-                    // Se for envio (contém link/código), abre o compartilhador nativo
-                    if (!string.IsNullOrEmpty(resultado.Dados.LinkValidacao) && !string.IsNullOrEmpty(resultado.Dados.CodigoValidacao))
-                    {
-                        await Application.Current.MainPage.DisplayAlert(
-                            "Indicação Pronta!",
-                            $"Código de validação gerado: {resultado.Dados.CodigoValidacao}\n\nVamos compartilhar o link com o indicado!",
-                            "Compartilhar");
-
-                        // Dispara o menu nativo (WhatsApp, SMS, Telegram, etc.)
-                        await Share.Default.RequestAsync(new ShareTextRequest
-                        {
-                            Title = "Compartilhar Indicação",
-                            Subject = "Seu Bônus Exclusivo!",
-                            Text = $"Olá! Você recebeu uma indicação com bônus especial.\n\nApresente este código na empresa: {resultado.Dados.CodigoValidacao}\nOu acesse seu voucher pelo link: {resultado.Dados.LinkValidacao}"
-                        });
-
-                        // Atualiza os dados na tela para refletir o status novo
-                        await IndicacaConsultarDetalhes();
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
-                        await Shell.Current.GoToAsync(".."); // Retorna para a tela anterior
-                    }
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
-                }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Ocorreu uma falha: {ex.Message}", "Ok");
-            }
-        }
-
 
         [RelayCommand]
         public async Task ConfirmarValidacaoEmpresa()
