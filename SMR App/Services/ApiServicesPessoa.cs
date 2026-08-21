@@ -14,6 +14,7 @@ namespace SMR_App.Services
         private readonly HttpClient _httpClient;
         public ApiServicesPessoa()
         {
+<<<<<<< Updated upstream
             // Define os endereços
             string urlLocal = "https://localhost:7190/";
             string urlProducao = "https://Api-smr-backend-env.eba-fihsn5vm.sa-east-1.elasticbeanstalk.com/";
@@ -37,6 +38,14 @@ namespace SMR_App.Services
             _httpClient = new HttpClient(handler)
             {
                 BaseAddress = new Uri(baseURL)
+=======
+            var handler = new HttpClientHandler();
+            handler.UseProxy = false;
+
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
+>>>>>>> Stashed changes
             };
 
         }

@@ -19,6 +19,7 @@ namespace SMR_App.Services
 
         public ApiServiceIndicacao(HttpClient httpClient)
         {
+<<<<<<< Updated upstream
             // Define os endereços
             string urlLocal = "https://localhost:7190/";
             string urlProducao = "https://Api-smr-backend-env.eba-fihsn5vm.sa-east-1.elasticbeanstalk.com/";
@@ -38,10 +39,14 @@ namespace SMR_App.Services
             // Ignora o certificado SSL apenas em modo Debug para facilitar a vida
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 #endif
+=======
+            var handler = new HttpClientHandler();
+            handler.UseProxy = false;
+>>>>>>> Stashed changes
 
             _httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(baseURL)
+                BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
             };
         }
         public async Task<(bool Sucesso, IndicacaoRetornoApiEnviada Dados)> ConsultarIndicacaoValidacao(string token, string codigoValidacao)

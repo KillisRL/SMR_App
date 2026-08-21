@@ -26,15 +26,16 @@ namespace SMR_App.ViewModels
             _apiServiceIndicacao = apiServiceIndicacao;
         }
 
-        [RelayCommand]
-        public async Task IndicacaoConsultarCodigo()
-        {
-            try
-            {
-                string token = await SecureStorage.Default.GetAsync("jwt_token");
+        //[RelayCommand]
+        //public async Task IndicacaoConsultarCodigo()
+        //{
+        //    try
+        //    {
+        //        string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                var resultado = await _apiServiceIndicacao.ConsultarIndicacaoValidacao(token, codigoValidacao);
+        //        var resultado = await _apiServiceIndicacao.ConsultarIndicacaoValidacao(token, codigoValidacao);
 
+<<<<<<< Updated upstream
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Dados.Mensagem, "Ok");
@@ -57,6 +58,19 @@ namespace SMR_App.ViewModels
                 IsDetecting = true;
             }
         }
+=======
+        //        if (resultado.Sucesso)
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
+
+        //            var parametro = new Dictionary<string, object>
+        //            {
+        //                {"CodigoIndicacao",  }
+        //            }
+        //        }
+        //    }
+        //}
+>>>>>>> Stashed changes
 
 
         [RelayCommand]
@@ -66,7 +80,7 @@ namespace SMR_App.ViewModels
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                if(string.IsNullOrEmpty(CodigoValidacao))
+                if (string.IsNullOrEmpty(CodigoValidacao))
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha o código para relaizar a validação da indicação", "Ok");
                     return;
@@ -75,7 +89,7 @@ namespace SMR_App.ViewModels
 
                 var resultado = await _apiServiceIndicacao.ConfirmarValidacaoPorCodigo(token, CodigoValidacao);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
                     await Shell.Current.GoToAsync(".."); // Volta de tela
