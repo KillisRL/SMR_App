@@ -26,16 +26,15 @@ namespace SMR_App.ViewModels
             _apiServiceIndicacao = apiServiceIndicacao;
         }
 
-        //[RelayCommand]
-        //public async Task IndicacaoConsultarCodigo()
-        //{
-        //    try
-        //    {
-        //        string token = await SecureStorage.Default.GetAsync("jwt_token");
+        [RelayCommand]
+        public async Task IndicacaoConsultarCodigo()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-        //        var resultado = await _apiServiceIndicacao.ConsultarIndicacaoValidacao(token, codigoValidacao);
+                var resultado = await _apiServiceIndicacao.ConsultarIndicacaoValidacao(token, codigoValidacao);
 
-<<<<<<< Updated upstream
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Dados.Mensagem, "Ok");
@@ -50,27 +49,14 @@ namespace SMR_App.ViewModels
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
-                    }
                 }
+            }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao validar: {ex.Message}", "Ok");
                 IsDetecting = true;
             }
         }
-=======
-        //        if (resultado.Sucesso)
-        //        {
-        //            await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Dados.Mensagem, "Ok");
-
-        //            var parametro = new Dictionary<string, object>
-        //            {
-        //                {"CodigoIndicacao",  }
-        //            }
-        //        }
-        //    }
-        //}
->>>>>>> Stashed changes
 
 
         [RelayCommand]

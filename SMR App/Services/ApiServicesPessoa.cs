@@ -1,11 +1,10 @@
-﻿using SMRDominio.ClassePessoa;
+﻿using SMRDominio.ClasseBase;
+using SMRDominio.ClassePessoa;
 using SMRDominio.DTOs;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http.Headers;
-using SMRDominio.ClasseBase;
-using System.Globalization;
 
 namespace SMR_App.Services
 {
@@ -14,43 +13,16 @@ namespace SMR_App.Services
         private readonly HttpClient _httpClient;
         public ApiServicesPessoa()
         {
-<<<<<<< Updated upstream
-            // Define os endereços
-            string urlLocal = "https://localhost:7190/";
-            string urlProducao = "https://Api-smr-backend-env.eba-fihsn5vm.sa-east-1.elasticbeanstalk.com/";
-
-            // Lógica inteligente: 
-            // Se for Android, usa a AWS. Se for Windows (ou outro), usa Localhost.
-            string baseURL = (DeviceInfo.Platform == DevicePlatform.Android)
-                ? urlProducao
-                : urlLocal;
-
-            var handler = new HttpClientHandler
-            {
-                UseProxy = false
-            };
-
-#if DEBUG
-            // Ignora o certificado SSL apenas em modo Debug para facilitar a vida
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-#endif
-
-            _httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri(baseURL)
-=======
             var handler = new HttpClientHandler();
             handler.UseProxy = false;
 
             _httpClient = new HttpClient(handler)
             {
                 BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
->>>>>>> Stashed changes
             };
-
         }
 
-        public async Task<(bool Sucesso, List<Empresa> Dados, string Mensagem)> ConsultarEmpresa(string? token,  string? razaoSocial)
+        public async Task<(bool Sucesso, List<Empresa> Dados, string Mensagem)> ConsultarEmpresa(string? token, string? razaoSocial)
         {
             try
             {
@@ -64,7 +36,7 @@ namespace SMR_App.Services
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                if(resultado.IsSuccessStatusCode)
+                if (resultado.IsSuccessStatusCode)
                 {
                     var dados = await resultado.Content.ReadFromJsonAsync<List<Empresa>>(options);
 
@@ -81,7 +53,7 @@ namespace SMR_App.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return (false,null, "Servidor indisponível no momento.");
+                return (false, null, "Servidor indisponível no momento.");
             }
 
         }

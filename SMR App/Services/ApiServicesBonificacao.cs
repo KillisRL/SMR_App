@@ -16,43 +16,14 @@ namespace SMR_App.Services
     {
         private readonly HttpClient _httpClient;
 
-        // Mantendo o HTTPS que você corrigiu e apontando para a porta do seu Swagger
-       // private const string BaseUrl = "https://localhost:7190/";
-
         public ApiServicesBonificacao()
         {
-<<<<<<< Updated upstream
-            // Define os endereços
-            string urlLocal = "https://localhost:7190/";
-            string urlProducao = "https://Api-smr-backend-env.eba-fihsn5vm.sa-east-1.elasticbeanstalk.com/";
-
-            // Lógica inteligente: 
-            // Se for Android, usa a AWS. Se for Windows (ou outro), usa Localhost.
-            string baseURL = (DeviceInfo.Platform == DevicePlatform.Android)
-                ? urlProducao
-                : urlLocal;
-
-            var handler = new HttpClientHandler
-            {
-                UseProxy = false
-            };
-
-#if DEBUG
-            // Ignora o certificado SSL apenas em modo Debug para facilitar a vida
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-#endif
-
-            _httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri(baseURL)
-=======
             var handler = new HttpClientHandler();
             handler.UseProxy = false;
 
             _httpClient = new HttpClient(handler)
             {
                 BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
->>>>>>> Stashed changes
             };
         }
 
