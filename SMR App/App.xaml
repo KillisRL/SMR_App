@@ -19,6 +19,11 @@
                         <Image Grid.Column="0" Source="home_gold.png" 
                                HeightRequest="40"
                                WidthRequest="40">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.AbrirTelaCommand,
+                                    Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                      CommandParameter="PrincipalView"/>
+                            </Image.GestureRecognizers>
                         </Image>
 
                         <!-- NOME USUÁRIO -->
