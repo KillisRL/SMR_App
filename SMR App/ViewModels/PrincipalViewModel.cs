@@ -7,16 +7,27 @@ namespace SMR_App.ViewModels
     public class PrincipalViewModel : BaseViewModel
     {
 
-        // VARIAVEIS
-        private bool _visualizarConfiguracoesEmpresa;
+        // VARIÁVEIS DE PERFIL
+        private bool _isEmpresa;
+        private bool _isCliente;
 
         // PROPRIEDADES
-        public bool VisualizarConfiguracoesEmpresa
+        public bool IsEmpresa
         {
-            get => _visualizarConfiguracoesEmpresa;
+            get => _isEmpresa;
             set
             {
-                _visualizarConfiguracoesEmpresa = value;
+                _isEmpresa = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsCliente
+        {
+            get => _isCliente;
+            set
+            {
+                _isCliente = value;
                 OnPropertyChanged();
             }
         }
@@ -31,16 +42,21 @@ namespace SMR_App.ViewModels
             // Obter pessoa logada
             var pessoa = ApiServicesSessaoPessoa.PessoaLogada;
 
-            // Se for pessoa jurídica aparece o menu de configuração de empresa
             if (pessoa != null)
             {
-                VisualizarConfiguracoesEmpresa = (pessoa.id_pessoa_tipo == PessoaTipo.Empresa);
+                // Define os perfis com base no tipo da pessoa logada
+                IsEmpresa = (pessoa.id_pessoa_tipo == PessoaTipo.Empresa);
+
+                // Se não for empresa, assumimos que é o cliente (pessoa física)
+                // Se você tiver um Enum específico para cliente, pode usar: pessoa.id_pessoa_tipo == PessoaTipo.Cliente
+                IsCliente = (pessoa.id_pessoa_tipo != PessoaTipo.Empresa);
 
                 NomeUsuario = pessoa.nome;
             }
             else
             {
-                VisualizarConfiguracoesEmpresa = false;
+                IsEmpresa = false;
+                IsCliente = false;
             }
         }
     }

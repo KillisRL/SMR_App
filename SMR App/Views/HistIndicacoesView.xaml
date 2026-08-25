@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMR_App.Views.HistIndicacoesView"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+    <!-- O Grid principal contém: Cabeçalho/Filtros (Auto), Lista (*), Botões Inferiores (Auto) -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="0,0,0,20">
+
+        <!-- LINHA 0: TÍTULO E FILTROS -->
+        <VerticalStackLayout Grid.Row="0" Margin="20,20,20,10" Spacing="15">
+
+            <Label Text="INDICAÇÕES" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               TextColor="{StaticResource TextoPrincipal}" 
+               HorizontalOptions="Center" />
+
+            <!-- Filtros: Campo de busca por Nome e Seleção de Status -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
+                <!-- Busca por Nome do Indicado -->
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="Indicado:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                        StrokeShape="RoundRectangle 8" 
+                        StrokeThickness="0" 
+                        HeightRequest="45" 
+                        Padding="5,0">
+                        <Entry Text="{Binding NomeBusca}" 
+                           Placeholder="Buscar nome..." 
+                           PlaceholderColor="Gray" 
+                           TextColor="{StaticResource TextoPrincipal}" 
+                           VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Filtro de Status -->
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="Status:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                        StrokeShape="RoundRectangle 8" 
+                        StrokeThickness="0" 
+                        HeightRequest="45" 
+                        Padding="5,0">
+                        <Picker ItemsSource="{Binding OpcoesStatus}" 
+                            SelectedItem="{Binding StatusSelecionado}" 
+                            TextColor="{StaticResource TextoPrincipal}" 
+                            TitleColor="Gray" />
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Botão de Pesquisar -->
+            <Button Text="PESQUISAR" 
+                Command="{Binding ConsultarIndicacoesCommand}" 
+                BackgroundColor="#404040" 
+                TextColor="White" 
+                FontAttributes="Bold" 
+                CornerRadius="8" 
+                HeightRequest="40" />
+
+        </VerticalStackLayout>
+
+        <!-- LINHA 1: LISTA DE INDICAÇÕES -->
+        <CollectionView Grid.Row="1" 
+                    ItemsSource="{Binding ListaIndicacoes}" 
+                    SelectionMode="None"
+                    Margin="20,0">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
+                    <Label Text="Nenhum histórico encontrado." 
+                       TextColor="Gray" 
+                       FontSize="16" 
+                       HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Card Escuro (Clicável para ver detalhes) -->
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                        StrokeShape="RoundRectangle 8" 
+                        StrokeThickness="0" 
+                        Margin="0,0,0,15"
+                        Padding="15">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalhesCommand}"
+                                              CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="Auto, *">
+
+                            <!-- Código ou ID em Dourado -->
+                            <Label Grid.Column="0" 
+                               Text="{Binding Id}" 
+                               FontSize="36" 
+                               FontAttributes="Bold" 
+                               TextColor="#D4AF37" 
+                               VerticalOptions="Center" 
+                               Margin="0,0,20,0" />
+
+                            <!-- Informações de Texto -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="5">
+
+                                <!-- Nome do Indicado -->
+                                <Label Text="{Binding NomeIndicado, StringFormat='Nome: {0}'}" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   LineBreakMode="TailTruncation" />
+
+                                <!-- Data da Indicação -->
+                                <Label Text="{Binding DataIndicacao, StringFormat='Data: {0:dd/MM/yyyy}'}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="Gray" />
+
+                                <!-- Badge de Status Visual -->
+                                <Border StrokeShape="RoundRectangle 4" 
+                                    Stroke="Transparent" 
+                                    BackgroundColor="#404040"
+                                    HorizontalOptions="Start"
+                                    Padding="8,2"
+                                    Margin="0,5,0,0">
+                                    <Label Text="{Binding Status}" 
+                                       FontSize="12" 
+                                       FontAttributes="Bold" 
+                                       TextColor="White" />
+                                    <!-- DICA: Você pode usar DataTriggers aqui no Border igual fez nas bonificações 
+                                     para deixar verde se "Validado" ou amarelo se "Pendente" -->
+                                </Border>
+
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- LINHA 2: BOTÕES INFERIORES -->
+        <Grid Grid.Row="2" 
+          ColumnDefinitions="*, *" 
+          Margin="20,10,20,0" 
+          ColumnSpacing="20">
+
+            <Button Grid.Column="0" 
+                Text="VOLTAR" 
+                Command="{Binding VoltarTelaCommand}" 
+                BackgroundColor="#404040" 
+                TextColor="White" 
+                FontAttributes="Bold" 
+                CornerRadius="20" 
+                HeightRequest="50" />
+
+            <Button Grid.Column="1" 
+                Text="VALIDAR" 
+                Command="{Binding AbrirValidacaoCommand}" 
+                BackgroundColor="#D4AF37" 
+                TextColor="Black" 
+                FontAttributes="Bold" 
+                CornerRadius="20"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>

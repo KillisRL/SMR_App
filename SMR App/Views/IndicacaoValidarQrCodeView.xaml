@@ -5,8 +5,8 @@
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              x:Class="SMR_App.Views.IndicacaoValidarQrCodeView"
              x:DataType="viewmodels:IndicacaoValidarQrCodeViewModel"
-             Title="Validar Voucher"
-             BackgroundColor="#121212">
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
 
     <Grid RowDefinitions="Auto, *, Auto, Auto">
 
