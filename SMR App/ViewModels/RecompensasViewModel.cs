@@ -6,6 +6,7 @@ using SMRDominio.ClasseRecompensa;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
@@ -29,12 +30,20 @@ namespace SMR_App.ViewModels
         public RecompensasViewModel(ApiServiceRecompensa apiServiceRecompensa) 
         {
             _apiServiceRecompensa = apiServiceRecompensa;
+            _ = ConsultarRecompensas();
         }
 
         [RelayCommand]
         public async Task AbriCadastroRecompensa()
         {
             await Shell.Current.GoToAsync(nameof(CadRecompensaView));
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool ativo && ativo)
+                return "ATIVO";
+            return "INATIVO";
         }
 
         [RelayCommand]

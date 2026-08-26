@@ -4,15 +4,26 @@ namespace SMR_App.Views;
 
 public partial class RecompensasView : ContentPage
 {
+
+    private readonly RecompensasViewModel _recompensasViewModel;
     // O .NET MAUI vai injetar a ViewModel automaticamente aqui
     public RecompensasView(RecompensasViewModel viewModel)
     {
         InitializeComponent();
+        _recompensasViewModel = viewModel;
+
         BindingContext = viewModel;
 
         // Seleciona Título por padrão no filtro
         if (PickerTipoFiltro != null)
             PickerTipoFiltro.SelectedIndex = 0;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await _recompensasViewModel.ConsultarRecompensas();
     }
 
     private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)

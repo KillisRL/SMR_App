@@ -35,6 +35,15 @@ namespace SMR_App.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Dados inválido para o cadastro da bonificação.", "Ok");
                 return;
             }
+
+
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", $"Deseja cadastrar uma indicação para a bonificação {bonificacao.Descricao}?", "Sim", "Não");
+
+            if(!confirmar)
+            {
+                return;
+            }
+
             var parametro = new Dictionary<string, object>
             {
                 {"BonificacaoEnviada", bonificacao }
