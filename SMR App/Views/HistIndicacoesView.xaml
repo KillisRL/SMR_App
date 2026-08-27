@@ -1,138 +1,116 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SMR_App.Views.HistIndicacoesView"
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             xmlns:classesPessoa="clr-namespace:SMRDominio.ClassePessoa;assembly=SMRDominio"
+             x:Class="SMR_App.Views.HistIndicacoesView"
+             x:DataType="viewmodels:HistIndicacoesViewModel"
              ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource FundoPrincipal}">
+
     <!-- O Grid principal contém: Cabeçalho/Filtros (Auto), Lista (*), Botões Inferiores (Auto) -->
-    <Grid RowDefinitions="Auto, *, Auto" Padding="0,0,0,20">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
 
-        <!-- LINHA 0: TÍTULO E FILTROS -->
-        <VerticalStackLayout Grid.Row="0" Margin="20,20,20,10" Spacing="15">
+        <!-- LINHA 0: TÍTULO E PESQUISA DE EMPRESA -->
+        <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,0,0,20">
 
-            <Label Text="INDICAÇÕES" 
-               FontSize="28" 
-               FontAttributes="Bold" 
-               TextColor="{StaticResource TextoPrincipal}" 
-               HorizontalOptions="Center" />
+            <Label Text="CONSULTAR HISTÓRICO POR EMPRESA " 
+                   FontSize="26" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoPrincipal}" 
+                   HorizontalOptions="Center" />
 
-            <!-- Filtros: Campo de busca por Nome e Seleção de Status -->
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+            <!-- Barra de Pesquisa por Razão Social (Conectado a RazaoSocial da ViewModel) -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Pesquisa por Razão Social" 
+                       FontAttributes="Bold" 
+                       FontSize="14" 
+                       TextColor="{StaticResource TextoPrincipal}" />
 
-                <!-- Busca por Nome do Indicado -->
-                <VerticalStackLayout Grid.Column="0" Spacing="5">
-                    <Label Text="Indicado:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
-                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                <Border BackgroundColor="{StaticResource FundoMenu}" 
                         StrokeShape="RoundRectangle 8" 
                         StrokeThickness="0" 
                         HeightRequest="45" 
                         Padding="5,0">
-                        <Entry Text="{Binding NomeBusca}" 
-                           Placeholder="Buscar nome..." 
-                           PlaceholderColor="Gray" 
-                           TextColor="{StaticResource TextoPrincipal}" 
-                           VerticalOptions="Center" />
-                    </Border>
-                </VerticalStackLayout>
-
-                <!-- Filtro de Status -->
-                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                    <Label Text="Status:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
-                    <Border BackgroundColor="{StaticResource FundoMenu}" 
-                        StrokeShape="RoundRectangle 8" 
-                        StrokeThickness="0" 
-                        HeightRequest="45" 
-                        Padding="5,0">
-                        <Picker ItemsSource="{Binding OpcoesStatus}" 
-                            SelectedItem="{Binding StatusSelecionado}" 
-                            TextColor="{StaticResource TextoPrincipal}" 
-                            TitleColor="Gray" />
-                    </Border>
-                </VerticalStackLayout>
-            </Grid>
-
-            <!-- Botão de Pesquisar -->
-            <Button Text="PESQUISAR" 
-                Command="{Binding ConsultarIndicacoesCommand}" 
-                BackgroundColor="#404040" 
-                TextColor="White" 
-                FontAttributes="Bold" 
-                CornerRadius="8" 
-                HeightRequest="40" />
+                    <SearchBar x:Name="SearchBarPesquisa"
+                               Text="{Binding RazaoSocial}"
+                               Placeholder="Digite a razão social..." 
+                               PlaceholderColor="Gray"
+                               TextColor="{StaticResource TextoPrincipal}"
+                               BackgroundColor="Transparent" 
+                               CancelButtonColor="{StaticResource TextoPrincipal}"
+                               SearchCommand="{Binding ConsultarEmpresaCommand}" />
+                </Border>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
 
-        <!-- LINHA 1: LISTA DE INDICAÇÕES -->
+        <!-- LINHA 1: LISTA DE EMPRESAS (CollectionView Comprido) -->
         <CollectionView Grid.Row="1" 
-                    ItemsSource="{Binding ListaIndicacoes}" 
-                    SelectionMode="None"
-                    Margin="20,0">
+                        ItemsSource="{Binding ListaEmpresa}" 
+                        SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 Span="1" 
+                                 VerticalItemSpacing="15" />
+            </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
-                    <Label Text="Nenhum histórico encontrado." 
-                       TextColor="Gray" 
-                       FontSize="16" 
-                       HorizontalOptions="Center" />
+                    <Label Text="Nenhuma empresa encontrada." 
+                           TextColor="Gray" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <!-- Card Escuro (Clicável para ver detalhes) -->
+                <DataTemplate x:DataType="classesPessoa:Empresa">
+                    <!-- Card Comprido da Empresa (Clicável para abrir o histórico) -->
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
-                        StrokeShape="RoundRectangle 8" 
-                        StrokeThickness="0" 
-                        Margin="0,0,0,15"
-                        Padding="15">
+                            StrokeShape="RoundRectangle 15" 
+                            StrokeThickness="0" 
+                            HeightRequest="80" 
+                            Padding="15,10">
 
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalhesCommand}"
-                                              CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistIndicacoesViewModel}}, Path=AbrirHistoricoCommand}"
+                                CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
 
-                        <Grid ColumnDefinitions="Auto, *">
+                        <!-- Layout Horizontal: Círculo na esquerda e Dados na direita -->
+                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15" VerticalOptions="Center">
 
-                            <!-- Código ou ID em Dourado -->
-                            <Label Grid.Column="0" 
-                               Text="{Binding Id}" 
-                               FontSize="36" 
-                               FontAttributes="Bold" 
-                               TextColor="#D4AF37" 
-                               VerticalOptions="Center" 
-                               Margin="0,0,20,0" />
+                            <!-- Indicador Visual / Círculo -->
+                            <Ellipse Grid.Column="0"
+                                     WidthRequest="45" 
+                                     HeightRequest="45" 
+                                     Fill="#D4AF37" 
+                                     VerticalOptions="Center" 
+                                     HorizontalOptions="Center" />
 
-                            <!-- Informações de Texto -->
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="5">
+                            <!-- Textos Empilhados (Razão Social e CNPJ) -->
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 VerticalOptions="Center" 
+                                                 Spacing="2">
 
-                                <!-- Nome do Indicado -->
-                                <Label Text="{Binding NomeIndicado, StringFormat='Nome: {0}'}" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="{StaticResource TextoPrincipal}" 
-                                   LineBreakMode="TailTruncation" />
-
-                                <!-- Data da Indicação -->
-                                <Label Text="{Binding DataIndicacao, StringFormat='Data: {0:dd/MM/yyyy}'}"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="Gray" />
-
-                                <!-- Badge de Status Visual -->
-                                <Border StrokeShape="RoundRectangle 4" 
-                                    Stroke="Transparent" 
-                                    BackgroundColor="#404040"
-                                    HorizontalOptions="Start"
-                                    Padding="8,2"
-                                    Margin="0,5,0,0">
-                                    <Label Text="{Binding Status}" 
-                                       FontSize="12" 
+                                <!-- RAZÃO SOCIAL -->
+                                <Label Text="{Binding razao_social}" 
                                        FontAttributes="Bold" 
-                                       TextColor="White" />
-                                    <!-- DICA: Você pode usar DataTriggers aqui no Border igual fez nas bonificações 
-                                     para deixar verde se "Validado" ou amarelo se "Pendente" -->
-                                </Border>
+                                       FontSize="16" 
+                                       TextColor="{StaticResource TextoPrincipal}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1" />
+
+                                <!-- CNPJ -->
+                                <Label Text="{Binding cnpj, StringFormat='CNPJ: {0}'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray"
+                                       LineBreakMode="NoWrap" />
 
                             </VerticalStackLayout>
                         </Grid>
@@ -140,30 +118,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!-- LINHA 2: BOTÕES INFERIORES -->
-        <Grid Grid.Row="2" 
-          ColumnDefinitions="*, *" 
-          Margin="20,10,20,0" 
-          ColumnSpacing="20">
-
-            <Button Grid.Column="0" 
-                Text="VOLTAR" 
-                Command="{Binding VoltarTelaCommand}" 
-                BackgroundColor="#404040" 
-                TextColor="White" 
-                FontAttributes="Bold" 
-                CornerRadius="20" 
-                HeightRequest="50" />
-
-            <Button Grid.Column="1" 
-                Text="VALIDAR" 
-                Command="{Binding AbrirValidacaoCommand}" 
-                BackgroundColor="#D4AF37" 
-                TextColor="Black" 
-                FontAttributes="Bold" 
-                CornerRadius="20"/>
-        </Grid>
 
     </Grid>
 </ContentPage>

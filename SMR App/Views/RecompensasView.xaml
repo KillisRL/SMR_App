@@ -1,12 +1,12 @@
-    <?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
-                 x:Class="SMR_App.Views.RecompensasView"
-                 ControlTemplate="{StaticResource MainPageTemplate}"
-                 NavigationPage.HasNavigationBar="False"
-                 Shell.NavBarIsVisible="False"
-                 BackgroundColor="{StaticResource FundoPrincipal}">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             x:Class="SMR_App.Views.RecompensasView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource FundoPrincipal}">
 
     <!-- Grid principal divide a tela: Filtros/Busca (Auto), Lista (*), Botão Rodapé (Auto) -->
     <Grid RowDefinitions="Auto, *, Auto" Padding="20,0,20,20">
@@ -15,10 +15,10 @@
         <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,20,0,15">
 
             <Label Text="CONSULTAR RECOMPENSAS" 
-                       FontSize="28" 
-                       FontAttributes="Bold" 
-                       TextColor="{StaticResource TextoPrincipal}" 
-                       HorizontalOptions="Center" />
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoPrincipal}" 
+                   HorizontalOptions="Center" />
 
             <!-- Filtros: Tipo de Busca e Status em 2 Colunas -->
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
@@ -27,14 +27,14 @@
                 <VerticalStackLayout Grid.Column="0" Spacing="5">
                     <Label Text="Buscar por:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
-                                StrokeShape="RoundRectangle 8" 
-                                StrokeThickness="0" 
-                                HeightRequest="45" 
-                                Padding="5,0">
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="45" 
+                            Padding="5,0">
                         <Picker x:Name="PickerTipoFiltro" 
-                                    TextColor="{StaticResource TextoPrincipal}" 
-                                    TitleColor="Gray"
-                                    SelectedIndexChanged="OnTipoFiltroChanged">
+                                TextColor="{StaticResource TextoPrincipal}" 
+                                TitleColor="Gray"
+                                SelectedIndexChanged="OnTipoFiltroChanged">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Título</x:String>
@@ -49,14 +49,14 @@
                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                     <Label Text="Status:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
-                                StrokeShape="RoundRectangle 8" 
-                                StrokeThickness="0" 
-                                HeightRequest="45" 
-                                Padding="5,0">
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="45" 
+                            Padding="5,0">
                         <Picker ItemsSource="{Binding OpcoesStatus}" 
-                                    SelectedItem="{Binding StatusSelecionado}" 
-                                    TextColor="{StaticResource TextoPrincipal}" 
-                                    TitleColor="Gray" />
+                                SelectedItem="{Binding StatusSelecionado}" 
+                                TextColor="{StaticResource TextoPrincipal}" 
+                                TitleColor="Gray" />
                     </Border>
                 </VerticalStackLayout>
             </Grid>
@@ -64,38 +64,38 @@
             <!-- Barra de Pesquisa Única -->
             <VerticalStackLayout Spacing="5">
                 <Label Text="Pesquisa" 
-                           FontAttributes="Bold" 
-                           FontSize="14" 
-                           TextColor="{StaticResource TextoPrincipal}" />
+                       FontAttributes="Bold" 
+                       FontSize="14" 
+                       TextColor="{StaticResource TextoPrincipal}" />
 
                 <Border BackgroundColor="{StaticResource FundoMenu}" 
-                            StrokeShape="RoundRectangle 8" 
-                            StrokeThickness="0" 
-                            HeightRequest="45" 
-                            Padding="5,0">
+                        StrokeShape="RoundRectangle 8" 
+                        StrokeThickness="0" 
+                        HeightRequest="45" 
+                        Padding="5,0">
                     <SearchBar x:Name="SearchBarPesquisa"
-                                   Placeholder="Digite para buscar..." 
-                                   PlaceholderColor="Gray"
-                                   TextColor="{StaticResource TextoPrincipal}"
-                                   BackgroundColor="Transparent" 
-                                   CancelButtonColor="{StaticResource TextoPrincipal}" 
-                                   TextChanged="OnSearchBarTextChanged"
-                                   SearchCommand="{Binding ConsultarRecompensasCommand}" />
+                               Placeholder="Digite para buscar..." 
+                               PlaceholderColor="Gray"
+                               TextColor="{StaticResource TextoPrincipal}"
+                               BackgroundColor="Transparent" 
+                               CancelButtonColor="{StaticResource TextoPrincipal}" 
+                               TextChanged="OnSearchBarTextChanged"
+                               SearchCommand="{Binding ConsultarRecompensasCommand}" />
                 </Border>
             </VerticalStackLayout>
         </VerticalStackLayout>
 
         <!-- LINHA 1: Lista de Recompensas (Cards Escuros) -->
         <CollectionView Grid.Row="1" 
-                            ItemsSource="{Binding ListaRecompensa}" 
-                            SelectionMode="None">
+                        ItemsSource="{Binding ListaRecompensa}" 
+                        SelectionMode="None">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
                     <Label Text="Nenhuma recompensa encontrada." 
-                               TextColor="Gray" 
-                               FontSize="16" 
-                               HorizontalOptions="Center" />
+                           TextColor="Gray" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
@@ -103,61 +103,60 @@
                 <DataTemplate>
                     <!-- Card Escuro no padrão do TCC -->
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
-                                StrokeShape="RoundRectangle 8" 
-                                StrokeThickness="0" 
-                                Margin="0,0,0,15"
-                                Padding="15">
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            Margin="0,0,0,15"
+                            Padding="15">
 
                         <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto" RowSpacing="8">
 
                             <!-- LINHA 0, COLUNA 0: Título da Recompensa (Área clicável para alteração) -->
                             <Label Grid.Row="0" Grid.Column="0"
-                                       Text="{Binding titulo}" 
-                                       FontAttributes="Bold" 
-                                       FontSize="18" 
-                                       TextColor="#D4AF37"
-                                       LineBreakMode="WordWrap"
-                                       VerticalOptions="Center">
+                                   Text="{Binding titulo}" 
+                                   FontAttributes="Bold" 
+                                   FontSize="18" 
+                                   TextColor="#D4AF37"
+                                   LineBreakMode="WordWrap"
+                                   VerticalOptions="Center">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
-                                            CommandParameter="{Binding .}" />
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
                             </Label>
 
                             <!-- LINHA 0, COLUNA 1: Container de Status (Ativo/Inativo) -->
                             <Border Grid.Row="0" Grid.Column="1" 
-                                        StrokeShape="RoundRectangle 4" 
-                                        StrokeThickness="0" 
-                                        Padding="8,3" 
-                                        HorizontalOptions="End" 
-                                        VerticalOptions="Start">
+                                    StrokeShape="RoundRectangle 4" 
+                                    StrokeThickness="0" 
+                                    Padding="8,3" 
+                                    HorizontalOptions="End" 
+                                    VerticalOptions="Start">
                                 <Border.Triggers>
-                                    <!-- Altere para Ativo ou ativo dependendo de como está na sua classe C# do Domínio -->
-                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
+                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="True">
                                         <Setter Property="BackgroundColor" Value="#2E7D32" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="False">
+                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="False">
                                         <Setter Property="BackgroundColor" Value="#C62828" />
                                     </DataTrigger>
                                 </Border.Triggers>
 
-                                <Label Text="{Binding Ativo, Converter={StaticResource BoolToStatusConverter}, FallbackValue='INATIVO'}" 
-                                           FontAttributes="Bold" 
-                                           TextColor="White" 
-                                           FontSize="11"/>
+                                <Label Text="{Binding ativo, Converter={StaticResource BoolToStatusConverter}, FallbackValue='INATIVO'}" 
+                                       FontAttributes="Bold" 
+                                       TextColor="White" 
+                                       FontSize="11"/>
                             </Border>
 
                             <!-- LINHA 1: Descrição (Ocupa as duas colunas para dar espaço ao texto longo) -->
                             <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                       Text="{Binding descricao}" 
-                                       TextColor="{StaticResource TextoPrincipal}" 
-                                       FontSize="14"
-                                       LineBreakMode="WordWrap">
+                                   Text="{Binding descricao}" 
+                                   TextColor="{StaticResource TextoPrincipal}" 
+                                   FontSize="14"
+                                   LineBreakMode="WordWrap">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
-                                            CommandParameter="{Binding .}" />
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
                             </Label>
 
@@ -165,46 +164,46 @@
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="4" VerticalOptions="End">
                                 <VerticalStackLayout.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
-                                            CommandParameter="{Binding .}" />
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        CommandParameter="{Binding .}" />
                                 </VerticalStackLayout.GestureRecognizers>
 
                                 <!-- Rank Mínimo -->
                                 <HorizontalStackLayout Spacing="5">
                                     <Label Text="RANK MÍNIMO:" 
-                                               TextColor="Gray" 
-                                               FontSize="12" 
-                                               FontAttributes="Bold" />
+                                           TextColor="Gray" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" />
                                     <Label Text="{Binding id_rank, FallbackValue='Geral'}" 
-                                               TextColor="#D4AF37" 
-                                               FontSize="12" 
-                                               FontAttributes="Bold" />
+                                           TextColor="#D4AF37" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" />
                                 </HorizontalStackLayout>
 
                                 <!-- Pontos Necessários -->
                                 <HorizontalStackLayout Spacing="5">
                                     <Label Text="PONTOS NECESSÁRIOS:" 
-                                               TextColor="Gray" 
-                                               FontSize="13" 
-                                               FontAttributes="Bold" />
+                                           TextColor="Gray" 
+                                           FontSize="13" 
+                                           FontAttributes="Bold" />
                                     <Label Text="{Binding pontos_necessarios}" 
-                                               TextColor="#D4AF37" 
-                                               FontSize="14" 
-                                               FontAttributes="Bold" />
+                                           TextColor="#D4AF37" 
+                                           FontSize="14" 
+                                           FontAttributes="Bold" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
                             <!-- LINHA 2, COLUNA 1: Botão Lixeira (Totalmente isolado na ponta inferior direita) -->
                             <ImageButton Grid.Row="2" Grid.Column="1"
-                                             Source="lixeirarecompensa.png" 
-                                             BackgroundColor="Transparent"
-                                             HeightRequest="28"
-                                             WidthRequest="28"
-                                             Padding="2"
-                                             HorizontalOptions="End"
-                                             VerticalOptions="End"
-                                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirRecompensaCommand}"
-                                             CommandParameter="{Binding .}" />
+                                         Source="lixeirarecompensa.png" 
+                                         BackgroundColor="Transparent"
+                                         HeightRequest="28"
+                                         WidthRequest="28"
+                                         Padding="2"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="End"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirRecompensaCommand}"
+                                         CommandParameter="{Binding .}" />
 
                         </Grid>
                     </Border>
@@ -215,13 +214,13 @@
         <!-- LINHA 2: Botão de Ação Dourado no Rodapé -->
         <Grid Grid.Row="2" ColumnDefinitions="*" Margin="0,15,0,0">
             <Button Grid.Column="0" 
-                        Text="NOVA RECOMPENSA" 
-                        BackgroundColor="#D4AF37" 
-                        TextColor="Black" 
-                        FontAttributes="Bold" 
-                        CornerRadius="20" 
-                        HeightRequest="50" 
-                        Command="{Binding AbriCadastroRecompensaCommand}" />
+                    Text="NOVA RECOMPENSA" 
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20" 
+                    HeightRequest="50" 
+                    Command="{Binding AbriCadastroRecompensaCommand}" />
         </Grid>
 
     </Grid>
