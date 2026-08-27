@@ -93,6 +93,10 @@ namespace SMRApi.Controllers
                 // 2. Trata cada status
                 if (codigoStatus == IndicacaoStatus.Enviada)
                 {
+                    if(indicacao.Status_Indicacao != IndicacaoStatus.Pendente)
+                    {
+                        return BadRequest(new { Mensagem = "Só é possível enviar indicações na situação \"Pendente\"." });
+                    }
                     // Gera um código de 8 dígitos se ainda não tiver um
                     if (string.IsNullOrEmpty(indicacao.Codigo_Validacao))
                     {
@@ -106,8 +110,6 @@ namespace SMRApi.Controllers
 
                     return Ok(new
                     {
-
-
                         Mensagem = "Indicação enviada com sucesso!",
                         CodigoValidacao = indicacao.Codigo_Validacao,
                         LinkValidacao = linkBase
@@ -115,10 +117,52 @@ namespace SMRApi.Controllers
                 }
                 else if (codigoStatus == IndicacaoStatus.Cancelada)
                 {
+
+                    if(indicacao.Status_Indicacao != IndicacaoStatus.Pendente || indicacao.Status_Indicacao != IndicacaoStatus.Enviada)
+                    {
+                        return BadRequest(new {Mensagem = "Só é possível cancelar indicações com as seguintes situação: Pendente e Enviada."});
+                    }
                     indicacao.Status_Indicacao = IndicacaoStatus.Cancelada;
                     await _dbContext.SaveChangesAsync();
 
                     return Ok(new { Mensagem = "Indicação cancelada com sucesso!" });
+                }
+                else if (codigoStatus == IndicacaoStatus.Validada)
+                {
+                    if (indicacao.Status_Indicacao != IndicacaoStatus.Enviada)
+                    {
+                        return BadRequest(new { Mensagem = "Só é possível validar uma indicação na situação \"Enviada\"."});
+                    }
+
+                    int idEmpresa = await _dbContext.Bonificacoes.Where(b => b.Id == indicacao.Id_Bonificacao).Select(b => b.Id_Empresa).FirstOrDefaultAsync();
+
+                    var promotorPontos = await _dbContext.PromotorPontos.FirstOrDefaultAsync(p => p.id_promotor == indicacao.Id_Promotor_Indicou && p.id_empresa == idEmpresa);
+
+                    if (promotorPontos != null)
+                    {
+                        promotorPontos.pontos_acumulados++;
+                        promotorPontos.data_atualizacao = DateTime.Now;
+
+                        _dbContext.PromotorPontos.Update(promotorPontos);
+                    }
+                    else
+                    {
+                        promotorPontos = new PromotorPontos
+                        {
+                            id_promotor = indicacao.Id_Promotor_Indicou,
+                            id_empresa = idEmpresa,
+                            pontos_acumulados = 1,
+                            data_atualizacao = DateTime.Now
+                        };
+                        await _dbContext.PromotorPontos.AddAsync(promotorPontos);
+                    }
+
+                    indicacao.Status_Indicacao = codigoStatus;
+                    indicacao.Data_Validacao = DateTime.Now;
+                    await _dbContext.SaveChangesAsync();
+
+                    return Ok(new { Mensagem = $"Status alterado para {codigoStatus} com sucesso!" });
+
                 }
                 else
                 {

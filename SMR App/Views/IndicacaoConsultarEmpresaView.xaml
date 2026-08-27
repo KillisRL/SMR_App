@@ -39,17 +39,16 @@
         </VerticalStackLayout>
 
         <!-- ========================================== -->
-        <!-- LINHA 1: Lista de Empresas (Grid 2 Colunas)-->
+        <!-- LINHA 1: Lista de Empresas (1 Coluna Comprida) -->
         <!-- ========================================== -->
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding ListaEmpresa}" 
                         SelectionMode="None">
 
-            <!-- Define o layout em Grid com 2 colunas -->
+            <!-- 🚀 ALTERADO DE SPAN=2 PARA SPAN=1 PARA FICAR COMPRIDO -->
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" 
-                                 Span="2" 
-                                 HorizontalItemSpacing="15" 
+                                 Span="1" 
                                  VerticalItemSpacing="15" />
             </CollectionView.ItemsLayout>
 
@@ -63,67 +62,56 @@
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
-                <!-- 🚀 1. TIPO CORRIGIDO: Deve apontar para a classe Empresa -->
                 <DataTemplate x:DataType="classesPessoa:Empresa">
-                    <!-- Card da Empresa -->
+                    <!-- Card Comprido da Empresa -->
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
                             StrokeShape="RoundRectangle 15" 
                             StrokeThickness="0" 
-                            MinimumHeightRequest="110" 
-                            Padding="12">
+                            HeightRequest="80" 
+                            Padding="15,10">
 
-                        <!-- 🚀 2. TAP GESTURE DENTRO DO BORDER DO ITEM -->
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer 
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IndicacaoConsultarEmpresaViewModel}}, Path=AbrirCadastroCommand}"
                                 CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
 
-                        <!-- Container Vertical para alinhar Razão Social e CNPJ -->
-                        <VerticalStackLayout VerticalOptions="Center" 
-                                             HorizontalOptions="Center" 
-                                             Spacing="6">
+                        <!-- 🚀 GRID HORIZONTAL: Coluna 0 para o Círculo/Logo, Coluna 1 para os Textos -->
+                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15" VerticalOptions="Center">
 
-                            <!-- RAZÃO SOCIAL -->
-                            <Label Text="{Binding razao_social}" 
-                                   FontAttributes="Bold" 
-                                   FontSize="14" 
-                                   TextColor="{StaticResource TextoPrincipal}"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"
-                                   LineBreakMode="WordWrap"
-                                   MaxLines="2" />
+                            <!-- Indicador Visual / Círculo (Igual ao seu print) -->
+                            <Ellipse Grid.Column="0"
+                                     WidthRequest="45" 
+                                     HeightRequest="45" 
+                                     Fill="#8B5A5B" 
+                                     VerticalOptions="Center" 
+                                     HorizontalOptions="Center" />
 
-                            <!-- CNPJ -->
-                            <Label Text="{Binding cnpj, StringFormat='CNPJ: {0}'}" 
-                                   FontSize="11" 
-                                   FontAttributes="Bold"
-                                   TextColor="Gray"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"
-                                   LineBreakMode="NoWrap" />
+                            <!-- Textos Empilhados (Razão Social e CNPJ) -->
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 VerticalOptions="Center" 
+                                                 Spacing="2">
 
-                        </VerticalStackLayout>
+                                <!-- RAZÃO SOCIAL -->
+                                <Label Text="{Binding razao_social}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16" 
+                                       TextColor="{StaticResource TextoPrincipal}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1" />
+
+                                <!-- CNPJ -->
+                                <Label Text="{Binding cnpj, StringFormat='CNPJ: {0}'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray"
+                                       LineBreakMode="NoWrap" />
+
+                            </VerticalStackLayout>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!-- ========================================== -->
-        <!-- LINHA 2: Botão de Ação no Rodapé           -->
-        <!-- ========================================== -->
-        <Grid Grid.Row="2" Margin="0,15,0,0">
-            <Button Text="RESGATAR&#10;RECOMPENSA" 
-                    BackgroundColor="#D4AF37" 
-                    TextColor="Black" 
-                    FontAttributes="Bold" 
-                    CornerRadius="15" 
-                    HeightRequest="60" 
-                    WidthRequest="160"
-                    HorizontalOptions="End"
-                    Padding="10"
-                    LineBreakMode="WordWrap" />
-        </Grid>
 
     </Grid>
 </ContentPage>

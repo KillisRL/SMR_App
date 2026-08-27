@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var key = Encoding.ASCII.GetBytes("SmrAppUelerBernardoLuizFelipeTCC");
 
+// --- 1. CONFIGURAÇÃO DOS SERVIÇOS (Injeção de Dependência) ---
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -16,7 +18,7 @@ builder.Services.AddAuthentication(x =>
 })
 .AddJwtBearer(x =>
 {
-    x.RequireHttpsMetadata = false; 
+    x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
@@ -56,26 +58,38 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("MariaDb");
 
 builder.Services.AddDbContext<SMRDBContext>(options =>
 {
-    // O Pomelo requer que a string de conexão e a versão sejam passadas
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllersWithViews();
+
+// Configuração do CORS (Movida para ANTES do builder.Build())
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSMRWeb", policy =>
+    {
+        policy.WithOrigins(
+            "https://smrapp.com.br",
+            "https://www.smrapp.com.br",
+            "https://smr-app-virid.vercel.app"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+// --- 2. CONSTRUÇÃO DA APLICAÇÃO ---
 var app = builder.Build();
 
+// --- 3. PIPELINE DE REQUISIÇÕES (Middlewares) ---
 app.UseStaticFiles();
 app.UseRouting();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -84,7 +98,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Quem é você?
+// Middleware do CORS (Sempre após UseRouting e antes de UseAuthentication)
+app.UseCors("AllowSMRWeb");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
