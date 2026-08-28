@@ -51,6 +51,7 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacaoDetalhesViewModel>();
             builder.Services.AddTransient<IndicacaoValidarQrCodeViewModel>();
             builder.Services.AddTransient<HistIndicacoesViewModel>();
+            builder.Services.AddTransient<HistIndicacoesEmpresaViewModel>();
 
 
 
@@ -73,6 +74,7 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacaoDetalhesView>();
             builder.Services.AddTransient<IndicacaoValidarQrCodeView>();
             builder.Services.AddTransient<HistIndicacoesView>();
+            builder.Services.AddTransient<HistIndicacoesEmpresaView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

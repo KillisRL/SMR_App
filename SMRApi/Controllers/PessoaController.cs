@@ -171,6 +171,7 @@ namespace SMRApi.Controllers
                         celular = dto.celular,
                         pontos_acumulados = 0
                     };
+
                     _dbContext.Promotor.Add(novoPromotor);
                 }
 

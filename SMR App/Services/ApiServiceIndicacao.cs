@@ -3,6 +3,7 @@ using SMRDominio.ClasseIndicacao;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -26,6 +27,39 @@ namespace SMR_App.Services
             {
                 BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
             };
+        }
+ 
+        public async Task<(bool Sucesso, string Mensagem, List<IndicacaoHistoricoDto> Dados)> ConsultarIndicacaoHistorico(DateTime datainicial, DateTime datafinal, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var parametro = new { datainicial, datafinal };
+
+                var resultado = await _httpClient.PostAsJsonAsync("indicacao/consultar", parametro);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<IndicacaoHistoricoDto>>(options);
+                    return (true, string.Empty, dados ?? new List<IndicacaoHistoricoDto>());
+                }
+                else
+                {
+                    // Tratamento defensivo caso a API retorne erro sem corpo JSON estruturado
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    string mensagemErro = retorno?.Mensagem ?? "Erro desconhecido ao consultar indicações.";
+
+                    return (false, mensagemErro, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar indicação: {ex.Message}");
+                return (false, "Erro interno ao consultar indicações.", null);
+            }
         }
         public async Task<(bool Sucesso, IndicacaoRetornoApiEnviada Dados)> ConsultarIndicacaoValidacao(string token, string codigoValidacao)
         {

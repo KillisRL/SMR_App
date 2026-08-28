@@ -23,12 +23,15 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         public async Task AbrirHistorico(Empresa empresaSelecionada)
         {
+
+            int idEmpresa = empresaSelecionada.id;
+
             var parametro = new Dictionary<string, object>
             {
-                {"EmpresaIndicacao", empresaSelecionada }
+                {"EmpresaIndicacao", idEmpresa }
             };
 
-            await Shell.Current.GoToAsync(nameof(IndicacaoEmpresaBonificacaoView), parametro);
+            await Shell.Current.GoToAsync(nameof(HistIndicacoesEmpresaView), parametro);
         }
 
 

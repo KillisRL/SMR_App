@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             xmlns:classesIndicacao="clr-namespace:SMRDominio.ClasseIndicacao;assembly=SMRDominio"
+             x:Class="SMR_App.Views.HistIndicacoesEmpresaView"
+             x:DataType="viewmodels:HistIndicacoesEmpresaViewModel"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <!-- Grid principal divide a tela em seções verticais -->
+    <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="20">
+
+        <!-- ========================================== -->
+        <!-- LINHA 0: CARROSSEL DE EMPRESAS (< Nome >)    -->
+        <!-- ========================================== -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,10,0,15" VerticalOptions="Center">
+
+            <!-- Botão Seta Esquerda (Comando Conectado) -->
+            <ImageButton Grid.Column="0"
+                         Source="setaesquerda.png" 
+                         BackgroundColor="Transparent"
+                         HeightRequest="30" WidthRequest="30"
+                         Command="{Binding EmpresaAnteriorCommand}"
+                         HorizontalOptions="Start" />
+
+            <!-- Nome da Empresa Centralizado -->
+            <Label Grid.Column="1"
+                   Text="{Binding NomeEmpresaAtual}" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoPrincipal}" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" 
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1" />
+
+            <!-- Botão Seta Direita (Comando Conectado) -->
+            <ImageButton Grid.Column="2"
+                         Source="setadireita.png" 
+                         BackgroundColor="Transparent"
+                         HeightRequest="30" WidthRequest="30"
+                         Command="{Binding ProximaEmpresaCommand}"
+                         HorizontalOptions="End" />
+        </Grid>
+
+        <!-- ========================================== -->
+        <!-- LINHA 1: CONTADOR E BARRA DE PROGRESSO     -->
+        <!-- ========================================== -->
+        <VerticalStackLayout Grid.Row="1" Spacing="6" Margin="0,0,0,15">
+            <Grid ColumnDefinitions="*, Auto">
+                <Label Grid.Column="0" Text="Indicações" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextoPrincipal}" />
+                <!-- Aqui você pode ligar um contador caso queira exibir a quantidade da lista atual -->
+                <Label Grid.Column="1" Text="{Binding ListaIndicacao.Count, StringFormat='Total: {0}'}" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextoPrincipal}" />
+            </Grid>
+
+            <!-- Barra de Progresso Customizada -->
+            <ProgressBar Progress="0.6" 
+                         ProgressColor="#2E7D32" 
+                         BackgroundColor="#DCDCDC" 
+                         HeightRequest="12" />
+        </VerticalStackLayout>
+
+        <!-- ========================================== -->
+        <!-- LINHA 2: CABEÇALHO DO HISTÓRICO E NÍVEL    -->
+        <!-- ========================================== -->
+        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+            <Label Grid.Column="0" Text="Histórico" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextoPrincipal}" />
+            <Label Grid.Column="1" Text="Nível: Prata" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextoPrincipal}" />
+        </Grid>
+
+        <!-- ========================================== -->
+        <!-- LINHA 3: LISTA DE HISTÓRICO (COLLECTIONVIEW) -->
+        <!-- ========================================== -->
+        <CollectionView Grid.Row="3" 
+                        ItemsSource="{Binding ListaIndicacao}" 
+                        SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
+                    <Label Text="Nenhum histórico encontrado para esta empresa." 
+                           TextColor="Gray" 
+                           FontSize="14" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="classesIndicacao:IndicacaoHistoricoDto">
+                    <!-- Card de Histórico Escuro Padrão TCC -->
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            Padding="12">
+
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
+
+                            <!-- Dados do Indicado (Nome, Data da Indicação e Data de Validação) -->
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="3">
+
+                                <!-- Nome do Indicado -->
+                                <Label Text="{Binding NomeIndicado}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="15" 
+                                       TextColor="{StaticResource TextoPrincipal}" />
+
+                                <!-- Data da Indicação -->
+                                <Label Text="{Binding DataIndicacao, StringFormat='Data Indicação: {0:dd/MM/yyyy}'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray" />
+
+                                <!-- Data da Confirmação / Validação -->
+                                <Label Text="{Binding DataValidacao, StringFormat='Data Confirmação: {0:dd/MM/yyyy}', TargetNullValue='Data Confirmação: Pendente'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <!-- Ícone de Perfil à Direita -->
+                            <Image Grid.Column="1" 
+                                   Source="user_icon.png" 
+                                   HeightRequest="40" 
+                                   WidthRequest="40" 
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

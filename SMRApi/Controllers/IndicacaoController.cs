@@ -19,6 +19,66 @@ namespace SMRApi.Controllers
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+        [HttpPost("consultar")]
+        [Authorize]
+        public async Task<IActionResult> IndicacaoConsultar([FromBody] ConsultaIndicacaoRequest request)
+        {
+            try
+            {
+                // Pega as datas do request enviado pelo app
+                DateTime dataInicial = request.DataInicial;
+                DateTime dataFinal = request.DataFinal;
+
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value
+                       ?? User.FindFirst("id")?.Value
+                       ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado." });
+                }
+
+                int codigoPromotor = await _dbContext.Promotor.Where(p => p.id_pessoa == idPessoaLogada).Select(p => p.id).FirstOrDefaultAsync();
+
+                if (codigoPromotor <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para consulta de indicações" });
+                }
+
+                var novaIndicacoes = await (
+                    from indicacao in _dbContext.Indicacao
+                    join bonificacao in _dbContext.Bonificacoes on
+                        indicacao.Id_Bonificacao equals bonificacao.Id
+                    join empresa in _dbContext.Empresa on
+                        bonificacao.Id_Empresa equals empresa.id
+                    where (indicacao.Id_Promotor_Indicou == codigoPromotor) &&
+                        (indicacao.Data_Indicacao >= dataInicial) &&
+                        (indicacao.Data_Indicacao <= dataFinal)
+                    select new
+                    {
+                        IDPromotor = indicacao.Id_Promotor_Indicou,
+                        NomeIndicado = indicacao.Nome_Indicado,
+                        RazaoSocial = empresa.razao_social,
+                        DataIndicacao = indicacao.Data_Indicacao,
+                        DataValidacao = indicacao.Data_Validacao,
+                        IDBonificacao = indicacao.Id_Bonificacao,
+                        DescricaoBonificacao = bonificacao.Descricao,
+                        IDEmpresa = bonificacao.Id_Empresa
+                    }).ToListAsync();
+
+                if (novaIndicacoes.Count <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Você não tem nenhuma indicação." });
+                }
+
+                return Ok(novaIndicacoes);
+            }
+            catch (Exception ex)
+            {
+                var detalhe = ex.InnerException?.Message ?? ex.Message;
+                return StatusCode(500, new { Mensagem = "Erro ao consultar a indicação.", Erro = detalhe });
+            }
+        }
 
         [HttpGet("consultar-validacao/{codigoValidacao}")]
         [Authorize]
@@ -279,6 +339,12 @@ namespace SMRApi.Controllers
                 var detalhe = ex.InnerException?.Message ?? ex.Message;
                 return StatusCode(500, new { Mensagem = "Erro ao cadastrar indicação.", Erro = detalhe });
             }
+        }
+
+        public class ConsultaIndicacaoRequest
+        {
+            public DateTime DataInicial { get; set; }
+            public DateTime DataFinal { get; set; }
         }
     }
 }
