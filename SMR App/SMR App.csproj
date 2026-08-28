@@ -84,6 +84,9 @@
 		<MauiXaml Update="Views\GerenciarRecompensasView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\HistIndicacoesEmpresaView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\HistIndicacoesView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
