@@ -2,58 +2,61 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             x:Class="SMR_App.Views.RelatoriosCoBonifView">
+             x:Class="SMR_App.Views.RelatoriosCoBonifView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
 
-    <Grid RowDefinitions="Auto, Auto, Auto, *, 80" Padding="15">
-
-        <DatePicker Date="{Binding DataInicio}" Format="dd/MM/yyyy" FontAttributes="Bold"/>
-        <DatePicker Date="{Binding DataFim}" Format="dd/MM/yyyy" FontAttributes="Bold"/>
-
-        <!-- Cabeçalho: Home, Usuário e Perfil -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="0, 10, 0, 20">
-            <ImageButton Grid.Column="0" Source="home_icon.png" WidthRequest="40" HeightRequest="40" Command="{Binding VoltarInicioCommand}"/>
-            <Label Grid.Column="1" Text="{Binding NomeUsuario}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Image Grid.Column="2" Source="profile_icon.png" WidthRequest="40" HeightRequest="40"/>
-        </Grid>
+    <!-- Ajustei as linhas para o gráfico ocupar o espaço central flexível (*) -->
+    <Grid RowDefinitions="Auto, Auto, *, 80" Padding="15">
 
         <!-- Navegação do Relatório -->
-        <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto" Margin="0, 0, 0, 20">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0, 0, 0, 20">
             <ImageButton Grid.Column="0" Source="arrow_left.png" WidthRequest="30" Command="{Binding RelatorioAnteriorCommand}"/>
 
-            <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="15, 10" HorizontalOptions="Center">
-                <Label Text="CONTROLE&#10;BONIFICAÇÃO" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <!-- Fundo alterado para FundoMenu -->
+            <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 10" HorizontalOptions="Center">
+                <Label Text="CONTROLE&#10;BONIFICAÇÃO" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
             </Border>
 
             <ImageButton Grid.Column="2" Source="arrow_right.png" WidthRequest="30" Command="{Binding ProximoRelatorioCommand}"/>
         </Grid>
 
         <!-- Filtros de Data -->
-        <HorizontalStackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Center" Margin="0, 0, 0, 20">
+        <HorizontalStackLayout Grid.Row="1" Spacing="15" HorizontalOptions="Center" Margin="0, 0, 0, 20">
             <Image Source="calendar_icon.png" WidthRequest="25" VerticalOptions="Center"/>
-            <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="10, 5">
-                <DatePicker Date="{Binding DataInicio}" Format="dd/MM/yyyy" FontAttributes="Bold"/>
+
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10, 5">
+                <DatePicker Date="{Binding DataInicio}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}"/>
             </Border>
-            <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="10, 5">
-                <DatePicker Date="{Binding DataFim}" Format="dd/MM/yyyy" FontAttributes="Bold"/>
+
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10, 5">
+                <DatePicker Date="{Binding DataFim}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}"/>
             </Border>
         </HorizontalStackLayout>
 
         <!-- Container do Gráfico -->
-        <Border Grid.Row="3" Stroke="#B39DDB" StrokeThickness="2" StrokeShape="RoundRectangle 5" Padding="10">
-            <VerticalStackLayout>
-                <Label Text="Controle Bonificação" HorizontalOptions="Center" FontSize="16"/>
-                <Label Text="● Custo Indicação" TextColor="#4285F4" HorizontalOptions="Center" FontSize="12" Margin="0,0,0,10"/>
+        <!-- Usa o FundoMenu para dar o aspecto de "Cartão" e TextoSecundario para uma borda suave -->
+        <Border Grid.Row="2" BackgroundColor="{StaticResource FundoMenu}" Stroke="{StaticResource TextoSecundario}" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10">
+            <Grid RowDefinitions="Auto, Auto, *">
+                <Label Grid.Row="0" Text="Controle Bonificação" HorizontalOptions="Center" FontSize="16" TextColor="{StaticResource TextoPrincipal}"/>
 
-                <!-- O controle do LiveCharts2 entrará aqui -->
-                <!-- <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" /> -->
-                <BoxView Color="LightGray" HeightRequest="200" HorizontalOptions="Fill"/>
-                <!-- Placeholder -->
-            </VerticalStackLayout>
+                <!-- A cor da legenda permanece azulada (CornflowerBlue) para combinar com a linha do gráfico que configuramos na ViewModel -->
+                <Label Grid.Row="1" Text="● Custo Indicação" TextColor="CornflowerBlue" HorizontalOptions="Center" FontSize="12" Margin="0,0,0,10"/>
+
+                <!-- Gráfico Oficial do LiveCharts -->
+                <lvc:CartesianChart 
+                    Grid.Row="2"
+                    Series="{Binding SeriesGrafico}" 
+                    XAxes="{Binding EixosX}" 
+                    YAxes="{Binding EixosY}" />
+            </Grid>
         </Border>
 
-        <!-- Área Inferior / Bottom Sheet -->
-        <Border Grid.Row="4" BackgroundColor="#D3D3D3" StrokeThickness="0" Margin="-15, 15, -15, -15">
-            <BoxView Color="Black" HeightRequest="5" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 10, 0, 0"/>
+        <!-- Área Inferior / Bottom Sheet igual a PrincipalView -->
+        <Border Grid.Row="3" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Margin="-15, 15, -15, -15">
+            <!-- Puxador (Handle) com cor baseada no TextoSecundario e cantos arredondados -->
+            <BoxView Color="{StaticResource TextoSecundario}" HeightRequest="5" WidthRequest="100" CornerRadius="2" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 10, 0, 0"/>
         </Border>
+
     </Grid>
 </ContentPage>

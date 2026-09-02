@@ -9,7 +9,7 @@ using SMRDominio.DTOs;
 
 namespace SMR_App.ViewModels
 {
-    public partial class RelatoriosCoBonifViewModel : ObservableObject
+    public partial class RelatoriosCoBonifViewModel : BaseViewModel
     {
         private readonly RelatorioApiService _apiService;
 
@@ -17,10 +17,10 @@ namespace SMR_App.ViewModels
         private string _nomeUsuario = "Ueler Bernardo";
 
         [ObservableProperty]
-        private DateTime _dataInicio = new DateTime(2026, 2, 1);
+        private DateTime _dataInicio = new DateTime(2026, 8, 1);
 
         [ObservableProperty]
-        private DateTime _dataFim = new DateTime(2026, 2, 28);
+        private DateTime _dataFim = new DateTime(2026, 8, 31);
 
         [ObservableProperty]
         private ISeries[]? _seriesGrafico;
@@ -84,6 +84,8 @@ namespace SMR_App.ViewModels
 
                 if (dados == null || !dados.Any())
                 {
+                    await Application.Current.MainPage.DisplayAlert("Sem Dados", "Nenhuma bonificação encontrada neste período.", "OK");
+
                     SeriesGrafico = Array.Empty<ISeries>();
                     EixosX = Array.Empty<Axis>();
                     return;
@@ -116,7 +118,7 @@ namespace SMR_App.ViewModels
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Erro ao carregar gráfico: {ex.Message}");
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha ao carregar gráfico: {ex.Message}", "OK");
             }
         }
     }

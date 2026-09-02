@@ -1,8 +1,9 @@
 ﻿using SMR_App.Models;
-using SMRDominio.DTOs; // Ou onde seu CustoBonificacaoDTO estiver compartilhado
+using SMRDominio.ClasseBonificacao;
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace SMR_App.Services
 {
@@ -34,16 +35,22 @@ namespace SMR_App.Services
 
                 if (resultado.IsSuccessStatusCode)
                 {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
                     var dados = await resultado.Content.ReadFromJsonAsync<List<CustoBonificacaoDTO>>();
                     return dados ?? new List<CustoBonificacaoDTO>();
                 }
+                else
+                {
+                    // Se der erro 401, 500, etc., vai estourar a exceção para aparecer na tela
+                    var erro = await resultado.Content.ReadAsStringAsync();
+                    throw new Exception($"Status {resultado.StatusCode}. Detalhe: {erro}");
+                }
 
-                return new List<CustoBonificacaoDTO>();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Erro ao buscar relatório: {ex.Message}");
-                return new List<CustoBonificacaoDTO>();
+                throw new Exception(ex.Message);
             }
         }
     }

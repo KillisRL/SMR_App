@@ -6,7 +6,7 @@ using SMRInfraestrutura;
 
 namespace SMRApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [Authorize] // Exige que o usuário esteja logado com o token JWT
     public class RelatoriosController : ControllerBase
@@ -14,9 +14,10 @@ namespace SMRApi.Controllers
         private readonly RelatoriosRepository _repository;
         private readonly SMRDBContext _dbContext;
 
-        public RelatoriosController(RelatoriosRepository repository)
+        public RelatoriosController(RelatoriosRepository repository, SMRDBContext dbContext)
         {
             _repository = repository;
+            _dbContext = dbContext;
         }
 
         [HttpGet("custo-indicacao")]
