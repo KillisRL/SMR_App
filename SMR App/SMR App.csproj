@@ -5,6 +5,8 @@
 		<TargetFrameworks>net9.0-android35.0</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 
+		<NoWarn>NU1605</NoWarn>
+
 		<OutputType>Exe</OutputType>
 		<RootNamespace>SMR_App</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -48,6 +50,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.5" />
 
 		<!-- 2. CORREÇÃO CRÍTICA: Trocado $(MauiVersion) por 9.0.21 explicitamente -->
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
@@ -119,6 +122,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Views\RecuperarSenhaView.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\RelatoriosCoBonifView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\RelatoriosView.xaml">
 			<Generator>MSBuild:Compile</Generator>

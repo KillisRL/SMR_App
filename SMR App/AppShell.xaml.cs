@@ -29,6 +29,7 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(IndicacaoValidarQrCodeView), typeof(IndicacaoValidarQrCodeView));
             Routing.RegisterRoute(nameof(HistIndicacoesView), typeof(HistIndicacoesView));
             Routing.RegisterRoute(nameof(HistIndicacoesEmpresaView), typeof(HistIndicacoesEmpresaView));
+            Routing.RegisterRoute(nameof(RelatoriosCoBonifView), typeof(RelatoriosCoBonifView));
 
 
         }

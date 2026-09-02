@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using SMR_App.Services;
-using ZXing.Net.Maui.Controls;
 using SMR_App.ViewModels;
 using SMR_App.Views;
+using ZXing.Net.Maui.Controls;
 
 namespace SMR_App
 {
@@ -16,6 +18,8 @@ namespace SMR_App
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseBarcodeReader()
+                .UseSkiaSharp()
+                .UseLiveCharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -52,6 +56,7 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacaoValidarQrCodeViewModel>();
             builder.Services.AddTransient<HistIndicacoesViewModel>();
             builder.Services.AddTransient<HistIndicacoesEmpresaViewModel>();
+            builder.Services.AddTransient<RelatoriosCoBonifViewModel>();
 
 
 
@@ -75,6 +80,7 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacaoValidarQrCodeView>();
             builder.Services.AddTransient<HistIndicacoesView>();
             builder.Services.AddTransient<HistIndicacoesEmpresaView>();
+            builder.Services.AddTransient<RelatoriosCoBonifView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

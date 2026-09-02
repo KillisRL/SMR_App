@@ -4,7 +4,8 @@
     {
         get
         {
-            return "https://api.smrapp.com.br/";
+            //return "https://api.smrapp.com.br/";
+            return "https://localhost:7190/";
         }
     }
 }
