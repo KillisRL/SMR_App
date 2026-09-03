@@ -38,7 +38,43 @@ namespace SMRApi.Repositories
 
             return await db.QueryAsync<CustoBonificacaoDTO>(sql, parametros);
         }
+
+        public async Task<IEnumerable<DetalheBonificacaoExportDTO>> ObterDetalhesExportacaoAsync(DateTime inicio, DateTime fim, int idEmpresa)
+        {
+            using IDbConnection db = new MySqlConnection(_connectionString);
+
+            string sql = @"
+        SELECT 
+            i.data_indicacao AS DataIndicacao,
+            b.descricao AS DescricaoBonificacao,
+            b.valor AS Valor
+        FROM indicacao i
+        INNER JOIN bonificacao b ON i.id_bonificacao = b.id
+        WHERE i.data_indicacao BETWEEN @DataInicio AND @DataFim
+          AND b.id_empresa = @IdEmpresa
+          AND i.status_indicacao = 4
+        ORDER BY i.data_indicacao DESC;";
+
+            var parametros = new
+            {
+                DataInicio = inicio.ToString("yyyy-MM-dd 00:00:00"),
+                DataFim = fim.ToString("yyyy-MM-dd 23:59:59"),
+                IdEmpresa = idEmpresa
+            };
+
+            return await db.QueryAsync<DetalheBonificacaoExportDTO>(sql, parametros);
+        }
+
+        // DTO para exportação
+        public class DetalheBonificacaoExportDTO
+        {
+            public DateTime DataIndicacao { get; set; }
+            public string? DescricaoBonificacao { get; set; }
+            public decimal Valor { get; set; }
+        }
     }
+
+
 
     public class CustoBonificacaoDTO
     {

@@ -2,21 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
-             x:Class="SMR_App.Views.RelatoriosView">
-    <Grid RowDefinitions="Auto, Auto, *, 80" Padding="15">
+             x:Class="SMR_App.Views.RelatoriosView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
 
-        <!-- Cabeçalho: Home, Usuário e Perfil -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="0, 10, 0, 20">
-            <ImageButton Grid.Column="0" Source="home_icon.png" WidthRequest="40" HeightRequest="40" Command="{Binding VoltarInicioCommand}"/>
-            <Label Grid.Column="1" Text="{Binding NomeUsuario}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Image Grid.Column="2" Source="profile_icon.png" WidthRequest="40" HeightRequest="40"/>
-        </Grid>
+    <Grid RowDefinitions="Auto, Auto, *, 80" Padding="15">
 
         <!-- Barra de Pesquisa -->
         <VerticalStackLayout Grid.Row="1" Spacing="5" Margin="0, 10, 0, 20">
-            <Label Text="Pesquisa" FontSize="16" FontAttributes="Bold"/>
-            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#E0E0E0" Padding="10, 5">
-                <SearchBar Placeholder="" Text="{Binding TextoPesquisa}" BackgroundColor="Transparent"/>
+            <Label Text="Pesquisa" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}"/>
+
+            <Border StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10, 5">
+                <SearchBar Placeholder="" Text="{Binding TextoPesquisa}" BackgroundColor="Transparent" TextColor="{StaticResource TextoPrincipal}"/>
             </Border>
         </VerticalStackLayout>
 
@@ -24,9 +21,9 @@
         <Grid Grid.Row="2" ColumnDefinitions="*, *" RowDefinitions="100, 100" ColumnSpacing="15" RowSpacing="15" VerticalOptions="Center">
 
             <!-- Botão 1: Ranking Promotores -->
-            <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 15" BackgroundColor="#D9D9D9" Padding="10">
+            <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 15" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10">
                 <Button Text="RANKING&#10;PROMOTORES" 
-                        TextColor="Black" 
+                        TextColor="{StaticResource TextoPrincipal}" 
                         FontAttributes="Bold" 
                         FontSize="14"
                         BackgroundColor="Transparent"
@@ -34,9 +31,9 @@
             </Border>
 
             <!-- Botão 2: Controle Bonificação (O que criamos o gráfico) -->
-            <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 15" BackgroundColor="#D9D9D9" Padding="10">
+            <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 15" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10">
                 <Button Text="CONTROLE&#10;BONIFICAÇÃO" 
-                        TextColor="Black" 
+                        TextColor="{StaticResource TextoPrincipal}" 
                         FontAttributes="Bold" 
                         FontSize="14"
                         BackgroundColor="Transparent"
@@ -45,9 +42,9 @@
             </Border>
 
             <!-- Botão 3: Conversão -->
-            <Border Grid.Row="1" Grid.Column="0" StrokeShape="RoundRectangle 15" BackgroundColor="#D9D9D9" Padding="10">
+            <Border Grid.Row="1" Grid.Column="0" StrokeShape="RoundRectangle 15" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10">
                 <Button Text="CONVERSÃO" 
-                        TextColor="Black" 
+                        TextColor="{StaticResource TextoPrincipal}" 
                         FontAttributes="Bold" 
                         FontSize="14"
                         BackgroundColor="Transparent"
@@ -56,8 +53,9 @@
         </Grid>
 
         <!-- Área Inferior / Bottom Sheet -->
-        <Border Grid.Row="3" BackgroundColor="#D3D3D3" StrokeThickness="0" Margin="-15, 15, -15, -15">
-            <BoxView Color="Black" HeightRequest="5" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 10, 0, 0"/>
+        <Border Grid.Row="3" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Margin="-15, 15, -15, -15">
+            <BoxView Color="{StaticResource TextoSecundario}" HeightRequest="5" WidthRequest="100" CornerRadius="2" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 10, 0, 0"/>
         </Border>
+
     </Grid>
 </ContentPage>

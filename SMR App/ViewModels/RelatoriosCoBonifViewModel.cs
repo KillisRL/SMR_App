@@ -63,6 +63,82 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private void ProximoRelatorio() { }
 
+        [RelayCommand]
+        private async Task ExportarExcelAsync()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Sessão expirada.", "OK");
+                    return;
+                }
+
+                // 1. Pula um alerta informando que está gerando
+                var bytes = await _apiService.BaixarRelatorioExcelAsync(DataInicio, DataFim, token);
+
+                if (bytes == null || bytes.Length == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível gerar o arquivo Excel.", "OK");
+                    return;
+                }
+
+                // 2. Define o nome do arquivo com a data atual
+                string nomeArquivo = $"Relatorio_Bonificacao_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                // 3. Salva no diretório temporário/cache do app e abre automaticamente
+                string caminhoArquivo = Path.Combine(FileSystem.CacheDirectory, nomeArquivo);
+                await File.WriteAllBytesAsync(caminhoArquivo, bytes);
+
+                // 4. Abre o arquivo com o programa padrão do sistema (Excel, LibreOffice ou leitor compatível)
+                await Launcher.Default.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(caminhoArquivo)
+                });
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Erro ao exportar Excel: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ExportarPdfAsync()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Sessão expirada.", "OK");
+                    return;
+                }
+
+                var bytes = await _apiService.BaixarRelatorioPdfAsync(DataInicio, DataFim, token);
+
+                if (bytes == null || bytes.Length == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível gerar o arquivo PDF.", "OK");
+                    return;
+                }
+
+                string nomeArquivo = $"Relatorio_Bonificacao_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                string caminhoArquivo = Path.Combine(FileSystem.CacheDirectory, nomeArquivo);
+                await File.WriteAllBytesAsync(caminhoArquivo, bytes);
+
+                // Abre o PDF com o visualizador padrão do sistema
+                await Launcher.Default.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(caminhoArquivo)
+                });
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Erro ao exportar PDF: {ex.Message}", "OK");
+            }
+        }
+
         // Disparados automaticamente quando o usuário altera a data no DatePicker
         partial void OnDataInicioChanged(DateTime value) => _ = CarregarDadosGraficoAsync();
         partial void OnDataFimChanged(DateTime value) => _ = CarregarDadosGraficoAsync();

@@ -20,6 +20,58 @@ namespace SMR_App.Services
             };
         }
 
+        public async Task<byte[]?> BaixarRelatorioExcelAsync(DateTime inicio, DateTime fim, string token)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
+                string url = $"relatorios/exportar-excel?inicio={inicio:yyyy-MM-dd}&fim={fim:yyyy-MM-dd}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsByteArrayAsync();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao baixar Excel: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<byte[]?> BaixarRelatorioPdfAsync(DateTime inicio, DateTime fim, string token)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
+                string url = $"relatorios/exportar-pdf?inicio={inicio:yyyy-MM-dd}&fim={fim:yyyy-MM-dd}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsByteArrayAsync();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao baixar PDF: {ex.Message}");
+                return null;
+            }
+        }
+
         public async Task<List<CustoBonificacaoDTO>> ObterCustoIndicacaoAsync(DateTime inicio, DateTime fim, string token)
         {
             try
