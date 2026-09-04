@@ -35,6 +35,7 @@ namespace SMR_App
             builder.Services.AddSingleton<ApiServicesBonificacao>();
             builder.Services.AddSingleton<ApiServiceRecompensa>();
             builder.Services.AddSingleton<ApiServiceIndicacao>();
+            builder.Services.AddSingleton<RelatorioApiService>();
 
             // ViewModels
             builder.Services.AddTransient<PessoaViewModel>();
@@ -57,6 +58,7 @@ namespace SMR_App
             builder.Services.AddTransient<HistIndicacoesViewModel>();
             builder.Services.AddTransient<HistIndicacoesEmpresaViewModel>();
             builder.Services.AddTransient<RelatoriosCoBonifViewModel>();
+            builder.Services.AddTransient<RelatoriosRankingViewModel>();
 
 
 
@@ -81,6 +83,7 @@ namespace SMR_App
             builder.Services.AddTransient<HistIndicacoesView>();
             builder.Services.AddTransient<HistIndicacoesEmpresaView>();
             builder.Services.AddTransient<RelatoriosCoBonifView>();
+            builder.Services.AddTransient<RelatoriosRankingView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

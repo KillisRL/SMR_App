@@ -27,7 +27,8 @@
                         FontAttributes="Bold" 
                         FontSize="14"
                         BackgroundColor="Transparent"
-                        Command="{Binding IrParaRankingCommand}"/>
+                        Command="{Binding AbrirTelaCommand}"
+                        CommandParameter="RelatoriosRankingView"/>
             </Border>
 
             <!-- Botão 2: Controle Bonificação (O que criamos o gráfico) -->

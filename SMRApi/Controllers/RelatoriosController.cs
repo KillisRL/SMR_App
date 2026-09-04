@@ -47,9 +47,33 @@ namespace SMRApi.Controllers
                 if (inicio > fim)
                     return BadRequest(new { message = "A data de início não pode ser maior que a data de fim." });
 
-                int idEmpresa = await ObterIdEmpresaLogadaAsync(); // Linha limpa e reutilizável!
+                int idEmpresa = await ObterIdEmpresaLogadaAsync();
 
                 var dados = await _repository.ObterCustoIndicacaoAsync(inicio, fim, idEmpresa);
+                return Ok(dados);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        [HttpGet("ranking-promotores")]
+        [Authorize]
+        public async Task<IActionResult> GetRankingPromotores(
+            [FromQuery] DateTime inicio,
+            [FromQuery] DateTime fim,
+            [FromQuery] int status = 0)
+        {
+            try
+            {
+                if (inicio > fim)
+                    return BadRequest(new { message = "A data de início não pode ser maior que a data de fim." });
+
+                int idEmpresa = await ObterIdEmpresaLogadaAsync();
+
+                var dados = await _repository.ObterRankingPromotoresAsync(inicio, fim, idEmpresa, status);
+
                 return Ok(dados);
             }
             catch (Exception ex)

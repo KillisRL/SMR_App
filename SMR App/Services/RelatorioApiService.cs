@@ -1,5 +1,6 @@
 ﻿using SMR_App.Models;
 using SMRDominio.ClasseBonificacao;
+using SMRDominio.DTOs;
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -103,6 +104,33 @@ namespace SMR_App.Services
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<RankingPromotorDTO>> ObterRankingPromotoresAsync(DateTime inicio, DateTime fim, int status, string token)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(token))
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
+                string url = $"relatorios/ranking-promotores?inicio={inicio:yyyy-MM-dd}&fim={fim:yyyy-MM-dd}&status={status}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var dados = await response.Content.ReadFromJsonAsync<List<RankingPromotorDTO>>(options);
+                    return dados ?? new List<RankingPromotorDTO>();
+                }
+                return new List<RankingPromotorDTO>();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao buscar ranking: {ex.Message}");
+                return new List<RankingPromotorDTO>();
             }
         }
     }

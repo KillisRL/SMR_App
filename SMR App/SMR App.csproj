@@ -126,6 +126,9 @@
 		<MauiXaml Update="Views\RelatoriosCoBonifView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\RelatoriosRankingView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\RelatoriosView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
