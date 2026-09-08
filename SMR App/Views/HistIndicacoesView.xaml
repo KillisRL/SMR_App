@@ -16,7 +16,7 @@
         <!-- LINHA 0: TÍTULO E PESQUISA DE EMPRESA -->
         <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,0,0,20">
 
-            <Label Text="CONSULTAR HISTÓRICO POR EMPRESA " 
+            <Label Text="Consultar Histórico" 
                    FontSize="26" 
                    FontAttributes="Bold" 
                    TextColor="{StaticResource TextoPrincipal}" 
@@ -118,6 +118,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentPage>

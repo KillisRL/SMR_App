@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Graphics.Text;
 using SMR_App.Services;
+using SMR_App.Views;
 using SMRDominio.ClasseIndicacao;
+using SMRDominio.ClasseRecompensa;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,16 +18,24 @@ namespace SMR_App.ViewModels
     {
         private readonly ApiServiceIndicacao _apiServiceIndicacao;
 
-        // Lista completa que vem da API (todas as empresas)
+        // O retorno da API agora é um objeto único (Wrapper), não uma lista de wrappers
+        private ConsultaFinalHistorico _respostaTotal; 
+
         private List<IndicacaoHistoricoDto> _todasIndicacoes = new();
+        private List<PromotorPontosResponse> _todosPontos = new();
+        private List<RecompensaResponse> _recompensasEmpresa = new();
 
         private List<int> _idsEmpresasDisponiveis = new();
         private int _indexEmpresaAtual = 0;
 
-        // Lista filtrada que será exibida na CollectionView da tela
-        [ObservableProperty] ObservableCollection<IndicacaoHistoricoDto> listaIndicacao = new();
+        [ObservableProperty]
+        private bool isFiltroAberto = false;
 
-        [ObservableProperty] private DateTime dataInicial = DateTime.Now.Date.AddDays(-30);
+        [ObservableProperty] ObservableCollection<IndicacaoHistoricoDto> listaIndicacao = new();
+        [ObservableProperty] private double progresso = 0;
+        [ObservableProperty] private int pontosPromotor = 0;
+        [ObservableProperty] private Recompensa_Rank promotorRank = Recompensa_Rank.ND;
+        [ObservableProperty] private DateTime dataInicial = DateTime.Now.Date.AddDays(-7);
         [ObservableProperty] private DateTime dataFinal = DateTime.Now.Date.AddHours(23).AddMinutes(59);
 
         [ObservableProperty] private int idEmpresa;
@@ -35,7 +46,6 @@ namespace SMR_App.ViewModels
             _apiServiceIndicacao = apiServiceIndicacao;
         }
 
-        // Este método roda automaticamente assim que o [QueryProperty] preenche o IdEmpresa!
         partial void OnIdEmpresaChanged(int value)
         {
             if (value > 0 && _todasIndicacoes.Any())
@@ -45,19 +55,44 @@ namespace SMR_App.ViewModels
         }
 
         [RelayCommand]
+        public void AbrirFiltro()
+        {
+            IsFiltroAberto = true;
+        }
+        [RelayCommand]
+        public void FecharFiltro()
+        {
+            IsFiltroAberto = false;
+        }
+
+
+        [RelayCommand]
+        public async Task SalvarFiltro()
+        {
+            IsFiltroAberto = false; 
+            await IndicacaoConsultarHistorico();
+        }
+
+        [RelayCommand]
         public async Task IndicacaoConsultarHistorico()
         {
             try
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
+                // Atenção: Certifique-se de que o método ConsultarIndicacaoHistorico no seu ApiService 
+                // esteja tipado para retornar ConsultarFinal (o wrapper) dentro do 'Dados'
                 var resultado = await _apiServiceIndicacao.ConsultarIndicacaoHistorico(DataInicial, DataFinal, token);
 
                 if (resultado.Sucesso && resultado.Dados != null)
                 {
-                    _todasIndicacoes = resultado.Dados;
+                    _respostaTotal = resultado.Dados;
 
-                    // Extrai as empresas únicas disponíveis para o carrossel
+                    // Desempacotando as listas do Wrapper
+                    _todasIndicacoes = _respostaTotal.Indicacoes ?? new();
+                    _todosPontos = _respostaTotal.PontosPromotor ?? new();
+                    _recompensasEmpresa = _respostaTotal.RecompensasEmpresas ?? new();
+
                     _idsEmpresasDisponiveis = _todasIndicacoes.Select(i => i.IdEmpresa).Distinct().ToList();
 
                     // Se o IdEmpresa atual veio da tela anterior, acha o índice dele
@@ -108,7 +143,23 @@ namespace SMR_App.ViewModels
             IdEmpresa = _idsEmpresasDisponiveis[_indexEmpresaAtual];
         }
 
-        // Método que filtra a lista baseada na empresa atual
+        [RelayCommand]
+        public async Task AbrirDetalhesIndicacao(IndicacaoHistoricoDto indicacao)
+        {
+            if (indicacao == null)
+            {
+                await Shell.Current.DisplayAlert("Atenção", "Dados inválidos para consulta.", "Ok");
+                return;
+            }
+
+            var parametro = new Dictionary<string, object>
+            {
+                {"CodigoIndicacao", indicacao.IDIndicacao}
+            };
+
+            await Shell.Current.GoToAsync(nameof(IndicacaoDetalhesView), parametro);
+        }
+
         private void FiltrarIndicaçoesPorEmpresa()
         {
             var filtradas = _todasIndicacoes.Where(i => i.IdEmpresa == IdEmpresa).ToList();
@@ -128,6 +179,66 @@ namespace SMR_App.ViewModels
                 foreach (var item in filtradas)
                 {
                     ListaIndicacao.Add(item);
+                }
+
+                var dadosPromotor = _todosPontos.FirstOrDefault(p => p.IDEmpresa == IdEmpresa);
+
+                // Proteção contra NullReferenceException
+                if (dadosPromotor == null)
+                {
+                    PontosPromotor = 0;
+                    PromotorRank = Recompensa_Rank.ND;
+                    Progresso = 0;
+                    return; // Encerra a lógica aqui, pois não há o que calcular
+                }
+
+                PontosPromotor = dadosPromotor.PontosAcumulados;
+                PromotorRank = dadosPromotor.IDPromotorRank ?? Recompensa_Rank.ND;
+
+                var rankAtual = _recompensasEmpresa.FirstOrDefault(r => r.IDEmpresa == IdEmpresa && r.IDRank == dadosPromotor.IDPromotorRank);
+
+                if (rankAtual == null)
+                {
+                    var objetivo = _recompensasEmpresa.Where(r => r.IDEmpresa == IdEmpresa)
+                                                      .OrderBy(r => r.PontosNecessarios)
+                                                      .FirstOrDefault();
+                    if (objetivo == null)
+                    {
+                        Progresso = 0;
+                    }
+                    else
+                    {
+                        Progresso = (double)dadosPromotor.PontosAcumulados / objetivo.PontosNecessarios;
+                    }
+                }
+                else
+                {
+                    var objetivo = _recompensasEmpresa
+                                        .Where(r => r.IDEmpresa == IdEmpresa && r.PontosNecessarios > dadosPromotor.PontosAcumulados)
+                                        .OrderBy(r => r.PontosNecessarios)
+                                        .FirstOrDefault();
+
+                    if (objetivo == null)
+                    {
+                        // Usuário atingiu o Rank Máximo! A barra deve ficar 100% cheia.
+                        Progresso = 1.0;
+                    }
+                    else
+                    {
+                        // Progresso Relativo: Usa as variáveis que você mesmo criou para mostrar o avanço DENTRO do nível atual
+                        double pontosCalculados = (double)dadosPromotor.PontosAcumulados - rankAtual.PontosNecessarios;
+                        double pontosObjetivo = (double)objetivo.PontosNecessarios - rankAtual.PontosNecessarios;
+
+                        // Evita divisão por zero caso a regra de negócio tenha cadastrado recompensas com a mesma pontuação
+                        if (pontosObjetivo > 0)
+                        {
+                            Progresso = pontosCalculados / pontosObjetivo;
+                        }
+                        else
+                        {
+                            Progresso = 0;
+                        }
+                    }
                 }
             });
         }

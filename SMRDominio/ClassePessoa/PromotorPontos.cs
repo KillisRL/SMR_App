@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMRDominio.ClasseRecompensa;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +22,6 @@ namespace SMRDominio.ClassePessoa
         public int id_empresa { get; set; }
         public int pontos_acumulados { get; set; }
         public DateTime data_atualizacao { get; set; }
+        public Recompensa_Rank? id_rank { get; set; }
     }
 }
