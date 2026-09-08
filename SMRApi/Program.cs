@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SMRApi.Repositories;
 using SMRInfraestrutura;
 using System.Text;
 
@@ -67,6 +68,8 @@ builder.Services.AddDbContext<SMRDBContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<RelatoriosRepository>(provider =>
+    new RelatoriosRepository(connectionString));
 
 // Configuração do CORS (Movida para ANTES do builder.Build())
 builder.Services.AddCors(options =>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="SMR_App.Views.RelatoriosRankingView"
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <Grid RowDefinitions="Auto, Auto, Auto, *, 80" Padding="15">
+
+        <!-- Navegação do Relatório -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0, 0, 0, 15">
+            <ImageButton Grid.Column="0" Source="arrow_left.png" WidthRequest="30" Command="{Binding RelatorioAnteriorCommand}"/>
+
+            <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 8" HorizontalOptions="Center">
+                <Label Text="RANKING&#10;PROMOTORES" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
+            </Border>
+
+            <ImageButton Grid.Column="2" Source="arrow_right.png" WidthRequest="30" Command="{Binding ProximoRelatorioCommand}"/>
+        </Grid>
+
+        <!-- Filtros de Data -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="15" HorizontalOptions="Center" Margin="0, 0, 0, 15">
+            <Image Source="calendar_icon.png" WidthRequest="22" VerticalOptions="Center"/>
+
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10, 3">
+                <DatePicker Date="{Binding DataInicio}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}"/>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="10, 3">
+                <DatePicker Date="{Binding DataFim}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}"/>
+            </Border>
+        </HorizontalStackLayout>
+
+        <!-- FILTRO DE STATUS (Picker) -->
+        <Border Grid.Row="2" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 0" Margin="0, 0, 0, 15" HorizontalOptions="Center" WidthRequest="200">
+            <Picker ItemsSource="{Binding ListaStatus}" 
+                    SelectedItem="{Binding StatusSelecionado}" 
+                    ItemDisplayBinding="{Binding Descricao}"
+                    Title="Filtrar Status"
+                    TextColor="{StaticResource TextoPrincipal}"
+                    TitleColor="{StaticResource TextoSecundario}"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"/>
+        </Border>
+
+        <!-- Container do Gráfico (Barras) -->
+        <Border Grid.Row="3" BackgroundColor="{StaticResource FundoMenu}" Stroke="{StaticResource TextoSecundario}" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10">
+            <Grid RowDefinitions="Auto, Auto, *">
+                <Label Grid.Row="0" Text="Ranking Promotores" HorizontalOptions="Center" FontSize="15" TextColor="{StaticResource TextoPrincipal}"/>
+                <Label Grid.Row="1" Text="● Total de Indicações" TextColor="CornflowerBlue" HorizontalOptions="Center" FontSize="11" Margin="0,0,0,5"/>
+
+                <lvc:CartesianChart 
+                    Grid.Row="2"
+                    Series="{Binding SeriesGrafico}" 
+                    XAxes="{Binding EixosX}" 
+                    YAxes="{Binding EixosY}" />
+            </Grid>
+        </Border>
+
+        <!-- Área Inferior / Bottom Sheet -->
+        <Border Grid.Row="4" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Margin="-15, 15, -15, -15">
+            <BoxView Color="{StaticResource TextoSecundario}" HeightRequest="5" WidthRequest="100" CornerRadius="2" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 10, 0, 0"/>
+        </Border>
+
+    </Grid>
+</ContentPage>
