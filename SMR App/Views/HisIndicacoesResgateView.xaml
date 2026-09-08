@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
+             xmlns:classesIndicacao="clr-namespace:SMRDominio.ClasseIndicacao;assembly=SMRDominio"
+             x:Class="SMR_App.Views.HisIndicacoesResgateView"
+             x:DataType="viewmodels:HisIndicacoesResgate"
+             BackgroundColor="{StaticResource FundoPrincipal}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="OuroBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFD700" Offset="0.0" />
+            <GradientStop Color="#FFF176" Offset="0.5" />
+            <GradientStop Color="#FBC02D" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PrataBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#9E9E9E" Offset="0.0" />
+            <GradientStop Color="#E0E0E0" Offset="0.5" />
+            <GradientStop Color="#757575" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BronzeBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#8D6E63" Offset="0.0" />
+            <GradientStop Color="#D7CCC8" Offset="0.5" />
+            <GradientStop Color="#5D4037" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Shadow x:Key="GlowDesbloqueado" Brush="#4CAF50" Offset="0,4" Radius="8" Opacity="0.6" />
+        <Shadow x:Key="SombraSimples" Brush="Black" Offset="0,2" Radius="4" Opacity="0.3" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *" Padding="10">
+
+        <!-- ========================================== -->
+        <!-- LINHA 0: CARROSSEL DE EMPRESAS             -->
+        <!-- ========================================== -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="10,20,10,30" VerticalOptions="Center">
+            <ImageButton Grid.Column="0" Source="setaesquerda.png" BackgroundColor="Transparent" HeightRequest="45" WidthRequest="45" Command="{Binding EmpresaAnteriorCommand}" HorizontalOptions="Start" />
+
+            <Border Grid.Column="1" BackgroundColor="#2C2C2C" Stroke="#444444" StrokeThickness="2" StrokeShape="RoundRectangle 16" Padding="20,12" HorizontalOptions="Center" VerticalOptions="Center" Shadow="{StaticResource SombraSimples}">
+                <Label Text="{Binding NomeEmpresaAtual}" FontSize="16" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1" />
+            </Border>
+
+            <ImageButton Grid.Column="2" Source="setadireita.png" BackgroundColor="Transparent" HeightRequest="45" WidthRequest="45" Command="{Binding ProximaEmpresaCommand}" HorizontalOptions="End" />
+        </Grid>
+
+        <!-- ========================================== -->
+        <!-- LINHA 1: LISTA DE RECOMPENSAS (TERMÔMETRO) -->
+        <!-- ========================================== -->
+        <!-- ========================================== -->
+        <!-- LINHA 1: LISTA DE RECOMPENSAS (TERMÔMETRO) -->
+        <!-- ========================================== -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ListaRecompensa}" SelectionMode="None" HorizontalOptions="Fill">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
+                    <Label Text="Nenhuma recompensa configurada." TextColor="Gray" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="classesIndicacao:IndicacaoRecompensaResgate">
+
+                    <!-- MUDANÇA AQUI: Layout 100% elástico usando proporções e HorizontalOptions="Fill" -->
+                    <Grid ColumnDefinitions="3*, 4.5*, 2.5*" Margin="0" HorizontalOptions="Fill">
+
+                        <!-- COLUNA 0: Botão Resgatar -->
+                        <Button Grid.Column="0" 
+                                Text="RESGATAR!" 
+                                FontAttributes="Bold" 
+                                FontSize="12"
+                                CornerRadius="20" 
+                                HeightRequest="40"
+                                Padding="10,0" 
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#333333" />
+                                    <Setter Property="TextColor" Value="#666666" />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Setter Property="Shadow" Value="{x:Null}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#4CAF50" />
+                                    <Setter Property="TextColor" Value="White" />
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="Shadow" Value="{StaticResource GlowDesbloqueado}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+
+                        <!-- COLUNA 1: Bloco de Cor (Termômetro) e Pontos -->
+                        <Border Grid.Column="1" StrokeThickness="1" Stroke="#222222" HeightRequest="100" HorizontalOptions="Fill">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
+                                    <Setter Property="Background" Value="{StaticResource OuroBrush}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="2">
+                                    <Setter Property="Background" Value="{StaticResource PrataBrush}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="1">
+                                    <Setter Property="Background" Value="{StaticResource BronzeBrush}" />
+                                </DataTrigger>
+
+                                <DataTrigger TargetType="Border" Binding="{Binding PodeResgatar}" Value="False">
+                                    <Setter Property="Opacity" Value="0.6" />
+                                </DataTrigger>
+                            </Border.Triggers>
+
+                            <Label Text="{Binding PontosNecessarios}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label.Shadow>
+                                    <Shadow Brush="White" Offset="0,1" Radius="2" Opacity="0.5" />
+                                </Label.Shadow>
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="3">
+                                        <Setter Property="TextColor" Value="#4E342E" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="2">
+                                        <Setter Property="TextColor" Value="#212121" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="1">
+                                        <Setter Property="TextColor" Value="#3E2723" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Border>
+
+                        <!-- COLUNA 2: Nome do Rank e Ícone -->
+                        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
+
+                            <Label FontSize="14" FontAttributes="Bold" HorizontalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="3">
+                                        <Setter Property="Text" Value="OURO" />
+                                        <Setter Property="TextColor" Value="#FFD700" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="2">
+                                        <Setter Property="Text" Value="PRATA" />
+                                        <Setter Property="TextColor" Value="#E0E0E0" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="1">
+                                        <Setter Property="Text" Value="BRONZE" />
+                                        <Setter Property="TextColor" Value="#D7CCC8" />
+                                    </DataTrigger>
+
+                                    <DataTrigger TargetType="Label" Binding="{Binding PodeResgatar}" Value="False">
+                                        <Setter Property="TextColor" Value="Gray" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Image HeightRequest="45" WidthRequest="45" HorizontalOptions="Center">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="3">
+                                        <Setter Property="Source" Value="rank_ouro.png" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="2">
+                                        <Setter Property="Source" Value="rank_prata.png" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="1">
+                                        <Setter Property="Source" Value="rank_bronze.png" />
+                                    </DataTrigger>
+
+                                    <!-- Efeito de bloqueado/desbloqueado -->
+                                    <DataTrigger TargetType="Image" Binding="{Binding PodeResgatar}" Value="False">
+                                        <Setter Property="Opacity" Value="0.2" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding PodeResgatar}" Value="True">
+                                        <Setter Property="Opacity" Value="1.0" />
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

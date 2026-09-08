@@ -31,8 +31,7 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(HistIndicacoesEmpresaView), typeof(HistIndicacoesEmpresaView));
             Routing.RegisterRoute(nameof(RelatoriosCoBonifView), typeof(RelatoriosCoBonifView));
             Routing.RegisterRoute(nameof(RelatoriosRankingView), typeof(RelatoriosRankingView));
-
-
+            Routing.RegisterRoute(nameof(HisIndicacoesResgateView), typeof(HisIndicacoesResgateView));
         }
     }
 }

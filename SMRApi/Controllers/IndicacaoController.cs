@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Org.BouncyCastle.Bcpg.OpenPgp;
 using SMRDominio.ClasseIndicacao;
 using SMRDominio.ClassePessoa;
+using SMRDominio.ClasseRecompensa;
 using SMRInfraestrutura;
+using static SMRDominio.ClasseIndicacao.IndicacaoRecompensaResgate;
 
 namespace SMRApi.Controllers
 {
@@ -19,13 +21,73 @@ namespace SMRApi.Controllers
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+
+        [HttpGet("recompensa-consultar")]
+        [Authorize]
+        public async Task<IActionResult> IndicacaoRecompensa()
+        {
+            try
+            {
+                var usuarioClaim = User.FindFirst("id_pessoa")?.Value
+                     ?? User.FindFirst("id")?.Value
+                     ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int idPessoaLogada))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado." });
+                }
+
+                var promotor = await _dbContext.Promotor.Where(promotor => promotor.id_pessoa == idPessoaLogada).FirstOrDefaultAsync();
+
+                var listaRecompensa = await (
+                    from recompensa in _dbContext.Recompensas
+                    join empresa in _dbContext.Empresa on
+                       recompensa.id_empresa equals empresa.id
+                    where (recompensa.Ativo == true)
+                    select new IndicacaoRecompensaResgate
+                    {
+                        IDRecompensa = recompensa.id,
+                        IDRank = recompensa.id_rank.Value,
+                        IDEmpresa = recompensa.id_empresa,
+                        RazaoSocial = empresa.razao_social,
+                        PontosNecessarios = recompensa.pontos_necessarios
+                    }).ToListAsync();
+
+
+
+                var promotorPontos = await (
+                    from pontos in _dbContext.PromotorPontos
+                    where (pontos.id_promotor == promotor.id)
+                    select new PromotorPontosResgate
+                    {
+                        IDPromotor = promotor.id,
+                        IDEmpresa = pontos.id_empresa,
+                        IDPromotorRank = pontos.id_rank,
+                        PontosAcumulados = pontos.pontos_acumulados
+                    }).ToListAsync();
+
+                var consultaFinal = new ConsultaFinalResgate
+                {
+                    ListaRecompensas = listaRecompensa.ToList(),
+                    PromotorPontos = promotorPontos.ToList()
+                };
+
+                return Ok(consultaFinal);
+            }
+            catch (Exception ex)
+            {
+                var detalhe = ex.InnerException?.Message ?? ex.Message;
+                return StatusCode(500, new { Mensagem = "Erro ao consultar a recompensas.", Erro = detalhe });
+            }
+        }
+
+
         [HttpPost("consultar")]
         [Authorize]
         public async Task<IActionResult> IndicacaoConsultar([FromBody] ConsultaIndicacaoRequest request)
         {
             try
             {
-                // Pega as datas do request enviado pelo app
                 DateTime dataInicial = request.DataInicial;
                 DateTime dataFinal = request.DataFinal;
 
@@ -38,40 +100,87 @@ namespace SMRApi.Controllers
                     return Unauthorized(new { Mensagem = "Usuário não autenticado." });
                 }
 
-                int codigoPromotor = await _dbContext.Promotor.Where(p => p.id_pessoa == idPessoaLogada).Select(p => p.id).FirstOrDefaultAsync();
+                int codigoPromotor = await _dbContext.Promotor
+                    .Where(p => p.id_pessoa == idPessoaLogada)
+                    .Select(p => p.id)
+                    .FirstOrDefaultAsync();
 
                 if (codigoPromotor <= 0)
                 {
                     return BadRequest(new { Mensagem = "Dados inválidos para consulta de indicações" });
                 }
 
-                var novaIndicacoes = await (
+
+                var listaIndicacoes = await (
                     from indicacao in _dbContext.Indicacao
                     join bonificacao in _dbContext.Bonificacoes on
                         indicacao.Id_Bonificacao equals bonificacao.Id
                     join empresa in _dbContext.Empresa on
                         bonificacao.Id_Empresa equals empresa.id
                     where (indicacao.Id_Promotor_Indicou == codigoPromotor) &&
-                        (indicacao.Data_Indicacao >= dataInicial) &&
-                        (indicacao.Data_Indicacao <= dataFinal)
-                    select new
+                          (indicacao.Data_Indicacao >= dataInicial) &&
+                          (indicacao.Data_Indicacao <= dataFinal)
+                    select new IndicacaoHistoricoDto
                     {
-                        IDPromotor = indicacao.Id_Promotor_Indicou,
+                        IDIndicacao = indicacao.Id,
+                        IdPromotor = indicacao.Id_Promotor_Indicou,
                         NomeIndicado = indicacao.Nome_Indicado,
                         RazaoSocial = empresa.razao_social,
                         DataIndicacao = indicacao.Data_Indicacao,
                         DataValidacao = indicacao.Data_Validacao,
-                        IDBonificacao = indicacao.Id_Bonificacao,
+                        IdBonificacao = indicacao.Id_Bonificacao,
                         DescricaoBonificacao = bonificacao.Descricao,
-                        IDEmpresa = bonificacao.Id_Empresa
+                        IdEmpresa = bonificacao.Id_Empresa,
+                        IDSituacaoIndicacao = indicacao.Status_Indicacao.Value
                     }).ToListAsync();
 
-                if (novaIndicacoes.Count <= 0)
+                if(listaIndicacoes.Count <= 0)
                 {
-                    return BadRequest(new { Mensagem = "Você não tem nenhuma indicação." });
+                    return BadRequest(new { Mensagem = "Não há indicações no perído consultado." });
                 }
 
-                return Ok(novaIndicacoes);
+
+                var listaPontos = await (
+                    from pontos in _dbContext.PromotorPontos
+                    join empresa in _dbContext.Empresa on pontos.id_empresa equals empresa.id
+                    where (pontos.id_promotor == codigoPromotor)
+                    select new PromotorPontosResponse
+                    {
+                        IDEmpresa = pontos.id_empresa,
+                        RazaoSocial = empresa.razao_social,
+                        PontosAcumulados = pontos.pontos_acumulados,
+                        IDPromotorRank = pontos.id_rank.Value
+                    }).ToListAsync();
+                List<int> idsEmpresas = listaPontos.Select(p => p.IDEmpresa)
+                                                   .Union(listaIndicacoes.Select(i => i.IdEmpresa))
+                                                   .Distinct()
+                                                   .ToList();
+
+                // 4. Busca as recompensas (Só executa se houver empresas vinculadas)
+                var listaRecompensas = new List<RecompensaResponse>();
+                if (idsEmpresas.Any())
+                {
+                    listaRecompensas = await (
+                        from recompensas in _dbContext.Recompensas
+                        where idsEmpresas.Contains(recompensas.id_empresa) &&
+                                                    (recompensas.Ativo == true)
+                        select new RecompensaResponse
+                        {
+                            IDEmpresa = recompensas.id_empresa,
+                            IDRank = recompensas.id_rank.Value,
+                            IDRecompensa = recompensas.id,
+                            PontosNecessarios = recompensas.pontos_necessarios
+                        }).ToListAsync();
+                }
+
+                var respostaFinal = new ConsultaFinalHistorico
+                {
+                    Indicacoes = listaIndicacoes,
+                    PontosPromotor = listaPontos,
+                    RecompensasEmpresas = listaRecompensas
+                };
+
+                return Ok(respostaFinal);
             }
             catch (Exception ex)
             {
@@ -178,7 +287,7 @@ namespace SMRApi.Controllers
                 else if (codigoStatus == IndicacaoStatus.Cancelada)
                 {
 
-                    if(indicacao.Status_Indicacao != IndicacaoStatus.Pendente || indicacao.Status_Indicacao != IndicacaoStatus.Enviada)
+                    if(indicacao.Status_Indicacao != IndicacaoStatus.Pendente && indicacao.Status_Indicacao != IndicacaoStatus.Enviada)
                     {
                         return BadRequest(new {Mensagem = "Só é possível cancelar indicações com as seguintes situação: Pendente e Enviada."});
                     }
@@ -203,7 +312,24 @@ namespace SMRApi.Controllers
                         promotorPontos.pontos_acumulados++;
                         promotorPontos.data_atualizacao = DateTime.Now;
 
+                        var maiorRecompensaAlcancada = await _dbContext.Recompensas
+                            .Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios <= promotorPontos.pontos_acumulados)
+                            .OrderByDescending(r => r.pontos_necessarios)
+                            .FirstOrDefaultAsync();
+
+                        if (maiorRecompensaAlcancada != null)
+                        {
+                            if (promotorPontos.id_rank != maiorRecompensaAlcancada.id_rank)
+                            {
+                                promotorPontos.id_rank = maiorRecompensaAlcancada.id_rank;
+                            }
+                        }
+
+                        // 4. Marca o objeto como modificado no Entity Framework
                         _dbContext.PromotorPontos.Update(promotorPontos);
+
+                        // Obs: Não se esqueça de chamar await _dbContext.SaveChangesAsync(); 
+                        // no final do seu método principal para efetivar a transação no banco.
                     }
                     else
                     {
@@ -212,7 +338,8 @@ namespace SMRApi.Controllers
                             id_promotor = indicacao.Id_Promotor_Indicou,
                             id_empresa = idEmpresa,
                             pontos_acumulados = 1,
-                            data_atualizacao = DateTime.Now
+                            data_atualizacao = DateTime.Now,
+                            id_rank = SMRDominio.ClasseRecompensa.Recompensa_Rank.ND
                         };
                         await _dbContext.PromotorPontos.AddAsync(promotorPontos);
                     }

@@ -10,6 +10,7 @@ namespace SMRDominio.ClasseRecompensa
     {
         Bronze = 1, 
         Prata = 2,
-        Ouro = 3
+        Ouro = 3,
+        ND = 4
     }
 }

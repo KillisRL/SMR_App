@@ -1,5 +1,6 @@
 ﻿using SMRDominio.ClasseBase;
 using SMRDominio.ClasseIndicacao;
+using SMRDominio.ClasseRecompensa;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static SMRDominio.ClasseIndicacao.IndicacaoRecompensaResgate;
 
 namespace SMR_App.Services
 {
@@ -28,8 +30,34 @@ namespace SMR_App.Services
                 BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
             };
         }
- 
-        public async Task<(bool Sucesso, string Mensagem, List<IndicacaoHistoricoDto> Dados)> ConsultarIndicacaoHistorico(DateTime datainicial, DateTime datafinal, string token)
+        public async Task<(bool Sucesso, string Mensagem, ConsultaFinalResgate Dados)> ConsultarRecompensaResgate(string token)
+        {
+            try
+            { 
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resultado = await _httpClient.GetAsync($"indicacao/recompensa-consultar");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<ConsultaFinalResgate>(options);
+                    return (true, string.Empty, dados);
+                }
+                else
+                {
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+
+                    return (false, retorno.Mensagem, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, "Erro interno ao consultar recompensas.", null);
+            }
+        }
+        public async Task<(bool Sucesso, string Mensagem, ConsultaFinalHistorico Dados)> ConsultarIndicacaoHistorico(DateTime datainicial, DateTime datafinal, string token)
         {
             try
             {
@@ -43,12 +71,14 @@ namespace SMR_App.Services
 
                 if (resultado.IsSuccessStatusCode)
                 {
-                    var dados = await resultado.Content.ReadFromJsonAsync<List<IndicacaoHistoricoDto>>(options);
-                    return (true, string.Empty, dados ?? new List<IndicacaoHistoricoDto>());
+                    // 2. Remova o List<> aqui também no momento de ler o JSON
+                    var dados = await resultado.Content.ReadFromJsonAsync<ConsultaFinalHistorico>(options);
+
+                    // 3. Retorne o objeto 'dados', ou instancie um novo se for nulo
+                    return (true, string.Empty, dados ?? new ConsultaFinalHistorico());
                 }
                 else
                 {
-                    // Tratamento defensivo caso a API retorne erro sem corpo JSON estruturado
                     var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
                     string mensagemErro = retorno?.Mensagem ?? "Erro desconhecido ao consultar indicações.";
 
@@ -57,7 +87,6 @@ namespace SMR_App.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao consultar indicação: {ex.Message}");
                 return (false, "Erro interno ao consultar indicações.", null);
             }
         }
