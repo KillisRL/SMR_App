@@ -67,6 +67,7 @@ namespace SMR_App.ViewModels
                 if(resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    _ = ConsultarRecompensas();
                     return;
                 }
                 else
