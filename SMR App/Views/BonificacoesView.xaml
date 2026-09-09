@@ -42,7 +42,8 @@
                     <Label Text="Status:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
                     <Border BackgroundColor="{StaticResource FundoMenu}" 
                             StrokeShape="RoundRectangle 8" 
-                            StrokeThickness="0" 
+                            Stroke="#D4AF37"
+                            StrokeThickness="1" 
                             HeightRequest="45" 
                             Padding="5,0">
                         <Picker ItemsSource="{Binding OpcoesStatus}" 

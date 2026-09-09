@@ -5,16 +5,16 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SMR_App.App">
     <Application.Resources>
-        
+
         <ResourceDictionary>
-            
+
             <!-- MAIN PAGE TEMPLATE -->
             <ControlTemplate x:Key="MainPageTemplate">
                 <Grid RowDefinitions="80, *">
 
                     <Grid Grid.Row="0" BackgroundColor="{StaticResource FundoMenu}"
                           ColumnDefinitions="Auto, *, Auto" Padding="15,0">
-                        
+
                         <!-- HOME ICON -->
                         <Image Grid.Column="0" Source="home_gold.png" 
                                HeightRequest="40"
@@ -34,7 +34,7 @@
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
                                TextColor="{StaticResource TextoPrincipal}"/>
-                        
+
                         <!-- PROFILE ICON -->
                         <ImageButton Grid.Column="2"
                                      Command="{Binding BindingContext.AbrirTelaCommand, 
@@ -50,7 +50,32 @@
 
                 </Grid>
             </ControlTemplate>
-            
+
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="ChakraPetchBold" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="ChakraPetchBold" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily" Value="ChakraPetchBold" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="FontFamily" Value="ChakraPetchBold" />
+                <Setter Property="TextColor" Value="{StaticResource TextoPrincipal}" />
+                <Setter Property="TitleColor" Value="{StaticResource TextoSecundario}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <Style TargetType="DatePicker">
+                <Setter Property="FontFamily" Value="ChakraPetchBold" />
+                <Setter Property="TextColor" Value="{StaticResource TextoPrincipal}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

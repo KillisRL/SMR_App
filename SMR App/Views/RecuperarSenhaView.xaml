@@ -20,6 +20,7 @@
                    HorizontalOptions="Center" />
 
             <Label Text="{Binding InstrucaoTexto}"
+                   FontFamily="PressStart2PRegular"
                    TextColor="{StaticResource TextoSecundario}"
                    HorizontalTextAlignment="Center"
                    Margin="0,0,0,15" />
@@ -29,6 +30,7 @@
                     BackgroundColor="{StaticResource FundoInput}" StrokeShape="RoundRectangle 10" Padding="15,2">
                 <Entry Text="{Binding Email}"
                        Placeholder="Digite seu e-mail de cadastro"
+                       MaxLength="100"
                        PlaceholderColor="{StaticResource TextoSecundario}"
                        TextColor="{StaticResource TextoPrincipal}"
                        Keyboard="Email"/>
@@ -50,6 +52,7 @@
                     BackgroundColor="{StaticResource FundoInput}" StrokeShape="RoundRectangle 10" Padding="15,2">
                 <Entry Text="{Binding NovaSenha}"
                        Placeholder="Digite a nova senha"
+                       MaxLength="30"
                        PlaceholderColor="{StaticResource TextoSecundario}"
                        TextColor="{StaticResource TextoPrincipal}"
                        IsPassword="True"/>

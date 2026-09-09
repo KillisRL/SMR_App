@@ -8,8 +8,9 @@
              BackgroundColor="{StaticResource FundoPrincipal}">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="40" Padding="20" Margin="0,20,0,0">
+        <VerticalStackLayout Spacing="30" Padding="20" Margin="0,20,0,30">
 
+            <!-- Botões Principais (Grid 2x2) -->
             <Grid RowDefinitions="Auto, Auto" 
                   ColumnDefinitions="*, *" 
                   RowSpacing="20" 
@@ -56,6 +57,7 @@
                         CommandParameter="GerenciarBonificacoesView"/>
             </Grid>
 
+            <!-- Botão de Relatórios -->
             <Button Text="RELATÓRIOS" 
                     BackgroundColor="{StaticResource FundoBotao}" TextColor="Black"
                     FontAttributes="Bold"
@@ -66,17 +68,60 @@
                     Command="{Binding AbrirTelaCommand}"
                     CommandParameter="RelatoriosView"/>
 
-            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,30">
+            <!-- Seção Importar Clientes -->
+            <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
                 <Label Text="IMPORTAR CLIENTES"
                        FontAttributes="Bold"
                        FontSize="18"
                        TextColor="{StaticResource TextoTerciario}" 
                        HorizontalOptions="Center"/>
-                <Image Source="import_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ImportarClientesCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+
+                <!-- Layout Horizontal: Ícone original + Botão de Ver Exemplo -->
+                <HorizontalStackLayout Spacing="25" HorizontalOptions="Center" VerticalOptions="Center">
+
+                    <!-- Ícone Original de Importação -->
+                    <Image Source="import_icon.png" WidthRequest="75" HeightRequest="75" HorizontalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ImportarClientesCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <!-- Botão para alternar a exibição do exemplo -->
+                    <Button Text="Ver Exemplo CSV" 
+                            Command="{Binding AlternarExemploCommand}"
+                            BackgroundColor="#333333"
+                            TextColor="#D4AF37"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            HeightRequest="45"
+                            VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <!-- Box de Exemplo (Aparece/Sobe dinamicamente via IsVisible) -->
+                <Border Stroke="#D4AF37" 
+                        StrokeThickness="1" 
+                        BackgroundColor="{StaticResource FundoMenu}" 
+                        StrokeShape="RoundRectangle 10" 
+                        Padding="15" 
+                        WidthRequest="300"
+                        IsVisible="{Binding ExibirExemplo}">
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Formato esperado (.csv):" 
+                               TextColor="#D4AF37" 
+                               FontAttributes="Bold" 
+                               FontSize="13"/>
+
+                        <Label Text="Nome;Documento&#10;luiz;00000000000&#10;ueler;00000000000" 
+                               TextColor="{StaticResource TextoPrincipal}"
+                               FontSize="12"
+                               LineBreakMode="WordWrap"/>
+
+                        <Label Text="* Separado por ponto e vírgula (;)" 
+                               TextColor="{StaticResource TextoSecundario}" 
+                               FontSize="10"/>
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

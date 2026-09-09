@@ -9,8 +9,8 @@
 
             <!-- TIPO DE USUÁRIO -->
             <VerticalStackLayout Spacing="5">
-                <Label Text="TIPO DE USUÁRIO" 
-                       FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                <Label Text="TIPO DE USUÁRIO"
+                       FontSize="16" TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
                 <Border Stroke="{StaticResource BordaInput}" 
@@ -29,7 +29,7 @@
             <!-- CAMPO NOMES -->
             <VerticalStackLayout Spacing="5">
                 <Label Text="NOME / NOME FANTASIA" 
-                       FontSize="12" 
+                       FontSize="16"
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
@@ -39,7 +39,8 @@
                         StrokeShape="RoundRectangle 10" Padding="15,0">
                     
                     <Entry Text="{Binding Nome}" 
-                           Placeholder="Como você quer ser chamado?" 
+                           Placeholder="Como você quer ser chamado?"
+                           MaxLength="150"
                            PlaceholderColor="{StaticResource TextoSecundario}" 
                            TextColor="{StaticResource TextoPrincipal}" 
                            BackgroundColor="Transparent" />
@@ -49,8 +50,8 @@
             <!-- CAMPO RAZÃO SOCIAL -->
             <VerticalStackLayout IsVisible="{Binding IsEmpresaVisible}" Spacing="20">
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="RAZÃO SOCIAL" 
-                           FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                    <Label Text="RAZÃO SOCIAL"
+                           FontSize="16" TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
                     <Border Stroke="{StaticResource BordaInput}" 
@@ -58,8 +59,9 @@
                             BackgroundColor="{StaticResource FundoInput}" 
                             StrokeShape="RoundRectangle 10" Padding="15,0">
                         
-                        <Entry Text="{Binding Razao_social}" 
-                               Placeholder="Nome Jurídico" 
+                        <Entry Text="{Binding Razao_social}"
+                               Placeholder="Nome Jurídico"
+                               MaxLength="150"
                                PlaceholderColor="{StaticResource TextoSecundario}" 
                                TextColor="{StaticResource TextoPrincipal}" 
                                BackgroundColor="Transparent" />
@@ -67,8 +69,8 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="CNPJ" 
-                           FontSize="12" 
+                    <Label Text="CNPJ"
+                           FontSize="16"
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -78,7 +80,8 @@
                             StrokeShape="RoundRectangle 10" Padding="15,0">
                         
                         <Entry Text="{Binding Documento}" 
-                               Placeholder="Apenas números" 
+                               Placeholder="Apenas números"
+                               MaxLength="18"
                                Keyboard="Numeric" 
                                PlaceholderColor="{StaticResource TextoSecundario}" 
                                TextColor="{StaticResource TextoPrincipal}" 
@@ -89,7 +92,7 @@
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                     <VerticalStackLayout Spacing="5" Grid.Column="0">
                         <Label Text="TELEFONE 1"                               
-                               FontSize="12" 
+                               FontSize="16" 
                                TextColor="{StaticResource TextoSecundario}" 
                                FontAttributes="Bold" />
 
@@ -108,7 +111,7 @@
                     
                     <VerticalStackLayout Spacing="5" Grid.Column="1">
                         <Label Text="TELEFONE 2" 
-                               FontSize="12" 
+                               FontSize="16" 
                                TextColor="{StaticResource TextoSecundario}" 
                                FontAttributes="Bold" />
                         <Border Stroke="{StaticResource BordaInput}" 
@@ -129,7 +132,7 @@
             <VerticalStackLayout IsVisible="{Binding IsPromotorVisible}" Spacing="20">
                 <VerticalStackLayout Spacing="5">
                     <Label Text="CPF" 
-                           FontSize="12" 
+                           FontSize="16" 
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -139,7 +142,8 @@
                             StrokeShape="RoundRectangle 10" Padding="15,0">
                         
                         <Entry Text="{Binding Documento}" 
-                               Placeholder="Apenas números" 
+                               Placeholder="Apenas números"
+                               MaxLength="14"
                                Keyboard="Numeric" 
                                PlaceholderColor="{StaticResource TextoSecundario}" 
                                TextColor="{StaticResource TextoPrincipal}" 
@@ -150,7 +154,7 @@
                 <!-- CAMPO CELULAR -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="CELULAR" 
-                           FontSize="12" 
+                           FontSize="16" 
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -172,7 +176,7 @@
             <!-- CAMPO E-MAIL -->
             <VerticalStackLayout Spacing="5">
                 <Label Text="E-MAIL" 
-                       FontSize="12" 
+                       FontSize="16" 
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
@@ -182,7 +186,8 @@
                         StrokeShape="RoundRectangle 10" Padding="15,0">
                     
                     <Entry Text="{Binding Email}" 
-                           Placeholder="exemplo@email.com" 
+                           Placeholder="exemplo@email.com"
+                           MaxLength="100"
                            Keyboard="Email" 
                            PlaceholderColor="{StaticResource TextoSecundario}" 
                            TextColor="{StaticResource TextoPrincipal}" 
@@ -194,13 +199,20 @@
             <VerticalStackLayout Spacing="5">
                 
                 <Label Text="SENHA" 
-                       FontSize="12" 
+                       FontSize="16" 
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
                     <Border Grid.Column="0" Stroke="{StaticResource BordaInput}" StrokeThickness="1" BackgroundColor="{StaticResource FundoInput}" StrokeShape="RoundRectangle 10" Padding="15,0">
-                        <Entry Text="{Binding Senha_hash}" Placeholder="Digite sua senha" IsPassword="True" IsEnabled="{Binding IsSenhaHabilitada}" TextColor="{StaticResource TextoPrincipal}" PlaceholderColor="{StaticResource TextoSecundario}" BackgroundColor="Transparent" />
+                        <Entry Text="{Binding Senha_hash}"
+                               Placeholder="Digite sua senha"
+                               IsPassword="True"
+                               MaxLength="30"
+                               IsEnabled="{Binding IsSenhaHabilitada}"
+                               TextColor="{StaticResource TextoPrincipal}"
+                               PlaceholderColor="{StaticResource TextoSecundario}"
+                               BackgroundColor="Transparent" />
                     </Border>
                     
                     <Button Grid.Column="1" 

@@ -4,14 +4,8 @@
     {
         get
         {
-#if WINDOWS
-        // URL para testes locais rodando o app no Windows
-        return "https://localhost:7190/";
-
-#else
-            // URL de produção para Android, iOS, etc.
+            //return "https://localhost:7190/";
             return "https://api.smrapp.com.br/";
-#endif
         }
     }
 }

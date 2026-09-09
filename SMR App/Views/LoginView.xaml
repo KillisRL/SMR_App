@@ -19,12 +19,13 @@
                     StrokeShape="RoundRectangle 10" 
                     Padding="15,2">
                 <Entry Text="{Binding Documento}"
+                       MaxLength="18"
                        Placeholder="CPF ou CNPJ"
                        PlaceholderColor="{StaticResource TextoSecundario}"
                        TextColor="{StaticResource TextoPrincipal}"
                        BackgroundColor="Transparent"
                        HeightRequest="50"
-                       Keyboard="Text"/>
+                       Keyboard="Numeric"/>
             </Border>
 
             <Border Stroke="{StaticResource BordaInput}" 
@@ -34,6 +35,7 @@
                     Padding="15,2">
                 <Entry Text="{Binding Senha_hash}"
                        Placeholder="Sua Senha"
+                       MaxLength="30"                     
                        PlaceholderColor="{StaticResource TextoSecundario}"
                        TextColor="{StaticResource TextoPrincipal}"
                        BackgroundColor="Transparent"
@@ -51,6 +53,7 @@
                     Margin="0,10,0,0"/>
 
             <Label Text="Esqueci minha senha"
+                   FontSize="16"
                    TextColor="{StaticResource TextoSecundario}"
                    HorizontalOptions="Center"
                    Margin="0,5,0,15">
