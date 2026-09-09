@@ -86,12 +86,13 @@
                         <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15" VerticalOptions="Center">
 
                             <!-- Indicador Visual / Círculo -->
-                            <Ellipse Grid.Column="0"
-                                     WidthRequest="45" 
-                                     HeightRequest="45" 
-                                     Fill="#D4AF37" 
-                                     VerticalOptions="Center" 
-                                     HorizontalOptions="Center" />
+
+                            <Image Grid.Column="0"
+                                   WidthRequest="45" 
+                                    HeightRequest="45" 
+                                    Source="perfilempresa.png" 
+                                    VerticalOptions="Center" 
+                                    HorizontalOptions="Center"/>
 
                             <!-- Textos Empilhados (Razão Social e CNPJ) -->
                             <VerticalStackLayout Grid.Column="1" 
