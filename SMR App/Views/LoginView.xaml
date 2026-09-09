@@ -51,7 +51,7 @@
                     Margin="0,10,0,0"/>
 
             <Label Text="Esqueci minha senha"
-                   FontFamily="PressStart2PRegular"
+                   FontSize="16"
                    TextColor="{StaticResource TextoSecundario}"
                    HorizontalOptions="Center"
                    Margin="0,5,0,15">
