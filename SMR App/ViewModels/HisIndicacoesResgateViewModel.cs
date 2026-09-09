@@ -8,15 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SMR_App.ViewModels
 {
     [QueryProperty(nameof(IdEmpresa), "EmpresaIndicacao")]
-    public partial class HisIndicacoesResgate : BaseViewModel
+    public partial class HisIndicacoesResgateViewModel : BaseViewModel
     {
+        private readonly ApiServiceRecompensa _apiServiceRecompensa;
         private readonly ApiServiceIndicacao _apiServiceIndicacao;
         [ObservableProperty] private int idEmpresa;
 
@@ -26,14 +26,58 @@ namespace SMR_App.ViewModels
         private List<int> _idsEmpresas = new();
         private int _indexEmpresaAtual = 0;
 
+        private int id_promotor = 0;
+
         [ObservableProperty] ObservableCollection<IndicacaoRecompensaResgate> listaRecompensa = new();
         [ObservableProperty] private int pontosPromotor = 0;
         [ObservableProperty] private string nomeEmpresaAtual = "Carregando...";
         [ObservableProperty] private Recompensa_Rank promotorRank = Recompensa_Rank.ND;
 
-        public HisIndicacoesResgate(ApiServiceIndicacao apiServiceIndicacao)
+        public HisIndicacoesResgateViewModel(ApiServiceIndicacao apiServiceIndicacao, ApiServiceRecompensa apiServiceRecompensa)
         {
             _apiServiceIndicacao = apiServiceIndicacao;
+            _apiServiceRecompensa = apiServiceRecompensa;
+        }
+
+        [RelayCommand]
+        public async Task ResgatarRecompensa(IndicacaoRecompensaResgate recompensa)
+        {
+            try
+            {
+                if(recompensa == null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Não foi possível identificar a recompensa", "Ok");
+                    return;
+                }
+
+
+                string? token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                var novoResgate = new RecompensaResgate
+                {
+                    id_empresa = IdEmpresa,
+                    id_recompensa = recompensa.IDRecompensa,
+                    data_resgate = DateTime.Now,
+                    id_promotor = id_promotor
+                };
+
+                var resultado = await _apiServiceRecompensa.RecompensaResgatar(token, novoResgate);
+
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    return;
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível resgatar a recompensa selecionada. Erro: {ex.Message}", "OK");
+            }
         }
 
         partial void OnIdEmpresaChanged(int value)
@@ -52,7 +96,7 @@ namespace SMR_App.ViewModels
 
                 var resultado = await _apiServiceIndicacao.ConsultarRecompensaResgate(token);
 
-                if(resultado.Sucesso && resultado.Dados != null)
+                if (resultado.Sucesso && resultado.Dados != null)
                 {
                     _respostaTotal = resultado.Dados;
 
@@ -61,7 +105,9 @@ namespace SMR_App.ViewModels
 
                     _idsEmpresas = _todasRecompensas.Select(r => r.IDEmpresa).Distinct().ToList();
 
-                    if(_idsEmpresas.Contains(IdEmpresa))
+                    id_promotor = _promotorTodosPontos.Select(ptp => ptp.IDPromotor).FirstOrDefault();
+
+                    if (_idsEmpresas.Contains(IdEmpresa))
                     {
                         _indexEmpresaAtual = _idsEmpresas.IndexOf(IdEmpresa);
                     }
@@ -110,7 +156,10 @@ namespace SMR_App.ViewModels
 
         public void FiltrarRecompensaPorEmpresas()
         {
-            var filtradas = _todasRecompensas.Where(r => r.IDEmpresa == IdEmpresa).ToList();
+            var filtradas = _todasRecompensas
+                    .Where(r => r.IDEmpresa == IdEmpresa)
+                    .OrderByDescending(r => r.PontosNecessarios) // <-- O SEGREDO DA ORDENAÇÃO
+                    .ToList();
 
             if (filtradas.Any())
             {
@@ -137,5 +186,6 @@ namespace SMR_App.ViewModels
                 }
             });
         }
+    
     }
 }

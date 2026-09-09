@@ -4,28 +4,58 @@
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              xmlns:classesIndicacao="clr-namespace:SMRDominio.ClasseIndicacao;assembly=SMRDominio"
              x:Class="SMR_App.Views.HisIndicacoesResgateView"
-             x:DataType="viewmodels:HisIndicacoesResgate"
+             x:DataType="viewmodels:HisIndicacoesResgateViewModel"
              BackgroundColor="{StaticResource FundoPrincipal}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
-        <LinearGradientBrush x:Key="OuroBrush" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#FFD700" Offset="0.0" />
-            <GradientStop Color="#FFF176" Offset="0.5" />
-            <GradientStop Color="#FBC02D" Offset="1.0" />
+        <!-- DEGRADÊ OURO EM DEGRAUS -->
+        <LinearGradientBrush x:Key="OuroBrush" StartPoint="0,0" EndPoint="0,1">
+            <!-- Faixa 1 (Amarelo Forte) -->
+            <GradientStop Color="#EBE000" Offset="0.0" />
+            <GradientStop Color="#EBE000" Offset="0.25" />
+            <!-- Faixa 2 -->
+            <GradientStop Color="#F5ED5D" Offset="0.25" />
+            <GradientStop Color="#F5ED5D" Offset="0.50" />
+            <!-- Faixa 3 -->
+            <GradientStop Color="#FCF8AC" Offset="0.50" />
+            <GradientStop Color="#FCF8AC" Offset="0.75" />
+            <!-- Faixa 4 (Amarelo Claro) -->
+            <GradientStop Color="#FEFCE0" Offset="0.75" />
+            <GradientStop Color="#FEFCE0" Offset="1.0" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="PrataBrush" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#9E9E9E" Offset="0.0" />
-            <GradientStop Color="#E0E0E0" Offset="0.5" />
-            <GradientStop Color="#757575" Offset="1.0" />
+        <!-- DEGRADÊ PRATA EM DEGRAUS -->
+        <LinearGradientBrush x:Key="PrataBrush" StartPoint="0,0" EndPoint="0,1">
+            <!-- Faixa 1 (Cinza Escuro) -->
+            <GradientStop Color="#3E3E3E" Offset="0.0" />
+            <GradientStop Color="#3E3E3E" Offset="0.25" />
+            <!-- Faixa 2 -->
+            <GradientStop Color="#686868" Offset="0.25" />
+            <GradientStop Color="#686868" Offset="0.50" />
+            <!-- Faixa 3 -->
+            <GradientStop Color="#A3A3A3" Offset="0.50" />
+            <GradientStop Color="#A3A3A3" Offset="0.75" />
+            <!-- Faixa 4 (Cinza Claro) -->
+            <GradientStop Color="#D5D5D5" Offset="0.75" />
+            <GradientStop Color="#D5D5D5" Offset="1.0" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="BronzeBrush" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#8D6E63" Offset="0.0" />
-            <GradientStop Color="#D7CCC8" Offset="0.5" />
-            <GradientStop Color="#5D4037" Offset="1.0" />
+        <!-- DEGRADÊ BRONZE EM DEGRAUS -->
+        <LinearGradientBrush x:Key="BronzeBrush" StartPoint="0,0" EndPoint="0,1">
+            <!-- Faixa 1 (Marrom Escuro) -->
+            <GradientStop Color="#4A2500" Offset="0.0" />
+            <GradientStop Color="#4A2500" Offset="0.25" />
+            <!-- Faixa 2 -->
+            <GradientStop Color="#6F4B34" Offset="0.25" />
+            <GradientStop Color="#6F4B34" Offset="0.50" />
+            <!-- Faixa 3 -->
+            <GradientStop Color="#A69083" Offset="0.50" />
+            <GradientStop Color="#A69083" Offset="0.75" />
+            <!-- Faixa 4 (Marrom Claro/Bege) -->
+            <GradientStop Color="#E1DCD9" Offset="0.75" />
+            <GradientStop Color="#E1DCD9" Offset="1.0" />
         </LinearGradientBrush>
 
         <Shadow x:Key="GlowDesbloqueado" Brush="#4CAF50" Offset="0,4" Radius="8" Opacity="0.6" />
@@ -50,7 +80,7 @@
         <!-- ========================================== -->
         <!-- LINHA 1: LISTA DE RECOMPENSAS (TERMÔMETRO) -->
         <!-- ========================================== -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding ListaRecompensa}" SelectionMode="None" HorizontalOptions="Fill">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ListaRecompensa}" SelectionMode="None" HorizontalOptions="Fill" Margin="0,40,0,0">
 
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="0" />
@@ -65,8 +95,8 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="classesIndicacao:IndicacaoRecompensaResgate">
 
-                    <!-- MUDANÇA AQUI: Layout 100% elástico usando proporções e HorizontalOptions="Fill" -->
-                    <Grid ColumnDefinitions="3*, 4.5*, 2.5*" Margin="0" HorizontalOptions="Fill">
+                    <!-- Colunas das pontas fixas (120 e 100), coluna central (*) elástica -->
+                    <Grid ColumnDefinitions="120, *, 100" Margin="0" HorizontalOptions="Fill">
 
                         <!-- COLUNA 0: Botão Resgatar -->
                         <Button Grid.Column="0" 
@@ -75,9 +105,12 @@
                                 FontSize="12"
                                 CornerRadius="20" 
                                 HeightRequest="40"
-                                Padding="10,0" 
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
+                                Padding="5,0" 
+                                Margin="0,0,10,0"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Center"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HisIndicacoesResgateViewModel}}, Path=ResgatarRecompensaCommand}"
+                                CommandParameter="{Binding .}">
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="False">
                                     <Setter Property="BackgroundColor" Value="#333333" />
@@ -95,7 +128,7 @@
                         </Button>
 
                         <!-- COLUNA 1: Bloco de Cor (Termômetro) e Pontos -->
-                        <Border Grid.Column="1" StrokeThickness="1" Stroke="#222222" HeightRequest="100" HorizontalOptions="Fill">
+                        <Border Grid.Column="1" StrokeThickness="1" Stroke="#222222" HeightRequest="160" HorizontalOptions="Fill">
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
                                     <Setter Property="Background" Value="{StaticResource OuroBrush}" />
@@ -133,40 +166,59 @@
                         <!-- COLUNA 2: Nome do Rank e Ícone -->
                         <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
 
-                            <Label FontSize="14" FontAttributes="Bold" HorizontalOptions="Center">
+                            <Label FontSize="14" 
+                                   FontAttributes="Bold" 
+                                   HorizontalOptions="Center"
+                                   CharacterSpacing="1.5"
+                                   TextTransform="Uppercase">
+
+                                <!-- Sombra para criar aquele contraste de texto de RPG/Games -->
+                                <Label.Shadow>
+                                    <Shadow Brush="Black" Offset="0,2" Radius="3" Opacity="0.8" />
+                                </Label.Shadow>
+
                                 <Label.Triggers>
+
+                                    <!-- NÍVEL MÁXIMO -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="3">
-                                        <Setter Property="Text" Value="OURO" />
+                                        <Setter Property="Text" Value="👑 Rank Ouro" />
                                         <Setter Property="TextColor" Value="#FFD700" />
                                     </DataTrigger>
+
+                                    <!-- NÍVEL INTERMEDIÁRIO -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="2">
-                                        <Setter Property="Text" Value="PRATA" />
+                                        <Setter Property="Text" Value="⚔️ Elite Prata" />
                                         <Setter Property="TextColor" Value="#E0E0E0" />
                                     </DataTrigger>
+
+                                    <!-- NÍVEL INICIAL -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="1">
-                                        <Setter Property="Text" Value="BRONZE" />
+                                        <Setter Property="Text" Value="🛡️ Liga Bronze" />
                                         <Setter Property="TextColor" Value="#D7CCC8" />
                                     </DataTrigger>
 
+                                    <!-- EFEITO BLOQUEADO (Item não conquistado) -->
                                     <DataTrigger TargetType="Label" Binding="{Binding PodeResgatar}" Value="False">
-                                        <Setter Property="TextColor" Value="Gray" />
+                                        <Setter Property="TextColor" Value="#555555" />
+                                        <!-- Remove a sombra para que o rank não alcançado fique "apagado" e sem vida -->
+                                        <Setter Property="Shadow" Value="{x:Null}" />
                                     </DataTrigger>
+
                                 </Label.Triggers>
                             </Label>
 
                             <Image HeightRequest="45" WidthRequest="45" HorizontalOptions="Center">
                                 <Image.Triggers>
                                     <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="3">
-                                        <Setter Property="Source" Value="rank_ouro.png" />
+                                        <Setter Property="Source" Value="resgateouro.png" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="2">
-                                        <Setter Property="Source" Value="rank_prata.png" />
+                                        <Setter Property="Source" Value="resgateprata.png" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Image" Binding="{Binding IDRank}" Value="1">
-                                        <Setter Property="Source" Value="rank_bronze.png" />
+                                        <Setter Property="Source" Value="resgatebronze.png" />
                                     </DataTrigger>
 
-                                    <!-- Efeito de bloqueado/desbloqueado -->
                                     <DataTrigger TargetType="Image" Binding="{Binding PodeResgatar}" Value="False">
                                         <Setter Property="Opacity" Value="0.2" />
                                     </DataTrigger>

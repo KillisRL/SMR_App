@@ -20,6 +20,45 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        [HttpPost("resgate")]
+        [Authorize]
+        public async Task<IActionResult> RecompensaResgate([FromBody] RecompensaResgate novoResgate)
+        {
+            try
+            {
+                if (novoResgate == null)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para o resgate de recompensas." });
+                }
+
+                var jaResgatada = await _dbContext.RecompensaResgates
+                        .Where(rr => rr.id_recompensa == novoResgate.id_recompensa && rr.id_promotor == novoResgate.id_promotor).AnyAsync();
+
+                if(jaResgatada)
+                {
+                    return BadRequest(new { Mensagem = "Essa recompensa já foi resgatada." });
+                }
+
+                var resgateNovo = new RecompensaResgate
+                {
+                    id_empresa = novoResgate.id_empresa,
+                    id_promotor = novoResgate.id_promotor,
+                    id_recompensa = novoResgate.id_recompensa,
+                    data_resgate = novoResgate.data_resgate
+                };
+
+                _dbContext.RecompensaResgates.Add(resgateNovo);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new {Mensagem = "Recompensa resgatada com sucesso!"});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao consultar recompensas.", Erro = ex.Message });
+            }
+
+        }
+
         [HttpGet("consultar")]
         [Authorize]
         public async Task<IActionResult> ConsultarRecompensa([FromQuery] string? titulo, string? descricao, bool? ativo)
@@ -50,11 +89,6 @@ namespace SMRApi.Controllers
                         id_rank = recompensa.id_rank
                     }).ToListAsync();
 
-
-                if (listaRecompensa.Count <= 0)
-                {
-                    return BadRequest(new { Mensagem = "Nenhuma recompensa encontrada." });
-                }
 
                 return Ok(listaRecompensa);
             }

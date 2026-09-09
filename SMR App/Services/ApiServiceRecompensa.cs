@@ -28,6 +28,33 @@ namespace SMR_App.Services
             };
         }
 
+        public async Task<(bool Sucesso, string Mensagem)> RecompensaResgatar(string token, RecompensaResgate novoResgate)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var resultado = await _httpClient.PostAsJsonAsync("recompensas/resgate", novoResgate);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if(resultado.IsSuccessStatusCode)
+                {
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    return (true, retorno.Mensagem?? "Recompensa resgatada com sucesso");
+                }
+                else
+                {
+                    var retorno = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    return (false, retorno.Mensagem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao resgatar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+
+        }
         public async Task<(bool Sucesso, string Mensagem)> ExcluirRecompensa(string token, int codigoRecompensa)
         {
             try

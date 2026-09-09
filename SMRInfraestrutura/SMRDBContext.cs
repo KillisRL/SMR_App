@@ -16,6 +16,7 @@ namespace SMRInfraestrutura
         public DbSet<SMRDominio.ClasseBonificacao.Bonificacao> Bonificacoes { get; set; }
         public DbSet<SMRDominio.ClasseIndicacao.Indicacao> Indicacao { get; set; }
         public DbSet<SMRDominio.ClassePessoa.PromotorPontos> PromotorPontos { get; set; }
+        public DbSet<SMRDominio.ClasseRecompensa.RecompensaResgate> RecompensaResgates { get; set; }
         public SMRDBContext(IConfiguration configuracao, DbContextOptions<SMRDBContext> options): base(options)
         {
             _configuracao = configuracao ?? throw new ArgumentNullException(nameof(configuracao));
