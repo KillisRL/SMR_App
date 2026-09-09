@@ -314,15 +314,17 @@ namespace SMR_App.ViewModels
         {
             try
             {
-                if (string.IsNullOrEmpty(Documento) || string.IsNullOrEmpty(Senha_hash))
+                if (string.IsNullOrEmpty(Documento.Trim()) || string.IsNullOrEmpty(Senha_hash))
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os campos.", "OK");
                     return;
                 }
 
+                string documentoLimpo = new string(Documento.Where(char.IsDigit).ToArray());
+
                 var login = new PessoaLogin
                 {
-                    documento = Documento,
+                    documento = documentoLimpo,
                     senha_hash = Senha_hash
                 };
 
@@ -344,7 +346,9 @@ namespace SMR_App.ViewModels
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível realizar o login", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Erro",
+                        "Não foi possível realizar o login, documento ou senha",
+                        "Ok");
                 }
             }
             catch (Exception ex)
