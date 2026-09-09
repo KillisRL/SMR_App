@@ -50,9 +50,6 @@
         <!-- ========================================== -->
         <!-- LINHA 1: LISTA DE RECOMPENSAS (TERMÔMETRO) -->
         <!-- ========================================== -->
-        <!-- ========================================== -->
-        <!-- LINHA 1: LISTA DE RECOMPENSAS (TERMÔMETRO) -->
-        <!-- ========================================== -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding ListaRecompensa}" SelectionMode="None" HorizontalOptions="Fill">
 
             <CollectionView.ItemsLayout>

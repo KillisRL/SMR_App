@@ -9,8 +9,8 @@
 
             <!-- TIPO DE USUÁRIO -->
             <VerticalStackLayout Spacing="5">
-                <Label Text="TIPO DE USUÁRIO" 
-                       FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                <Label Text="TIPO DE USUÁRIO"
+                       FontSize="16" TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
                 <Border Stroke="{StaticResource BordaInput}" 
@@ -29,7 +29,7 @@
             <!-- CAMPO NOMES -->
             <VerticalStackLayout Spacing="5">
                 <Label Text="NOME / NOME FANTASIA" 
-                       FontSize="12" 
+                       FontSize="16"
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
@@ -49,8 +49,8 @@
             <!-- CAMPO RAZÃO SOCIAL -->
             <VerticalStackLayout IsVisible="{Binding IsEmpresaVisible}" Spacing="20">
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="RAZÃO SOCIAL" 
-                           FontSize="12" TextColor="{StaticResource TextoSecundario}" 
+                    <Label Text="RAZÃO SOCIAL"
+                           FontSize="16" TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
                     <Border Stroke="{StaticResource BordaInput}" 
@@ -68,7 +68,7 @@
 
                 <VerticalStackLayout Spacing="5">
                     <Label Text="CNPJ" 
-                           FontSize="12" 
+                           FontSize="16"
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -89,7 +89,7 @@
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                     <VerticalStackLayout Spacing="5" Grid.Column="0">
                         <Label Text="TELEFONE 1"                               
-                               FontSize="12" 
+                               FontSize="16" 
                                TextColor="{StaticResource TextoSecundario}" 
                                FontAttributes="Bold" />
 
@@ -108,7 +108,7 @@
                     
                     <VerticalStackLayout Spacing="5" Grid.Column="1">
                         <Label Text="TELEFONE 2" 
-                               FontSize="12" 
+                               FontSize="16" 
                                TextColor="{StaticResource TextoSecundario}" 
                                FontAttributes="Bold" />
                         <Border Stroke="{StaticResource BordaInput}" 
@@ -129,7 +129,7 @@
             <VerticalStackLayout IsVisible="{Binding IsPromotorVisible}" Spacing="20">
                 <VerticalStackLayout Spacing="5">
                     <Label Text="CPF" 
-                           FontSize="12" 
+                           FontSize="16" 
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -150,7 +150,7 @@
                 <!-- CAMPO CELULAR -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="CELULAR" 
-                           FontSize="12" 
+                           FontSize="16" 
                            TextColor="{StaticResource TextoSecundario}" 
                            FontAttributes="Bold" />
                     
@@ -172,7 +172,7 @@
             <!-- CAMPO E-MAIL -->
             <VerticalStackLayout Spacing="5">
                 <Label Text="E-MAIL" 
-                       FontSize="12" 
+                       FontSize="16" 
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 
@@ -194,7 +194,7 @@
             <VerticalStackLayout Spacing="5">
                 
                 <Label Text="SENHA" 
-                       FontSize="12" 
+                       FontSize="16" 
                        TextColor="{StaticResource TextoSecundario}" 
                        FontAttributes="Bold" />
                 

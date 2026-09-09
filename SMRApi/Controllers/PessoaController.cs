@@ -426,43 +426,57 @@ namespace SMRApi.Controllers
                     return NotFound(new { erro = "E-mail não encontrado no sistema." });
                 }
 
-                // 2. Gerar o código de 6 dígitos (Garante os zeros à esquerda com o "D6")
+                // 2. Gerar o código de 6 dígitos
                 string codigo = new Random().Next(1, 999999).ToString("D6");
-                DateTime dataExpiracao = DateTime.Now.AddMinutes(15);
 
-                // 3. Inserir direto na tabela que criamos no HeidiSQL
-                var sql = "INSERT INTO recuperacao_senha (email, codigo, data_expiracao) VALUES ({0}, {1}, {2})";
-                await _dbContext.Database.ExecuteSqlRawAsync(sql, request.Email, codigo, dataExpiracao);
+                // 3. Inserir usando o relógio do próprio banco (Evita conflito de fuso horário)
+                var sql = "INSERT INTO recuperacao_senha (email, codigo, data_expiracao) VALUES ({0}, {1}, DATE_ADD(NOW(), INTERVAL 15 MINUTE))";
+                await _dbContext.Database.ExecuteSqlRawAsync(sql, request.Email, codigo);
 
-                // 4. Configuração do envio de e-mail nativo do C# (SmtpClient)
+                // 4. Configuração profissional do envio de e-mail para evitar SPAM
                 try
                 {
                     var mailMessage = new System.Net.Mail.MailMessage();
-                    mailMessage.From = new System.Net.Mail.MailAddress("felipe120505@gmail.com");
+
+                    // Define um nome amigável no remetente (Isso evita que o provedor ache que é spam gerado por robô)
+                    mailMessage.From = new System.Net.Mail.MailAddress("felipe120505@gmail.com", "SMR App - Suporte");
                     mailMessage.To.Add(request.Email);
-                    mailMessage.Subject = "SMR APP - Código de Recuperação";
-                    mailMessage.Body = $"Olá!\n\nSeu código de verificação é: {codigo}\n\nEste código é válido por 15 minutos.";
+
+                    // Assunto direto e limpo (evite palavras apelativas como 'Urgente', 'Promoção', 'Ganhe')
+                    mailMessage.Subject = "Seu código de verificação - SMR App";
+
+                    // Corpo em HTML limpo melhora a reputação da entrega
+                    mailMessage.Body = $@"
+                        <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
+                            <h2 style='color: #D4AF37;'>SMR App - Recuperação de Senha</h2>
+                            <p>Olá,</p>
+                            <p>Você solicitou a recuperação de senha para a sua conta.</p>
+                            <p>O seu código de verificação é:</p>
+                            <h1 style='background: #f4f4f4; padding: 10px; display: inline-block; letter-spacing: 5px;'>{codigo}</h1>
+                            <p>Este código é válido por <b>15 minutos</b>.</p>
+                            <p>Se você não solicitou isso, pode ignorar este e-mail com segurança.</p>
+                        </div>";
+
+                    mailMessage.IsBodyHtml = true; // Habilita o formato HTML
 
                     using (var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com"))
                     {
-                        smtpClient.Port = 587; // Porta padrão de segurança do Gmail
-                        smtpClient.EnableSsl = true; // Criptografia ativada
+                        smtpClient.Port = 587;
+                        smtpClient.EnableSsl = true;
                         smtpClient.UseDefaultCredentials = false;
 
-                        // Suas credenciais
                         smtpClient.Credentials = new NetworkCredential(
-                            "felipe120505@gmail.com", // O mesmo e-mail do 'From'
+                            "felipe120505@gmail.com",
                             "ugnw uygz hvem pnqi"
                         );
 
-                        // Enviando o e-mail!
                         smtpClient.Send(mailMessage);
                     }
                 }
-                catch
+                catch (Exception mailEx)
                 {
-                    // Ignora o erro de envio físico do e-mail no ambiente de desenvolvimento local
-                    // para permitir que você teste a lógica gravando direto no banco
+                    // Loga o erro do e-mail no console do Visual Studio caso falhe o envio real
+                    System.Diagnostics.Debug.WriteLine($"Erro ao enviar e-mail SMTP: {mailEx.Message}");
                 }
 
                 return Ok(new { mensagem = "Código de recuperação gerado com sucesso!" });

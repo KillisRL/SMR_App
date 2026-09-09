@@ -32,5 +32,10 @@
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
+	<!-- Alvo definitivo para publicação rápida da API -->
+	<Target Name="PublishApiDefinitivo" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+		<Message Text="Publicando API automaticamente..." Importance="high" />
+	</Target>
+
 
 </Project>

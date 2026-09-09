@@ -24,6 +24,15 @@ namespace SMR_App
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Orbitro-Black.ttf", "OrbitroBlack");
+                    fonts.AddFont("Orbitro-Bold.ttf", "OrbitroBold");
+                    fonts.AddFont("Orbitron-VariableFont_wght.ttf", "OrbitronVariable");
+                    fonts.AddFont("PressStart2P-Regular.ttf", "PressStart2PRegular");
+                    fonts.AddFont("ChakraPetch-Regular.ttf", "ChakraPetchRegular");
+                    fonts.AddFont("ChakraPetch-Bold.ttf", "ChakraPetchBold");
+                    fonts.AddFont("Silkscreen-Regular.ttf", "SilkscreenRegular");
+                    fonts.AddFont("VT323-Regular.ttf", "VT323Regular");
+                    fonts.AddFont("Rajdhani-Regular.ttf", "RajdhaniRegular");
                 });
 
             // Adiciona a fábrica de HttpClient necessária para os serviços de API

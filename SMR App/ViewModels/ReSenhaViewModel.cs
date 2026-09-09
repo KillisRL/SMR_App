@@ -1,26 +1,15 @@
-﻿using System;
-using System.Net.Http;
+﻿using CommunityToolkit.Mvvm.Input;
+using SMR_App.Services; // Certifique-se de usar a mesma base de configuração
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 
 namespace SMR_App.ViewModels
 {
-    public class ReSenhaViewModel : BaseViewModel
+    public partial class ReSenhaViewModel : BaseViewModel
     {
-        // ==========================================================
-        // 1. CONFIGURAÇÃO DA API (Ajuste para a URL do seu Swagger)
-        // ==========================================================
-        private readonly string _baseUrl = "https://localhost:7190/pessoa";
         private readonly HttpClient _httpClient;
-
-        // Controle interno da máquina de estados (1 = E-mail, 2 = Código, 3 = Nova Senha)
         private int _faseAtual = 1;
 
-        // ==========================================================
-        // 2. PROPRIEDADES LIGADAS À TELA (XAML)
-        // ==========================================================
         private string _email;
         public string Email
         {
@@ -77,29 +66,23 @@ namespace SMR_App.ViewModels
             set => SetProperty(ref _exibirCampoNovaSenha, value);
         }
 
-        // ==========================================================
-        // 3. COMANDOS
-        // ==========================================================
         public ICommand AvancarCommand { get; }
         public ICommand VoltarCommand { get; }
 
-        // ==========================================================
-        // 4. CONSTRUTOR
-        // ==========================================================
         public ReSenhaViewModel()
         {
-            _httpClient = new HttpClient();
+            // Padronizado com o HttpClient configurado do projeto (igual às outras services)
+            var handler = new HttpClientHandler { UseProxy = false };
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
+            };
 
             AvancarCommand = new Command(async () => await ExecutarFaseAtualAsync());
             VoltarCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
 
-            // Prepara a tela inicial (Fase 1)
             ConfigurarFase1();
         }
-
-        // ==========================================================
-        // 5. MÉTODOS DE CONTROLE DE TELA E LÓGICA DE API
-        // ==========================================================
 
         private void ConfigurarFase1()
         {
@@ -130,7 +113,8 @@ namespace SMR_App.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", "Ocorreu um erro de conexão. Tente novamente.", "OK");
+                // Mostra o erro real no Alerta para sabermos se é rota, porta ou servidor
+                await Application.Current.MainPage.DisplayAlert("Erro de Conexão", ex.Message, "OK");
             }
         }
 
@@ -142,21 +126,22 @@ namespace SMR_App.ViewModels
                 return;
             }
 
-            // Envia para a API C#
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/solicitar-codigo", new { Email = this.Email });
+            // Como o BaseAddress é a API (ex: https://localhost:7190/), chamamos direto "pessoa/solicitar-codigo"
+            var response = await _httpClient.PostAsJsonAsync("pessoa/solicitar-codigo", new { Email = this.Email });
 
             if (response.IsSuccessStatusCode)
             {
-                // Sucesso, Muda a tela para a Fase 2 (Código)
                 _faseAtual = 2;
                 ExibirCampoEmail = false;
                 ExibirCampoCodigo = true;
                 InstrucaoTexto = "Um código de 6 dígitos foi enviado para o seu e-mail. Digite-o abaixo:";
                 TextoBotao = "VALIDAR CÓDIGO";
+                await Application.Current.MainPage.DisplayAlert("Sucesso!", $"Código de recuperação gerado com sucesso!", "OK");
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Ops!", "E-mail não encontrado no sistema.", "OK");
+                var erroDetalhe = await response.Content.ReadAsStringAsync();
+                await Application.Current.MainPage.DisplayAlert("Ops!", $"E-mail não encontrado ou erro no servidor. Detalhe: {erroDetalhe}", "OK");
             }
         }
 
@@ -168,8 +153,7 @@ namespace SMR_App.ViewModels
                 return;
             }
 
-            // Envia para a API C#
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/validar-codigo", new
+            var response = await _httpClient.PostAsJsonAsync("pessoa/validar-codigo", new
             {
                 Email = this.Email,
                 Codigo = this.CodigoVerificacao
@@ -177,12 +161,12 @@ namespace SMR_App.ViewModels
 
             if (response.IsSuccessStatusCode)
             {
-                // Sucesso! Muda a tela para a Fase 3 (Nova Senha)
                 _faseAtual = 3;
                 ExibirCampoCodigo = false;
                 ExibirCampoNovaSenha = true;
                 InstrucaoTexto = "Código validado! Agora crie a sua nova senha de acesso.";
                 TextoBotao = "SALVAR NOVA SENHA";
+                await Application.Current.MainPage.DisplayAlert("Sucesso!", $"Código de recuperação validado com sucesso!", "OK");
             }
             else
             {
@@ -198,8 +182,7 @@ namespace SMR_App.ViewModels
                 return;
             }
 
-            // Envia para a API C#
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/redefinir-senha", new
+            var response = await _httpClient.PostAsJsonAsync("pessoa/redefinir-senha", new
             {
                 Email = this.Email,
                 Codigo = this.CodigoVerificacao,
@@ -209,7 +192,6 @@ namespace SMR_App.ViewModels
             if (response.IsSuccessStatusCode)
             {
                 await Application.Current.MainPage.DisplayAlert("Sucesso", "Sua senha foi alterada com sucesso! Você já pode fazer login.", "OK");
-                // Finalizou o fluxo, volta para a tela de Login
                 await Shell.Current.GoToAsync("..");
             }
             else
