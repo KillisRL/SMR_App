@@ -39,13 +39,6 @@ namespace SMR_App.ViewModels
             await Shell.Current.GoToAsync(nameof(CadRecompensaView));
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool ativo && ativo)
-                return "ATIVO";
-            return "INATIVO";
-        }
-
         [RelayCommand]
         public async Task ExcluirRecompensa(Recompensa recompensa)
         {

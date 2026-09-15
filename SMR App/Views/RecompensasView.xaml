@@ -132,16 +132,17 @@
                                     Padding="8,3" 
                                     HorizontalOptions="End" 
                                     VerticalOptions="Start">
+                                
                                 <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="True">
+                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
                                         <Setter Property="BackgroundColor" Value="#2E7D32" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding ativo}" Value="False">
+                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="False">
                                         <Setter Property="BackgroundColor" Value="#C62828" />
                                     </DataTrigger>
                                 </Border.Triggers>
 
-                                <Label Text="{Binding ativo, Converter={StaticResource BoolToStatusConverter}, FallbackValue='INATIVO'}" 
+                                <Label Text="{Binding StatusTexto}" 
                                        FontAttributes="Bold" 
                                        TextColor="White" 
                                        FontSize="11"/>
@@ -155,7 +156,8 @@
                                    LineBreakMode="WordWrap">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                        Path=BindingContext.AbrirAlteracaoCommand}"
                                         CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
                             </Label>
@@ -164,7 +166,8 @@
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="4" VerticalOptions="End">
                                 <VerticalStackLayout.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                        Path=BindingContext.AbrirAlteracaoCommand}"
                                         CommandParameter="{Binding .}" />
                                 </VerticalStackLayout.GestureRecognizers>
 

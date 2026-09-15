@@ -98,26 +98,38 @@
                                 StrokeShape="RoundRectangle 8" 
                                 StrokeThickness="0" 
                                 HeightRequest="50"
-                                Padding="12,0">
-                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
-                                
-                                <Switch Grid.Column="2" 
-                                        IsToggled="{Binding Ativo}" 
-                                        OnColor="#D4AF37" 
-                                        Margin="0,0,0,0"
-                                        ThumbColor="White" 
-                                        VerticalOptions="Start" />
+                                Padding="15,0">
 
-                                <Label Grid.Column="3"
-                                       HorizontalTextAlignment="End"
-                                       VerticalTextAlignment="Center"
-                                       Margin="0,10,30,0"
-                                       Text="Ativo"
+                            <!-- Trocamos o Grid por um StackLayout perfeitamente alinhado à direita e centralizado -->
+                            <HorizontalStackLayout HorizontalOptions="End" 
+                                                   VerticalOptions="Center" 
+                                                   Spacing="10">
+
+                                <Switch IsToggled="{Binding Ativo}" 
+                                        OnColor="#D4AF37" 
+                                        ThumbColor="White" 
+                                        VerticalOptions="Center" />
+
+                                <Label VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"
                                        FontAttributes="Bold"
-                                       TextColor="{StaticResource TextoPrincipal}" 
-                                       FontSize="14" 
-                                       VerticalOptions="Start" />
-                            </Grid>
+                                       FontSize="14"
+                                       WidthRequest="60">
+                                    <!-- Largura fixa para o texto não empurrar o switch quando mudar de tamanho -->
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="True">
+                                            <Setter Property="Text" Value="Ativo" />
+                                            <Setter Property="TextColor" Value="{StaticResource TextoPrincipal}" />
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="False">
+                                            <Setter Property="Text" Value="Inativo" />
+                                            <Setter Property="TextColor" Value="Gray" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                            </HorizontalStackLayout>
                         </Border>
                     </VerticalStackLayout>
 

@@ -26,6 +26,9 @@ namespace SMRDominio.ClasseRecompensa
         public bool Ativo { get; set; }
 
         [JsonIgnore]
+        public string StatusTexto => Ativo ? "ATIVO" : "INATIVO";
+
+        [JsonIgnore]
         [ForeignKey("id_empresa")] 
         public Empresa? Empresa { get; set; }
     }
