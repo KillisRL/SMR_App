@@ -100,7 +100,7 @@
 
                         <!-- COLUNA 0: Botão Resgatar -->
                         <Button Grid.Column="0" 
-                                Text="RESGATAR!" 
+                                Text="{Binding TextoBotaoResgate}" 
                                 FontAttributes="Bold" 
                                 FontSize="12"
                                 CornerRadius="20" 
@@ -110,41 +110,75 @@
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HisIndicacoesResgateViewModel}}, Path=ResgatarRecompensaCommand}"
-                                CommandParameter="{Binding .}">
+                                CommandParameter="{Binding .}">     
                             <Button.Triggers>
+                                <!-- 1. BLOQUEADO: Não tem pontos suficientes -->
                                 <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="False">
                                     <Setter Property="BackgroundColor" Value="#333333" />
                                     <Setter Property="TextColor" Value="#666666" />
                                     <Setter Property="IsEnabled" Value="False" />
                                     <Setter Property="Shadow" Value="{x:Null}" />
                                 </DataTrigger>
+
+                                <!-- 2. LIBERADO: Pode resgatar agora -->
                                 <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="True">
                                     <Setter Property="BackgroundColor" Value="#4CAF50" />
                                     <Setter Property="TextColor" Value="White" />
                                     <Setter Property="IsEnabled" Value="True" />
                                     <Setter Property="Shadow" Value="{StaticResource GlowDesbloqueado}" />
                                 </DataTrigger>
+
+                                <!-- 3. RESGATADO: Já pegou a recompensa (DEVE FICAR POR ÚLTIMO) -->
+                                <DataTrigger TargetType="Button" Binding="{Binding JaResgatada}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#1565C0" />
+                                    <!-- Azul Escuro Gamificado -->
+                                    <Setter Property="TextColor" Value="#BBDEFB" />
+                                    <!-- Azul Claro para o texto -->
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Setter Property="Shadow" Value="{x:Null}" />
+                                </DataTrigger>
                             </Button.Triggers>
                         </Button>
 
                         <!-- COLUNA 1: Bloco de Cor (Termômetro) e Pontos -->
-                        <Border Grid.Column="1" StrokeThickness="1" Stroke="#222222" HeightRequest="160" HorizontalOptions="Fill">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
-                                    <Setter Property="Background" Value="{StaticResource OuroBrush}" />
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="2">
-                                    <Setter Property="Background" Value="{StaticResource PrataBrush}" />
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="1">
-                                    <Setter Property="Background" Value="{StaticResource BronzeBrush}" />
-                                </DataTrigger>
+                        <Grid Grid.Column="1" HeightRequest="160" HorizontalOptions="Fill">
 
-                                <DataTrigger TargetType="Border" Binding="{Binding PodeResgatar}" Value="False">
-                                    <Setter Property="Opacity" Value="0.6" />
-                                </DataTrigger>
-                            </Border.Triggers>
+                            <!-- 1. BASE APAGADA (Fica fixa no fundo com opacidade baixa) -->
+                            <Border StrokeThickness="1" Stroke="#222222" Opacity="0.15">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
+                                        <Setter Property="Background" Value="{StaticResource OuroBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="2">
+                                        <Setter Property="Background" Value="{StaticResource PrataBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="1">
+                                        <Setter Property="Background" Value="{StaticResource BronzeBrush}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                            </Border>
 
+                            <!-- 2. MÁSCARA DE PROGRESSO (Sobe de baixo pra cima, revelando a cor vibrante) -->
+                            <ContentView VerticalOptions="End" HeightRequest="{Binding AlturaPreenchimento}" IsClippedToBounds="True">
+
+                                <!-- A borda real iluminada. Ela fica engessada em 160px para o degradê não distorcer -->
+                                <Border HeightRequest="160" VerticalOptions="End" StrokeThickness="1" Stroke="#222222">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
+                                            <Setter Property="Background" Value="{StaticResource OuroBrush}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="2">
+                                            <Setter Property="Background" Value="{StaticResource PrataBrush}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="1">
+                                            <Setter Property="Background" Value="{StaticResource BronzeBrush}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                </Border>
+
+                            </ContentView>
+
+                            <!-- 3. PONTUAÇÃO (Centralizada sobre as duas camadas) -->
                             <Label Text="{Binding PontosNecessarios}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label.Shadow>
                                     <Shadow Brush="White" Offset="0,1" Radius="2" Opacity="0.5" />
@@ -161,7 +195,8 @@
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
-                        </Border>
+
+                        </Grid>
 
                         <!-- COLUNA 2: Nome do Rank e Ícone -->
                         <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
@@ -181,19 +216,19 @@
 
                                     <!-- NÍVEL MÁXIMO -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="3">
-                                        <Setter Property="Text" Value="👑 Rank Ouro" />
+                                        <Setter Property="Text" Value="OURO" />
                                         <Setter Property="TextColor" Value="#FFD700" />
                                     </DataTrigger>
 
                                     <!-- NÍVEL INTERMEDIÁRIO -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="2">
-                                        <Setter Property="Text" Value="⚔️ Elite Prata" />
+                                        <Setter Property="Text" Value="PRATA" />
                                         <Setter Property="TextColor" Value="#E0E0E0" />
                                     </DataTrigger>
 
                                     <!-- NÍVEL INICIAL -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="1">
-                                        <Setter Property="Text" Value="🛡️ Liga Bronze" />
+                                        <Setter Property="Text" Value="BRONZE" />
                                         <Setter Property="TextColor" Value="#D7CCC8" />
                                     </DataTrigger>
 
@@ -223,6 +258,9 @@
                                         <Setter Property="Opacity" Value="0.2" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Image" Binding="{Binding PodeResgatar}" Value="True">
+                                        <Setter Property="Opacity" Value="1.0" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding JaResgatada}" Value="True">
                                         <Setter Property="Opacity" Value="1.0" />
                                     </DataTrigger>
                                 </Image.Triggers>

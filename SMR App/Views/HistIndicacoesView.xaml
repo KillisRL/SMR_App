@@ -30,10 +30,10 @@
                        TextColor="{StaticResource TextoPrincipal}" />
 
                 <Border BackgroundColor="{StaticResource FundoMenu}" 
-                        StrokeShape="RoundRectangle 8" 
+                        StrokeShape="RoundRectangle 25" 
                         StrokeThickness="0" 
-                        HeightRequest="45" 
-                        Padding="5,0">
+                        HeightRequest="50" 
+                        Padding="10,0">
                     <SearchBar x:Name="SearchBarPesquisa"
                                Text="{Binding RazaoSocial}"
                                Placeholder="Digite a razão social..." 

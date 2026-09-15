@@ -18,6 +18,7 @@ namespace SMR_App.ViewModels
         public HistIndicacoesViewModel(ApiServicesPessoa apiServicesPessoa)
         {
             _apiServicesPessoa = apiServicesPessoa;
+            _ = ConsultarEmpresa();
         }
 
         [RelayCommand]
