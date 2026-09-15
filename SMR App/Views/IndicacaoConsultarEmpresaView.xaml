@@ -17,7 +17,7 @@
         <!-- LINHA 0: Barra de Pesquisa                 -->
         <!-- ========================================== -->
         <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
-            <Label Text="Pesquisa" 
+            <Label Text="Pesquisa por Razão Social" 
                    FontAttributes="Bold" 
                    FontSize="16" 
                    TextColor="{StaticResource TextoPrincipal}" />

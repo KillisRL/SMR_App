@@ -53,8 +53,6 @@ namespace SMRApi.Controllers
                         PontosNecessarios = recompensa.pontos_necessarios
                     }).ToListAsync();
 
-
-
                 var promotorPontos = await (
                     from pontos in _dbContext.PromotorPontos
                     where (pontos.id_promotor == promotor.id)
@@ -66,10 +64,21 @@ namespace SMRApi.Controllers
                         PontosAcumulados = pontos.pontos_acumulados
                     }).ToListAsync();
 
+                var jaResgatadas = await (
+                    from resgatadas in _dbContext.RecompensaResgates
+                    where (resgatadas.id_promotor == promotor.id)
+                    select new RecompensaResgatadas
+                    {
+                        IDPromotor = promotor.id,
+                        IDEmpresa = resgatadas.id_empresa,
+                        IDRecompensa = resgatadas.id_recompensa
+                    }).ToListAsync();
+
                 var consultaFinal = new ConsultaFinalResgate
                 {
                     ListaRecompensas = listaRecompensa.ToList(),
-                    PromotorPontos = promotorPontos.ToList()
+                    PromotorPontos = promotorPontos.ToList(),
+                    Resgatadas = jaResgatadas.ToList()
                 };
 
                 return Ok(consultaFinal);

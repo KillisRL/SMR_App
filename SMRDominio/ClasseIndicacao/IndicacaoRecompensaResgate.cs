@@ -14,14 +14,16 @@ namespace SMRDominio.ClasseIndicacao
         public int IDEmpresa { get; set; }
         public string RazaoSocial { get; set; }
         public int PontosNecessarios { get; set; }
-
-        // NOVO: Propriedade para controlar a tela
+        public double AlturaPreenchimento { get; set; }
         public bool PodeResgatar { get; set; }
+        public bool JaResgatada { get; set; }
+        public string TextoBotaoResgate => JaResgatada ? "RESGATADA" : "RESGATAR!";
     }
     public class ConsultaFinalResgate
     {
         public List<IndicacaoRecompensaResgate>? ListaRecompensas { get; set; }
         public List<PromotorPontosResgate>? PromotorPontos { get; set; }
+        public List<RecompensaResgatadas> Resgatadas { get; set; }
     }
     public class PromotorPontosResgate
     {
@@ -29,5 +31,12 @@ namespace SMRDominio.ClasseIndicacao
         public int IDEmpresa { get; set; }
         public int PontosAcumulados { get; set; }
         public Recompensa_Rank? IDPromotorRank { get; set; }
-    }    
+    }
+    
+    public class RecompensaResgatadas
+    {
+        public int IDPromotor { get; set; }
+        public int IDRecompensa { get; set; }
+        public int IDEmpresa { get; set; }
+    }
 }

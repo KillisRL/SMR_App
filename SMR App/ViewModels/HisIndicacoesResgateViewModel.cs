@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SMR_App.Services;
+using SMRDominio.ClasseBase;
 using SMRDominio.ClasseIndicacao;
 using SMRDominio.ClassePessoa;
 using SMRDominio.ClasseRecompensa;
@@ -23,10 +24,12 @@ namespace SMR_App.ViewModels
         private ConsultaFinalResgate _respostaTotal;
         private List<IndicacaoRecompensaResgate> _todasRecompensas = new();
         private List<PromotorPontosResgate> _promotorTodosPontos = new();
+        private List<RecompensaResgatadas> _recompensasResgatadas = new();
         private List<int> _idsEmpresas = new();
         private int _indexEmpresaAtual = 0;
-
         private int id_promotor = 0;
+        public bool JaResgatada = false;
+        public string NomeBotao => JaResgatada == false ? "RESGATAR!" : "RESGATADA";
 
         [ObservableProperty] ObservableCollection<IndicacaoRecompensaResgate> listaRecompensa = new();
         [ObservableProperty] private int pontosPromotor = 0;
@@ -66,6 +69,7 @@ namespace SMR_App.ViewModels
                 if(resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    IndicacaoRecompensaResgate();
                     return;
                 }
                 else
@@ -102,6 +106,7 @@ namespace SMR_App.ViewModels
 
                     _promotorTodosPontos = _respostaTotal.PromotorPontos ?? new();
                     _todasRecompensas = _respostaTotal.ListaRecompensas ?? new();
+                    _recompensasResgatadas = _respostaTotal.Resgatadas ?? new();
 
                     _idsEmpresas = _todasRecompensas.Select(r => r.IDEmpresa).Distinct().ToList();
 
@@ -156,36 +161,58 @@ namespace SMR_App.ViewModels
 
         public void FiltrarRecompensaPorEmpresas()
         {
-            var filtradas = _todasRecompensas
+            var dadosPromotor = _promotorTodosPontos.FirstOrDefault(pontos => pontos.IDEmpresa == IdEmpresa);
+            int pontosAtuais = dadosPromotor != null ? dadosPromotor.PontosAcumulados : 0;
+            var resgatadasEmpresa = _recompensasResgatadas.Where(resgatada => resgatada.IDEmpresa == IdEmpresa); 
+
+            PontosPromotor = pontosAtuais;
+            PromotorRank = dadosPromotor != null ? dadosPromotor.IDPromotorRank ?? Recompensa_Rank.ND : Recompensa_Rank.ND;
+            var filtradasAsc = _todasRecompensas
                     .Where(r => r.IDEmpresa == IdEmpresa)
-                    .OrderByDescending(r => r.PontosNecessarios) // <-- O SEGREDO DA ORDENAÇÃO
+                    .OrderBy(r => r.PontosNecessarios)
                     .ToList();
 
-            if (filtradas.Any())
-            {
-                NomeEmpresaAtual = filtradas.First().RazaoSocial;
-            }
+            if (filtradasAsc.Any())
+                NomeEmpresaAtual = filtradasAsc.First().RazaoSocial;
             else
-            {
                 NomeEmpresaAtual = "Nenhuma empresa selecionada";
+
+            int pontosAnteriores = 0; 
+
+            foreach (var item in filtradasAsc)
+            {
+                item.PodeResgatar = pontosAtuais >= item.PontosNecessarios;
+
+                item.JaResgatada = _recompensasResgatadas.Any(resgatada =>
+                                    resgatada.IDRecompensa == item.IDRecompensa &&
+                                    resgatada.IDEmpresa == IdEmpresa);
+                if (item.JaResgatada)
+                {
+                    item.PodeResgatar = false;
+                }
+
+                int pontosDesteRank = item.PontosNecessarios - pontosAnteriores;
+
+                int pontosConquistadosNesteRank = Math.Max(0, pontosAtuais - pontosAnteriores);
+
+                double percentual = (double)pontosConquistadosNesteRank / pontosDesteRank;
+                if (percentual > 1.0) percentual = 1.0;
+
+                item.AlturaPreenchimento = 160 * percentual;
+
+                pontosAnteriores = item.PontosNecessarios;
             }
+            var filtradasDesc = filtradasAsc.OrderByDescending(r => r.PontosNecessarios).ToList();
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                var dadosPromotor = _promotorTodosPontos.FirstOrDefault(pontos => pontos.IDEmpresa == IdEmpresa);
-
-                PontosPromotor = dadosPromotor != null ? dadosPromotor.PontosAcumulados : 0;
-                PromotorRank = dadosPromotor != null ? dadosPromotor.IDPromotorRank ?? Recompensa_Rank.ND : Recompensa_Rank.ND;
-
                 ListaRecompensa.Clear();
-                foreach (var item in filtradas)
+                foreach (var item in filtradasDesc)
                 {
-                    item.PodeResgatar = PontosPromotor >= item.PontosNecessarios;
-
                     ListaRecompensa.Add(item);
                 }
             });
         }
-    
+
     }
 }

@@ -61,7 +61,7 @@ namespace SMR_App.Services
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var resultado = await _httpClient.DeleteAsync($"recompensas/excluir{codigoRecompensa}");
+                var resultado = await _httpClient.DeleteAsync($"recompensas/excluir/{codigoRecompensa}");
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
