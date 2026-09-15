@@ -4,8 +4,8 @@ namespace SMR_App.Views;
 
 public partial class HisIndicacoesResgateView : ContentPage
 {
-    private readonly HisIndicacoesResgate _viewModel;
-    public HisIndicacoesResgateView(HisIndicacoesResgate viewModel)
+    private readonly HisIndicacoesResgateViewModel _viewModel;
+    public HisIndicacoesResgateView(HisIndicacoesResgateViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = _viewModel = viewModel;

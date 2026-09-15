@@ -33,7 +33,8 @@
                             StrokeThickness="0" 
                             HeightRequest="50" 
                             Padding="10,0">
-                        <Entry Text="{Binding Titulo}" 
+                        <Entry Text="{Binding Titulo}"
+                               MaxLength="100"
                                Placeholder="Ex: Desconto de R$ 20,00" 
                                PlaceholderColor="Gray" 
                                TextColor="{StaticResource TextoPrincipal}" 
@@ -55,7 +56,8 @@
                             Padding="10,0">
                         <Entry Text="{Binding Pontos}" 
                                Placeholder="Ex: 50" 
-                               Keyboard="Numeric" 
+                               Keyboard="Numeric"
+                               MaxLength="6"
                                PlaceholderColor="Gray" 
                                TextColor="{StaticResource TextoPrincipal}" 
                                VerticalOptions="Center" />
@@ -99,9 +101,6 @@
                                 Padding="12,0">
                             <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                                 
-    
-
-
                                 <Switch Grid.Column="2" 
                                         IsToggled="{Binding Ativo}" 
                                         OnColor="#D4AF37" 
@@ -136,7 +135,8 @@
                             StrokeThickness="0" 
                             HeightRequest="120" 
                             Padding="10">
-                        <Editor Text="{Binding Descricao}" 
+                        <Editor Text="{Binding Descricao}"
+                                MaxLength="255"
                                 Placeholder="Informe os detalhes ou regras de resgate..." 
                                 PlaceholderColor="Gray" 
                                 TextColor="{StaticResource TextoPrincipal}" 

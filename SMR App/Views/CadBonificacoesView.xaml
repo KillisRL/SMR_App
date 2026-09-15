@@ -41,7 +41,8 @@
                                 StrokeThickness="0" 
                                 HeightRequest="50" 
                                 Padding="10,0">
-                            <Entry Text="{Binding Nome}" 
+                            <Entry Text="{Binding Nome}"
+                                   MaxLength="100"
                                    Placeholder="Ex: Desconto de R$ 5,00" 
                                    PlaceholderColor="Gray"
                                    TextColor="{StaticResource TextoPrincipal}" 
@@ -175,6 +176,7 @@
                             <Editor Text="{Binding Descricao}" 
                                     Placeholder="Detalhes ou regras de uso..." 
                                     PlaceholderColor="Gray"
+                                    MaxLength="500"
                                     TextColor="{StaticResource TextoPrincipal}" 
                                     AutoSize="Disabled" />
                         </Border>

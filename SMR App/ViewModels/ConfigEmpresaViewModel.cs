@@ -1,23 +1,33 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using SMR_App.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
-using SMR_App.Services;
 
 namespace SMR_App.ViewModels
 {
-    public class ConfigEmpresaViewModel : BaseViewModel
+    public partial class ConfigEmpresaViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
 
         // Mantemos APENAS o comando de importação.
         // O "AbrirTelaCommand" que você usou nos botões do XAML já está sendo herdado do BaseViewModel!
         public ICommand ImportarClientesCommand { get; }
+
+        [ObservableProperty] private bool _exibirExemplo;
+
+        [RelayCommand]
+        private void AlternarExemplo()
+        {
+            ExibirExemplo = !ExibirExemplo;
+        }
 
         public ConfigEmpresaViewModel()
         {
@@ -28,8 +38,7 @@ namespace SMR_App.ViewModels
 
             _httpClient = new HttpClient(handler)
             {
-                // Ajuste para o IP/Porta do seu Swagger (use 10.0.2.2 no emulador Android)
-                BaseAddress = new Uri("https://localhost:7190/")
+                BaseAddress = new Uri(ConfiguracoesApp.UrlApi)
             };
 
             ImportarClientesCommand = new Command(async () => await ImportarClientesCsvAsync());

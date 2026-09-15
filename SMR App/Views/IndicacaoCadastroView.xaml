@@ -62,7 +62,8 @@
                                 StrokeThickness="0" 
                                 HeightRequest="50" 
                                 Padding="10,0">
-                            <Entry Text="{Binding Nome_Indicado}" 
+                            <Entry Text="{Binding Nome_Indicado}"
+                                   MaxLength="100"
                                    Placeholder="Digite o nome completo..." 
                                    PlaceholderColor="Gray" 
                                    TextColor="{StaticResource TextoPrincipal}" 
@@ -74,7 +75,7 @@
                     <VerticalStackLayout Spacing="5">
                         <Label Text="CPF *" 
                                FontAttributes="Bold" 
-                               FontSize="14" 
+                               FontSize="14"
                                TextColor="#D4AF37" />
 
                         <Border BackgroundColor="{StaticResource FundoPrincipal}" 
@@ -83,7 +84,8 @@
                                 HeightRequest="50" 
                                 Padding="10,0">
                             <Entry Text="{Binding Cpf}" 
-                                   Keyboard="Numeric" 
+                                   Keyboard="Numeric"
+                                   MaxLength="14"
                                    Placeholder="000.000.000-00" 
                                    PlaceholderColor="Gray" 
                                    TextColor="{StaticResource TextoPrincipal}" 
@@ -104,7 +106,8 @@
                                 HeightRequest="50" 
                                 Padding="10,0">
                             <Entry Text="{Binding Telefone_Indicado}" 
-                                   Keyboard="Telephone" 
+                                   Keyboard="Telephone"
+                                   MaxLength="20"
                                    Placeholder="(00) 00000-0000" 
                                    PlaceholderColor="Gray" 
                                    TextColor="{StaticResource TextoPrincipal}" 

@@ -20,6 +20,45 @@ namespace SMRApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        [HttpPost("resgate")]
+        [Authorize]
+        public async Task<IActionResult> RecompensaResgate([FromBody] RecompensaResgate novoResgate)
+        {
+            try
+            {
+                if (novoResgate == null)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para o resgate de recompensas." });
+                }
+
+                var jaResgatada = await _dbContext.RecompensaResgates
+                        .Where(rr => rr.id_recompensa == novoResgate.id_recompensa && rr.id_promotor == novoResgate.id_promotor).AnyAsync();
+
+                if(jaResgatada)
+                {
+                    return BadRequest(new { Mensagem = "Essa recompensa já foi resgatada." });
+                }
+
+                var resgateNovo = new RecompensaResgate
+                {
+                    id_empresa = novoResgate.id_empresa,
+                    id_promotor = novoResgate.id_promotor,
+                    id_recompensa = novoResgate.id_recompensa,
+                    data_resgate = novoResgate.data_resgate
+                };
+
+                _dbContext.RecompensaResgates.Add(resgateNovo);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new {Mensagem = "Recompensa resgatada com sucesso!"});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao consultar recompensas.", Erro = ex.Message });
+            }
+
+        }
+
         [HttpGet("consultar")]
         [Authorize]
         public async Task<IActionResult> ConsultarRecompensa([FromQuery] string? titulo, string? descricao, bool? ativo)
@@ -51,11 +90,6 @@ namespace SMRApi.Controllers
                     }).ToListAsync();
 
 
-                if (listaRecompensa.Count <= 0)
-                {
-                    return BadRequest(new { Mensagem = "Nenhuma recompensa encontrada." });
-                }
-
                 return Ok(listaRecompensa);
             }
             catch (Exception ex)
@@ -79,16 +113,66 @@ namespace SMRApi.Controllers
                 int idPessoa = int.Parse(pessoa);
                 var empresa = await _dbContext.Empresa.Where(e => e.id_pessoa == idPessoa).FirstOrDefaultAsync();
 
-                int idEmpresa = empresa.id;
-
                 if (empresa == null)
                 {
                     return BadRequest(new { Message = "Não foi possível cadastrar a recompensa porque nenhuma empresa está vinculada a este usuário." });
                 }
 
+                int idEmpresa = empresa.id;
+
+                // 2. CORREÇÃO: Usando a variável segura 'idEmpresa' obtida pelo Token, e não a enviada no Body
+                bool mesmoPonto = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios == recompensa.pontos_necessarios).AnyAsync();
+                if (mesmoPonto)
+                {
+                    return BadRequest(new { Mensagem = "Já existe uma recompensa com essa quantidade de pontos!" });
+                }
+
+                bool mesmoRankAtivo = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.id_rank == recompensa.id_rank && r.Ativo == true).AnyAsync();
+                if (mesmoRankAtivo)
+                {
+                    return BadRequest(new { Mensagem = "Já existe uma recompensa Ativa com o mesmo Rank. Altere o Rank da nova ou inative a já existente." });
+                }
+
+                if (recompensa.id_rank == Recompensa_Rank.Bronze)
+                {
+                    bool validacao = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios <= recompensa.pontos_necessarios && r.id_rank != recompensa.id_rank).AnyAsync();
+
+                    if (validacao)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa bronze não pode ter mais pontos do que as recompensas Prata e Ouro." });
+                    }
+                }
+
+                if (recompensa.id_rank == Recompensa_Rank.Prata)
+                {
+                    bool validacaoBronze = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios >= recompensa.pontos_necessarios && r.id_rank == Recompensa_Rank.Bronze).AnyAsync();
+
+                    if (validacaoBronze)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa prata não pode ter menos pontos do que a recompensa bronze." });
+                    }
+
+                    bool validacaoOuro = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios <= recompensa.pontos_necessarios && r.id_rank == Recompensa_Rank.Ouro).AnyAsync();
+
+                    if (validacaoOuro)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa prata não pode ter mais pontos do que a recompensa ouro." });
+                    }
+                }
+
+                if (recompensa.id_rank == Recompensa_Rank.Ouro)
+                {
+                    bool validacao = await _dbContext.Recompensas.Where(r => r.id_empresa == idEmpresa && r.pontos_necessarios >= recompensa.pontos_necessarios && r.id_rank != recompensa.id_rank).AnyAsync();
+
+                    if (validacao)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa ouro não pode ter menos pontos do que as recompensas Prata e Bronze." });
+                    }
+                }
+
                 var novaRecompensa = new Recompensa
                 {
-                    id_empresa = idEmpresa,
+                    id_empresa = idEmpresa, 
                     titulo = recompensa.titulo,
                     descricao = recompensa.descricao,
                     pontos_necessarios = recompensa.pontos_necessarios,
@@ -124,6 +208,7 @@ namespace SMRApi.Controllers
                 {
                     return Unauthorized(new { Message = "Usuário não autenticado ou identificador inválido no token." });
                 }
+
                 var empresa = await _dbContext.Empresa
                     .FirstOrDefaultAsync(e => e.id_pessoa == idPessoaLogada);
 
@@ -132,32 +217,110 @@ namespace SMRApi.Controllers
                     return BadRequest(new { Message = "Não foi possível alterar a recompensa porque nenhuma empresa está vinculada a este usuário." });
                 }
 
-                var recompesaAlterar = await _dbContext.Recompensas
-                    .Where(a => a.id == recompensa.id)
+                int idEmpresa = empresa.id;
+
+                bool mesmoPonto = await _dbContext.Recompensas.Where(r =>
+                    r.id_empresa == idEmpresa &&
+                    r.pontos_necessarios == recompensa.pontos_necessarios &&
+                    r.id != recompensa.id).AnyAsync();
+
+                if (mesmoPonto)
+                {
+                    return BadRequest(new { Mensagem = "Já existe uma recompensa com essa quantidade de pontos!" });
+                }
+
+                if (recompensa.Ativo)
+                {
+                    bool mesmoRankAtivo = await _dbContext.Recompensas.Where(r =>
+                        r.id_empresa == idEmpresa &&
+                        r.id_rank == recompensa.id_rank &&
+                        r.Ativo == true &&
+                        r.id != recompensa.id).AnyAsync();
+
+                    if (mesmoRankAtivo)
+                    {
+                        return BadRequest(new { Mensagem = "Já existe uma recompensa Ativa com o mesmo Rank. Altere o Rank da nova ou inative a já existente." });
+                    }
+                }
+                if (recompensa.id_rank == Recompensa_Rank.Bronze)
+                {
+                    bool validacao = await _dbContext.Recompensas.Where(r =>
+                        r.id_empresa == idEmpresa &&
+                        r.pontos_necessarios <= recompensa.pontos_necessarios &&
+                        r.id_rank != recompensa.id_rank &&
+                        r.id != recompensa.id).AnyAsync();
+
+                    if (validacao)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa bronze não pode ter mais pontos do que as recompensas Prata e Ouro." });
+                    }
+                }
+
+                if (recompensa.id_rank == Recompensa_Rank.Prata)
+                {
+                    bool validacaoBronze = await _dbContext.Recompensas.Where(r =>
+                        r.id_empresa == idEmpresa &&
+                        r.pontos_necessarios >= recompensa.pontos_necessarios &&
+                        r.id_rank == Recompensa_Rank.Bronze &&
+                        r.id != recompensa.id).AnyAsync();
+
+                    if (validacaoBronze)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa prata não pode ter menos pontos do que a recompensa bronze." });
+                    }
+
+                    bool validacaoOuro = await _dbContext.Recompensas.Where(r =>
+                        r.id_empresa == idEmpresa &&
+                        r.pontos_necessarios <= recompensa.pontos_necessarios &&
+                        r.id_rank == Recompensa_Rank.Ouro &&
+                        r.id != recompensa.id).AnyAsync();
+
+                    if (validacaoOuro)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa prata não pode ter mais pontos do que a recompensa ouro." });
+                    }
+                }
+
+                if (recompensa.id_rank == Recompensa_Rank.Ouro)
+                {
+                    bool validacao = await _dbContext.Recompensas.Where(r =>
+                        r.id_empresa == idEmpresa &&
+                        r.pontos_necessarios >= recompensa.pontos_necessarios &&
+                        r.id_rank != recompensa.id_rank &&
+                        r.id != recompensa.id).AnyAsync();
+
+                    if (validacao)
+                    {
+                        return BadRequest(new { Mensagem = "A recompensa ouro não pode ter menos pontos do que as recompensas Prata e Bronze." });
+                    }
+                }
+
+                // ALTERAÇÃO NO BANCO DE DADOS
+                // Adicionado a.id_empresa == idEmpresa para segurança (IDOR)
+                var recompensaAlterar = await _dbContext.Recompensas
+                    .Where(a => a.id == recompensa.id && a.id_empresa == idEmpresa)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(u => u.titulo, recompensa.titulo)
                         .SetProperty(u => u.descricao, recompensa.descricao)
                         .SetProperty(u => u.Ativo, recompensa.Ativo)
                         .SetProperty(u => u.pontos_necessarios, recompensa.pontos_necessarios)
-                        .SetProperty(u => u.id_rank,  recompensa.id_rank)
+                        .SetProperty(u => u.id_rank, recompensa.id_rank)
                     );
-                
-                
 
-                if (recompesaAlterar <= 0)
+                if (recompensaAlterar <= 0)
                 {
-                    return NotFound(new { Mensagem = "Recompensa não encontrada para alteração." });
+                    return NotFound(new { Mensagem = "Recompensa não encontrada para alteração ou pertence a outra empresa." });
                 }
 
                 return Ok(new { Mensagem = "Recompensa alterada com sucesso!" });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = "Erro ao cadastrar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
+                return BadRequest(new { Message = "Erro ao alterar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
 
-        [HttpDelete("excluir{id}")]
+        [HttpDelete("excluir/{id}")]
         [Authorize]
         public async Task<IActionResult> ExcluirRecompensa(int id)
         {
@@ -179,11 +342,16 @@ namespace SMRApi.Controllers
 
                 if (empresa == null)
                 {
-                    return BadRequest(new { Message = "Não foi possível alterar a recompensa porque nenhuma empresa está vinculada a este usuário." });
+                    return BadRequest(new { Message = "Não foi possível excluir a recompensa porque nenhuma empresa está vinculada a este usuário." });
                 }
 
-                //var recompensaUsada = await _dbContext.Recompensas
-                //    .AnyAsync(r => r.id)
+                bool recompensaUsada = await _dbContext.RecompensaResgates.Where(rr => rr.id_recompensa == id).AnyAsync();
+
+                if (recompensaUsada)
+                {
+                    // UX MELHORADA: Sugere a inativação já que a exclusão foi bloqueada
+                    return BadRequest(new { Mensagem = "Não é possível excluir uma recompensa que já foi resgatada. Caso não queira mais utilizá-la, altere o status para Inativa." });
+                }
 
                 var excluirRecompensa = await _dbContext.Recompensas
                     .Where(r => r.id == id && r.id_empresa == empresa.id).ExecuteDeleteAsync();

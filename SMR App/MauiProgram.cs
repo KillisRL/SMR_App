@@ -68,7 +68,7 @@ namespace SMR_App
             builder.Services.AddTransient<HistIndicacoesEmpresaViewModel>();
             builder.Services.AddTransient<RelatoriosCoBonifViewModel>();
             builder.Services.AddTransient<RelatoriosRankingViewModel>();
-            builder.Services.AddTransient<HisIndicacoesResgate>();
+            builder.Services.AddTransient<HisIndicacoesResgateViewModel>();
 
 
 
