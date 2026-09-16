@@ -78,6 +78,78 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         private void ProximoRelatorio() { }
 
+        [RelayCommand]
+        private async Task ExportarExcelAsync()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Sessão expirada.", "OK");
+                    return;
+                }
+
+                int statusId = StatusSelecionado?.Id ?? 0;
+                var bytes = await _apiService.BaixarRankingPromotoresExcelAsync(DataInicio, DataFim, statusId, token);
+
+                if (bytes == null || bytes.Length == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível gerar o arquivo Excel do ranking.", "OK");
+                    return;
+                }
+
+                string nomeArquivo = $"Relatorio_RankingPromotores_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                string caminhoArquivo = Path.Combine(FileSystem.CacheDirectory, nomeArquivo);
+                await File.WriteAllBytesAsync(caminhoArquivo, bytes);
+
+                await Launcher.Default.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(caminhoArquivo)
+                });
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Erro ao exportar Excel: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ExportarPdfAsync()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Sessão expirada.", "OK");
+                    return;
+                }
+
+                int statusId = StatusSelecionado?.Id ?? 0;
+                var bytes = await _apiService.BaixarRankingPromotoresPdfAsync(DataInicio, DataFim, statusId, token);
+
+                if (bytes == null || bytes.Length == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível gerar o arquivo PDF do ranking.", "OK");
+                    return;
+                }
+
+                string nomeArquivo = $"Relatorio_RankingPromotores_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                string caminhoArquivo = Path.Combine(FileSystem.CacheDirectory, nomeArquivo);
+                await File.WriteAllBytesAsync(caminhoArquivo, bytes);
+
+                await Launcher.Default.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(caminhoArquivo)
+                });
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Erro ao exportar PDF: {ex.Message}", "OK");
+            }
+        }
+
         // Eventos disparados ao mudar os filtros
         partial void OnDataInicioChanged(DateTime value) => _ = CarregarDadosGraficoAsync();
         partial void OnDataFimChanged(DateTime value) => _ = CarregarDadosGraficoAsync();

@@ -69,6 +69,7 @@ namespace SMR_App
             builder.Services.AddTransient<RelatoriosCoBonifViewModel>();
             builder.Services.AddTransient<RelatoriosRankingViewModel>();
             builder.Services.AddTransient<HisIndicacoesResgateViewModel>();
+            builder.Services.AddTransient<RelatoriosConversaoViewModel>();
 
 
 
@@ -95,6 +96,8 @@ namespace SMR_App
             builder.Services.AddTransient<RelatoriosCoBonifView>();
             builder.Services.AddTransient<RelatoriosRankingView>();
             builder.Services.AddTransient<HisIndicacoesResgateView>();
+            builder.Services.AddTransient<RelatoriosConversaoView>();
+            builder.Services.AddTransient<MenuInferiorView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

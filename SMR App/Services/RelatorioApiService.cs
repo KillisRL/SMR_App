@@ -133,5 +133,83 @@ namespace SMR_App.Services
                 return new List<RankingPromotorDTO>();
             }
         }
+
+        public async Task<byte[]> BaixarRankingPromotoresExcelAsync(DateTime dataInicio, DateTime dataFim, int statusId, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string url = $"relatorios/ranking-promotores/excel?dataInicio={dataInicio:yyyy-MM-dd}&dataFim={dataFim:yyyy-MM-dd}&status={statusId}";
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            return null;
+        }
+
+        public async Task<byte[]> BaixarRankingPromotoresPdfAsync(DateTime dataInicio, DateTime dataFim, int statusId, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string url = $"relatorios/ranking-promotores/pdf?dataInicio={dataInicio:yyyy-MM-dd}&dataFim={dataFim:yyyy-MM-dd}&status={statusId}";
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            return null;
+        }
+
+        // 1. Método para carregar o gráfico de linhas
+        public async Task<List<MetricaConversaoDTO>> ObterMeticasConversaoAsync(DateTime dataInicio, DateTime dataFim, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Formata a data para yyyy-MM-dd para enviar na URL
+                string url = $"relatorios/conversao?dataInicio={dataInicio:yyyy-MM-dd}&dataFim={dataFim:yyyy-MM-dd}";
+
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    return await response.Content.ReadFromJsonAsync<List<MetricaConversaoDTO>>(options) ?? new List<MetricaConversaoDTO>();
+                }
+                return new List<MetricaConversaoDTO>();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao obter métricas de conversão: {ex.Message}");
+                return new List<MetricaConversaoDTO>();
+            }
+        }
+
+        // 2. Método para baixar o Excel
+        public async Task<byte[]> BaixarConversaoExcelAsync(DateTime dataInicio, DateTime dataFim, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string url = $"relatorios/conversao/excel?dataInicio={dataInicio:yyyy-MM-dd}&dataFim={dataFim:yyyy-MM-dd}";
+
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            return null;
+        }
+
+        // 3. Método para baixar o PDF
+        public async Task<byte[]> BaixarConversaoPdfAsync(DateTime dataInicio, DateTime dataFim, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string url = $"relatorios/conversao/pdf?dataInicio={dataInicio:yyyy-MM-dd}&dataFim={dataFim:yyyy-MM-dd}";
+
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            return null;
+        }
     }
 }

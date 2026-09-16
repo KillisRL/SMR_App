@@ -6,7 +6,7 @@ namespace SMR_App.ViewModels
     public partial class RelatoriosViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private string _nomeUsuario = "Ueler Bernardo";
+        private string _nomeUsuario = string.Empty;
 
         [ObservableProperty]
         private string _textoPesquisa = string.Empty;

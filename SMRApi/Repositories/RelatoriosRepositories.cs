@@ -109,7 +109,42 @@ namespace SMRApi.Repositories
             return await db.QueryAsync<RankingPromotorDTO>(sql, parametros);
         }
 
+        // =========================================================================
+        // MÉTODOS PARA O RELATÓRIO DE CONVERSÃO
+        // =========================================================================
 
+        public async Task<IEnumerable<MetricaConversaoDbDTO>> ObterMetricasConversaoAsync(DateTime inicio, DateTime fim, int idEmpresa)
+        {
+            using IDbConnection db = new MySqlConnection(_connectionString);
+
+            string sql = @"
+                SELECT 
+                    DATE_FORMAT(i.data_indicacao, '%m/%Y') AS Mes,
+                    CAST(COUNT(i.id) AS SIGNED) AS TotalEnviadas,
+                    CAST(SUM(CASE WHEN i.status_indicacao = 4 THEN 1 ELSE 0 END) AS SIGNED) AS TotalValidadas
+                FROM indicacao i
+                INNER JOIN bonificacao b ON i.id_bonificacao = b.id
+                WHERE i.data_indicacao BETWEEN @DataInicio AND @DataFim
+                  AND b.id_empresa = @IdEmpresa
+                GROUP BY YEAR(i.data_indicacao), MONTH(i.data_indicacao)
+                ORDER BY YEAR(i.data_indicacao), MONTH(i.data_indicacao);";
+
+            var parametros = new
+            {
+                DataInicio = inicio.ToString("yyyy-MM-dd 00:00:00"),
+                DataFim = fim.ToString("yyyy-MM-dd 23:59:59"),
+                IdEmpresa = idEmpresa
+            };
+
+            return await db.QueryAsync<MetricaConversaoDbDTO>(sql, parametros);
+        }
+
+        public class MetricaConversaoDbDTO
+        {
+            public string? Mes { get; set; }
+            public int TotalEnviadas { get; set; }
+            public int TotalValidadas { get; set; }
+        }
 
         public class CustoBonificacaoDTO
         {

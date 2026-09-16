@@ -25,10 +25,5 @@ namespace SMR_App.Services
             PessoaLogada = null;
             OnSessaoChanged?.Invoke(); // Dispara o evento de mudança
         }
-
-        //public static void Logout()
-        //{
-        //    PessoaLogada = null;
-        //}
     }
 }

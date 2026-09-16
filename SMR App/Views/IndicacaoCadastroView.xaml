@@ -121,7 +121,7 @@
                         <!-- Botão Cancelar/Voltar -->
                         <Button Grid.Column="0" 
                                 Text="VOLTAR" 
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=PopAsyncCommand}" 
+                                Command="{Binding VoltarTelaCommand}" 
                                 BackgroundColor="Transparent" 
                                 TextColor="#D4AF37" 
                                 BorderColor="#D4AF37" 

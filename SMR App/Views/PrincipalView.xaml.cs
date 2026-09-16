@@ -10,19 +10,4 @@ public partial class PrincipalView : ContentPage
 
 		BindingContext = viewModel;
 	}
-
-    // Função para fazer o menu subir
-    private async void AbrirMenu_Action(object sender, EventArgs e)
-    {
-        // Move o menu para a posição 0 no eixo Y (traz para a tela)
-        await MenuBottomSheet.TranslateTo(0, 0, 250, Easing.CubicOut);
-    }
-
-    // Função para fazer o menu descer
-    private async void FecharMenu_Action(object sender, EventArgs e)
-    {
-        // Move o menu de volta para 500 no eixo Y (esconde para baixo)
-        await MenuBottomSheet.TranslateTo(0, 330, 250, Easing.CubicIn);
-    }
-
 }

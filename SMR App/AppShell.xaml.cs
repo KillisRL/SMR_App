@@ -9,8 +9,6 @@ namespace SMR_App
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(CadastroPessoaView), typeof(CadastroPessoaView));
-            //Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
-            //Routing.RegisterRoute(nameof(PrincipalView), typeof(PrincipalView));
             Routing.RegisterRoute(nameof(ConfigEmpresaView), typeof(ConfigEmpresaView));
             Routing.RegisterRoute(nameof(SplashView), typeof(SplashView));
             Routing.RegisterRoute(nameof(BonificacoesView), typeof(BonificacoesView));
@@ -32,6 +30,8 @@ namespace SMR_App
             Routing.RegisterRoute(nameof(RelatoriosCoBonifView), typeof(RelatoriosCoBonifView));
             Routing.RegisterRoute(nameof(RelatoriosRankingView), typeof(RelatoriosRankingView));
             Routing.RegisterRoute(nameof(HisIndicacoesResgateView), typeof(HisIndicacoesResgateView));
+            Routing.RegisterRoute(nameof(RelatoriosConversaoView), typeof(RelatoriosConversaoView));
+            Routing.RegisterRoute(nameof(MenuInferiorView), typeof(MenuInferiorView));
         }
     }
 }

@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SMR_App"
+             xmlns:views="clr-namespace:SMR_App.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SMR_App.App">
     <Application.Resources>
@@ -22,7 +23,7 @@
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.AbrirTelaCommand,
                                     Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                                      CommandParameter="//PrincipalView"/>
+                                                      CommandParameter="///PrincipalView"/>
                             </Image.GestureRecognizers>
                         </Image>
 
@@ -47,8 +48,12 @@
                         </ImageButton>
                     </Grid>
 
-                    <ContentPresenter Grid.Row="1"/>
+                    <ContentPresenter Grid.Row="1" Padding="0,0,0,60"/>
 
+                    <views:MenuInferiorView Grid.Row="1" 
+                                VerticalOptions="End"
+                                BindingContext="{Binding BindingContext,
+                                Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
                 </Grid>
             </ControlTemplate>
 

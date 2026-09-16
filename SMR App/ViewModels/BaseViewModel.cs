@@ -116,7 +116,7 @@ namespace SMR_App.ViewModels
 
             // Chama o serviço para limpar os dados
             ApiServicesSessaoPessoa.EncerrarSessao();
-            //await Shell.Current.GoToAsync(nameof(pgHomeView));
+            await Shell.Current.GoToAsync("///LoginView");
         }
 
 

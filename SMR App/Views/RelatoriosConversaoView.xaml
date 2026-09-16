@@ -2,11 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             x:Class="SMR_App.Views.RelatoriosCoBonifView"
+             x:Class="SMR_App.Views.RelatoriosConversaoView"
              ControlTemplate="{StaticResource MainPageTemplate}"
              BackgroundColor="{StaticResource FundoPrincipal}">
 
-    <!-- Ajustei as linhas para acomodar a barra de botões de exportação -->
     <Grid RowDefinitions="Auto, Auto, *, Auto, 80" Padding="15">
 
         <!-- Navegação do Relatório -->
@@ -14,7 +13,7 @@
             <ImageButton Grid.Column="0" Source="arrow_left.png" WidthRequest="30" Command="{Binding RelatorioAnteriorCommand}"/>
 
             <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 8" HorizontalOptions="Center">
-                <Label Text="CONTROLE&#10;BONIFICAÇÃO" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
+                <Label Text="MÉTRICAS DE&#10;CONVERSÃO" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
             </Border>
 
             <ImageButton Grid.Column="2" Source="arrow_right.png" WidthRequest="30" Command="{Binding ProximoRelatorioCommand}"/>
@@ -33,11 +32,11 @@
             </Border>
         </HorizontalStackLayout>
 
-        <!-- Container do Gráfico -->
+        <!-- Container do Gráfico (Linha) -->
         <Border Grid.Row="2" BackgroundColor="{StaticResource FundoMenu}" Stroke="{StaticResource TextoSecundario}" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10">
             <Grid RowDefinitions="Auto, Auto, *">
-                <Label Grid.Row="0" Text="Controle Bonificação" HorizontalOptions="Center" FontSize="15" TextColor="{StaticResource TextoPrincipal}"/>
-                <Label Grid.Row="1" Text="● Custo Indicação" TextColor="CornflowerBlue" HorizontalOptions="Center" FontSize="11" Margin="0,0,0,5"/>
+                <Label Grid.Row="0" Text="Métrica Conversão" HorizontalOptions="Center" FontSize="15" TextColor="{StaticResource TextoPrincipal}"/>
+                <Label Grid.Row="1" Text="● % de Indicações Validadas" TextColor="#D4AF37" HorizontalOptions="Center" FontSize="11" Margin="0,0,0,5"/>
 
                 <lvc:CartesianChart 
                     Grid.Row="2"
@@ -49,25 +48,11 @@
 
         <!-- BOTÕES DE EXPORTAÇÃO (Excel e PDF) -->
         <Grid Grid.Row="3" ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0, 15, 0, 0">
-            <!-- Botão Excel -->
-            <Button Grid.Column="0" 
-                    Text="Exportar Excel" 
-                    Command="{Binding ExportarExcelCommand}"
-                    BackgroundColor="#107C41" 
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    HeightRequest="45"/>
-
-            <!-- Botão PDF -->
-            <Button Grid.Column="1" 
-                    Text="Exportar PDF" 
-                    Command="{Binding ExportarPdfCommand}"
-                    BackgroundColor="#D32F2F" 
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    HeightRequest="45"/>
+            <Button Grid.Column="0" Text="Exportar Excel" Command="{Binding ExportarExcelCommand}" BackgroundColor="#107C41" TextColor="White" FontAttributes="Bold" CornerRadius="10" HeightRequest="45"/>
+            <Button Grid.Column="1" Text="Exportar PDF" Command="{Binding ExportarPdfCommand}" BackgroundColor="#D32F2F" TextColor="White" FontAttributes="Bold" CornerRadius="10" HeightRequest="45"/>
         </Grid>
+
+
+
     </Grid>
 </ContentPage>
