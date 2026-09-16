@@ -130,7 +130,7 @@ namespace SMR_App.ViewModels
             if (AcaoTela == AcaoTela.Cadastro)
             {
                 await CadastrarPessoa();
-                await Shell.Current.GoToAsync(nameof(LoginView));
+                await Shell.Current.GoToAsync("///LoginView");
             }
             else if (AcaoTela == AcaoTela.Alteracao)
             {
@@ -245,7 +245,7 @@ namespace SMR_App.ViewModels
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "OK");
-                    await Shell.Current.GoToAsync(nameof(LoginView)); // Navega para o login só se der sucesso!
+                    await Shell.Current.GoToAsync("///LoginView");
                 }
                 else
                 {
@@ -341,7 +341,7 @@ namespace SMR_App.ViewModels
                     // Mensagem
                     await Application.Current.MainPage.DisplayAlert($"Sucesso", $"Seja bem-vindo!", "OK");
                     // Abrir tela
-                    await Shell.Current.GoToAsync("//PrincipalView");
+                    await Shell.Current.GoToAsync("///PrincipalView");
                 }
                 else
                 {

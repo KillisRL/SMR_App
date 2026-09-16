@@ -77,7 +77,7 @@ namespace SMR_App.ViewModels
 
                 // 3. Usa a rota ABSOLUTA "//" para destruir o histórico de navegação
                 // Isso impede que o usuário aperte o botão "Voltar" do celular e caia na tela logada
-                await Shell.Current.GoToAsync("//LoginView");
+                await Shell.Current.GoToAsync("///LoginView");
             }
         }
     }
