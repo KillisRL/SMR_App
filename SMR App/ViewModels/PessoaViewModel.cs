@@ -295,8 +295,7 @@ namespace SMR_App.ViewModels
                         ApiServicesSessaoPessoa.IniciarSessao(ApiServicesSessaoPessoa.PessoaLogada);
                     }
 
-                    // Volta para a tela anterior (PrincipalView) automaticamente
-                    await VoltarTelaAsync();
+                    await VoltarTela();
                 }
                 else
                 {
@@ -342,7 +341,7 @@ namespace SMR_App.ViewModels
                     // Mensagem
                     await Application.Current.MainPage.DisplayAlert($"Sucesso", $"Seja bem-vindo!", "OK");
                     // Abrir tela
-                    await Shell.Current.GoToAsync("PrincipalView");
+                    await Shell.Current.GoToAsync("//PrincipalView");
                 }
                 else
                 {

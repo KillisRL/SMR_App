@@ -204,7 +204,9 @@
                        FontAttributes="Bold" />
                 
                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                    <Border Grid.Column="0" Stroke="{StaticResource BordaInput}" StrokeThickness="1" BackgroundColor="{StaticResource FundoInput}" StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Border Grid.Column="0" Stroke="{StaticResource BordaInput}"
+                            StrokeThickness="1" BackgroundColor="{StaticResource FundoInput}"
+                            StrokeShape="RoundRectangle 10" Padding="15,0">
                         <Entry Text="{Binding Senha_hash}"
                                Placeholder="Digite sua senha"
                                IsPassword="True"
@@ -227,12 +229,26 @@
 
             <BoxView HeightRequest="20" Color="Transparent" />
 
-            <!-- BOTÃO SALVAR -->
-            <Button Text="{Binding NomeBotaoAcao}" 
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                <!-- BOTÃO VOLTAR -->
+                <Button Text="Voltar"
+                        Grid.Column="0"
+                    Command="{Binding VoltarTelaCommand}" 
+                    BackgroundColor="{Binding FundoPrincipal}"
+                    BorderWidth="5"
+                    BorderColor="#D4AF37"
+                    TextColor="#D4AF37" CornerRadius="10" HeightRequest="55" 
+                    FontAttributes="Bold" FontSize="16"/>
+                
+                <!-- BOTÃO SALVAR -->
+                <Button Text="{Binding NomeBotaoAcao}"
+                        Grid.Column="1"
                     Command="{Binding SalvarCommand}" 
                     BackgroundColor="{StaticResource CorPrimaria}" 
                     TextColor="#FFFFFF" CornerRadius="10" HeightRequest="55" 
                     FontAttributes="Bold" FontSize="16"/>
+            </Grid>
+
             
             <!-- BOTÃO EXCLUIR -->
             <Button Text="Excluir Minha Conta" 

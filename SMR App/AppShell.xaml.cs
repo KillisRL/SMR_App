@@ -9,8 +9,8 @@ namespace SMR_App
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(CadastroPessoaView), typeof(CadastroPessoaView));
-            Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
-            Routing.RegisterRoute(nameof(PrincipalView), typeof(PrincipalView));
+            //Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
+            //Routing.RegisterRoute(nameof(PrincipalView), typeof(PrincipalView));
             Routing.RegisterRoute(nameof(ConfigEmpresaView), typeof(ConfigEmpresaView));
             Routing.RegisterRoute(nameof(SplashView), typeof(SplashView));
             Routing.RegisterRoute(nameof(BonificacoesView), typeof(BonificacoesView));

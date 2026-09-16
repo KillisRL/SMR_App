@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SMR_App.Services;
 using SMRDominio.ClassePessoa;
 
 namespace SMR_App.ViewModels
 {
-    public class PrincipalViewModel : BaseViewModel
+    public partial class PrincipalViewModel : BaseViewModel
     {
 
         // VARIÁVEIS DE PERFIL
@@ -57,6 +58,26 @@ namespace SMR_App.ViewModels
             {
                 IsEmpresa = false;
                 IsCliente = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task Logout()
+        {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Sair", "Tem certeza que deseja sair da sua conta?", "Sim", "Cancelar");
+
+            if (confirmar)
+            {
+                // 1. Limpa a classe estática de Sessão
+                ApiServicesSessaoPessoa.EncerrarSessao();
+
+                // 2. Remove os dados salvos fisicamente no aparelho
+                SecureStorage.Default.Remove("jwt_token");
+                Preferences.Default.Remove("IdEmpresaLogada");
+
+                // 3. Usa a rota ABSOLUTA "//" para destruir o histórico de navegação
+                // Isso impede que o usuário aperte o botão "Voltar" do celular e caia na tela logada
+                await Shell.Current.GoToAsync("//LoginView");
             }
         }
     }

@@ -91,6 +91,22 @@
                     </Label.GestureRecognizers>
                 </Label>
 
+                <!-- BOTÃO DE LOGOUT NO FINAL DO MENU -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 30, 0, 20">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+
+                    <!-- Se tiver um ícone de porta/saída, coloque o nome dele aqui -->
+                    <Image Source="logout_icon01.png" HeightRequest="25" WidthRequest="25" VerticalOptions="Center"/>
+
+                    <Label Text="Sair da Conta"
+                           FontSize="Title"
+                           TextColor="#C62828" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
 
             </VerticalStackLayout>
         </Frame>

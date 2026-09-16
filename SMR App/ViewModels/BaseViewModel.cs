@@ -15,7 +15,6 @@ namespace SMR_App.ViewModels
     public partial class BaseViewModel : BaseNotifyViewModel
     {
         public ICommand AbrirTelaCommand { get; }
-        public ICommand VoltarTela { get; }
         public ICommand ImportarClientesCommand { get; }
 
 
@@ -26,7 +25,6 @@ namespace SMR_App.ViewModels
         public BaseViewModel()
         {
             //CarregarDadosUsuario();
-            VoltarTela = new AsyncRelayCommand(VoltarTelaAsync);
             AbrirTelaCommand = new Command<string>(ExecuteAbrirTela);
 
             ApiServicesSessaoPessoa.OnSessaoChanged += NotificarMudancaDeSessao;
@@ -36,16 +34,11 @@ namespace SMR_App.ViewModels
 
 
 
-        public async Task VoltarTelaAsync()
+        [RelayCommand]
+        public async Task VoltarTela()
         {
-            if (Application.Current?.MainPage is Shell shell)
-            {
-                await shell.GoToAsync("..");
-            }
-            else if (Application.Current?.MainPage?.Navigation.NavigationStack.Count > 1)
-            {
-                await Application.Current.MainPage.Navigation.PopAsync();
-            }
+            // O AppShell gerencia a navegação de forma muito mais segura
+            await Shell.Current.GoToAsync("..");
         }
 
         private string _nomeUsuario;

@@ -217,7 +217,7 @@
                                     <!-- NÍVEL MÁXIMO -->
                                     <DataTrigger TargetType="Label" Binding="{Binding IDRank}" Value="3">
                                         <Setter Property="Text" Value="OURO" />
-                                        <Setter Property="TextColor" Value="#FFD700" />
+                                        <Setter Property="TextColor" Value="#D4AF37" />
                                     </DataTrigger>
 
                                     <!-- NÍVEL INTERMEDIÁRIO -->

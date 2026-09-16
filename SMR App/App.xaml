@@ -22,7 +22,7 @@
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.AbrirTelaCommand,
                                     Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                                      CommandParameter="PrincipalView"/>
+                                                      CommandParameter="//PrincipalView"/>
                             </Image.GestureRecognizers>
                         </Image>
 

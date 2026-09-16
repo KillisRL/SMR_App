@@ -5,10 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:SMR_App.Views"
     xmlns:local="clr-namespace:SMR_App"
-    Title="SMR_App">
+    Title="SMR_App"
+    FlyoutBehavior="Disabled">
 
     <ShellContent
         ContentTemplate="{DataTemplate views:SplashView}"
         Route="MainPage" />
+    <ShellContent
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="LoginView" />
+    <ShellContent
+        ContentTemplate="{DataTemplate views:PrincipalView}"
+        Route="PrincipalView" />
 
 </Shell>

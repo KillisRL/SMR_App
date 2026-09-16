@@ -13,6 +13,6 @@ public partial class SplashView : ContentPage
 
         await Task.Delay(2000);
 
-        await Shell.Current.GoToAsync($"{nameof(LoginView)}");
+        await Shell.Current.GoToAsync("//LoginView");
     }
 }
