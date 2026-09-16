@@ -37,7 +37,6 @@ namespace SMR_App.ViewModels
         public RelatoriosRankingViewModel(RelatorioApiService apiService)
         {
             _apiService = apiService;
-            NomeUsuario = "Ueler Bernardo";
 
             // Monta a lista de filtros
             ListaStatus = new ObservableCollection<StatusFiltro>

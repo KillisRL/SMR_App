@@ -14,9 +14,6 @@ namespace SMR_App.ViewModels
         private readonly RelatorioApiService _apiService;
 
         [ObservableProperty]
-        private string _nomeUsuario = "Ueler Bernardo";
-
-        [ObservableProperty]
         private DateTime _dataInicio = new DateTime(2026, 8, 1);
 
         [ObservableProperty]

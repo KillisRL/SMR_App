@@ -234,7 +234,7 @@
                 <Button Text="Voltar"
                         Grid.Column="0"
                     Command="{Binding VoltarTelaCommand}" 
-                    BackgroundColor="{Binding FundoPrincipal}"
+                    BackgroundColor="#121212"
                     BorderWidth="5"
                     BorderColor="#D4AF37"
                     TextColor="#D4AF37" CornerRadius="10" HeightRequest="55" 

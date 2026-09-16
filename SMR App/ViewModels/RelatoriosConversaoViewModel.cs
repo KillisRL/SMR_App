@@ -65,8 +65,6 @@ namespace SMR_App.ViewModels
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
                 if (string.IsNullOrEmpty(token)) return;
 
-                // Aqui você chamará o serviço da API para buscar a lista
-                // DTO sugerido: { string Mes, double TaxaConversao }
                 var dados = await _apiService.ObterMeticasConversaoAsync(DataInicio, DataFim, token);
 
                 if (dados == null || !dados.Any())
