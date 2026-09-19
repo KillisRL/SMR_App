@@ -118,7 +118,7 @@ namespace SMR_App.ViewModels
                     else
                     {
                         await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
-                        await Shell.Current.GoToAsync("..");
+                        await Shell.Current.GoToAsync("///PrincipalView");
                     }
                 }
                 else
