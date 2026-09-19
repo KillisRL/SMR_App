@@ -113,7 +113,7 @@ namespace SMR_App.ViewModels
                         });
 
                         // Atualiza os dados na tela para refletir o status novo
-                        await Shell.Current.GoToAsync(nameof(PrincipalView));
+                        await Shell.Current.GoToAsync("///PrincipalView");
                     }
                     else
                     {

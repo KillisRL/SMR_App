@@ -24,28 +24,33 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         public async Task AbrirHistorico(Empresa empresaSelecionada)
         {
-            var pessoaLogada = ApiServicesSessaoPessoa.PessoaLogada;
+            if (empresaSelecionada == null) return;
 
-            bool confirmacao = await Application.Current.MainPage.DisplayAlert($"Olá, {pessoaLogada.nome}", "O que deseja visualizar?", "Histórico de Indicação", "Resgate de Recompensa");
+            var pessoaLogada = ApiServicesSessaoPessoa.PessoaLogada;
+            string nomeUsuario = pessoaLogada != null ? pessoaLogada.nome : "Usuário";
+
+            // Trocado para Shell.Current (mais seguro para navegação e alertas)
+            bool confirmacao = await Shell.Current.DisplayAlert(
+                $"Olá, {nomeUsuario}",
+                "O que deseja visualizar?",
+                "Histórico de Indicação",
+                "Resgate de Recompensa");
+
+            // A MÁGICA QUE EVITA O CRASH NO ANDROID:
+            // Dá tempo para a animação do alerta terminar antes de empilhar uma nova página
+            await Task.Delay(150);
+
+            var parametro = new Dictionary<string, object>
+            {
+                {"EmpresaIndicacao", empresaSelecionada.id }
+            };
 
             if (confirmacao)
             {
-                int idEmpresa = empresaSelecionada.id;
-
-                var parametro = new Dictionary<string, object>
-                    {
-                        {"EmpresaIndicacao", idEmpresa }
-                    };
                 await Shell.Current.GoToAsync(nameof(HistIndicacoesEmpresaView), parametro);
             }
             else
             {
-                int idEmpresa = empresaSelecionada.id;
-
-                var parametro = new Dictionary<string, object>
-                {
-                    {"EmpresaIndicacao", idEmpresa }
-                };
                 await Shell.Current.GoToAsync(nameof(HisIndicacoesResgateView), parametro);
             }
         }
