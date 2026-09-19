@@ -150,31 +150,31 @@
                                 <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="5">
                                     <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
 
-                                        <Label FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" VerticalOptions="Center">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding IDIndicacao}" />
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding NomeIndicado}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
+                                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                            <Label Text="{Binding IDIndicacao}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                            <Label Text="-" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                            <Label Text="{Binding NomeIndicado}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                        </HorizontalStackLayout>
 
                                         <Border StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="6,2" VerticalOptions="Center">
                                             <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Pendente">
+                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}"
+                                                             Value="{x:Static classesIndicacao:IndicacaoStatus.Pendente}">
                                                     <Setter Property="BackgroundColor" Value="#1AFFFFFF" />
                                                     <Setter Property="Stroke" Value="#FFFFFF" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Enviada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}"
+                                                             Value="{x:Static classesIndicacao:IndicacaoStatus.Enviada}">
                                                     <Setter Property="BackgroundColor" Value="#1A2196F3" />
                                                     <Setter Property="Stroke" Value="#2196F3" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Cancelada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}"
+                                                             Value="{x:Static classesIndicacao:IndicacaoStatus.Cancelada}">
                                                     <Setter Property="BackgroundColor" Value="#1AE63946" />
                                                     <Setter Property="Stroke" Value="#E63946" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Validada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}"
+                                                             Value="{x:Static classesIndicacao:IndicacaoStatus.Validada}">
                                                     <Setter Property="BackgroundColor" Value="#1A4CAF50" />
                                                     <Setter Property="Stroke" Value="#4CAF50" />
                                                 </DataTrigger>
@@ -182,16 +182,20 @@
 
                                             <Label Text="{Binding IDSituacaoIndicacao}" FontSize="10" FontAttributes="Bold">
                                                 <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Pendente">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}"
+                                                                 Value="{x:Static classesIndicacao:IndicacaoStatus.Pendente}">
                                                         <Setter Property="TextColor" Value="#FFFFFF" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Enviada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}"
+                                                        Value="{x:Static classesIndicacao:IndicacaoStatus.Enviada}">
                                                         <Setter Property="TextColor" Value="#2196F3" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Cancelada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}"
+                                                                 Value="{x:Static classesIndicacao:IndicacaoStatus.Cancelada}">
                                                         <Setter Property="TextColor" Value="#E63946" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Validada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}"
+                                                                 Value="{x:Static classesIndicacao:IndicacaoStatus.Validada}">
                                                         <Setter Property="TextColor" Value="#4CAF50" />
                                                     </DataTrigger>
                                                 </Label.Triggers>

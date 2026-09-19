@@ -36,8 +36,6 @@ namespace SMR_App.ViewModels
                 "Histórico de Indicação",
                 "Resgate de Recompensa");
 
-            // A MÁGICA QUE EVITA O CRASH NO ANDROID:
-            // Dá tempo para a animação do alerta terminar antes de empilhar uma nova página
             await Task.Delay(150);
 
             var parametro = new Dictionary<string, object>
