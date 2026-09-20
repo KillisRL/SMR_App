@@ -165,31 +165,23 @@ namespace SMR_App.ViewModels
             var filtradas = _todasIndicacoes.Where(i => i.IdEmpresa == IdEmpresa).ToList();
 
             if (filtradas.Any())
-            {
                 NomeEmpresaAtual = filtradas.First().RazaoSocial;
-            }
             else
-            {
                 NomeEmpresaAtual = "Nenhuma empresa selecionada";
-            }
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                ListaIndicacao.Clear();
-                foreach (var item in filtradas)
-                {
-                    ListaIndicacao.Add(item);
-                }
+                // CORREÇÃO 1: Substitui a coleção de uma vez. Adeus crash do RecyclerView no Android!
+                ListaIndicacao = new ObservableCollection<IndicacaoHistoricoDto>(filtradas);
 
                 var dadosPromotor = _todosPontos.FirstOrDefault(p => p.IDEmpresa == IdEmpresa);
 
-                // Proteção contra NullReferenceException
                 if (dadosPromotor == null)
                 {
                     PontosPromotor = 0;
                     PromotorRank = Recompensa_Rank.ND;
                     Progresso = 0;
-                    return; // Encerra a lógica aqui, pois não há o que calcular
+                    return;
                 }
 
                 PontosPromotor = dadosPromotor.PontosAcumulados;
@@ -199,40 +191,35 @@ namespace SMR_App.ViewModels
 
                 if (rankAtual == null)
                 {
-                    var objetivo = _recompensasEmpresa.Where(r => r.IDEmpresa == IdEmpresa)
-                                                      .OrderBy(r => r.PontosNecessarios)
-                                                      .FirstOrDefault();
-                    if (objetivo == null)
+                    var objetivo = _recompensasEmpresa.Where(r => r.IDEmpresa == IdEmpresa).OrderBy(r => r.PontosNecessarios).FirstOrDefault();
+                    if (objetivo == null || objetivo.PontosNecessarios <= 0)
                     {
                         Progresso = 0;
                     }
                     else
                     {
-                        Progresso = (double)dadosPromotor.PontosAcumulados / objetivo.PontosNecessarios;
+                        // CORREÇÃO 2: Blinda o valor do progresso entre 0.0 e 1.0
+                        double calc = (double)dadosPromotor.PontosAcumulados / objetivo.PontosNecessarios;
+                        Progresso = Math.Clamp(calc, 0, 1);
                     }
                 }
                 else
                 {
-                    var objetivo = _recompensasEmpresa
-                                        .Where(r => r.IDEmpresa == IdEmpresa && r.PontosNecessarios > dadosPromotor.PontosAcumulados)
-                                        .OrderBy(r => r.PontosNecessarios)
-                                        .FirstOrDefault();
+                    var objetivo = _recompensasEmpresa.Where(r => r.IDEmpresa == IdEmpresa && r.PontosNecessarios > dadosPromotor.PontosAcumulados).OrderBy(r => r.PontosNecessarios).FirstOrDefault();
 
                     if (objetivo == null)
                     {
-                        // Usuário atingiu o Rank Máximo! A barra deve ficar 100% cheia.
                         Progresso = 1.0;
                     }
                     else
                     {
-                        // Progresso Relativo: Usa as variáveis que você mesmo criou para mostrar o avanço DENTRO do nível atual
                         double pontosCalculados = (double)dadosPromotor.PontosAcumulados - rankAtual.PontosNecessarios;
                         double pontosObjetivo = (double)objetivo.PontosNecessarios - rankAtual.PontosNecessarios;
 
-                        // Evita divisão por zero caso a regra de negócio tenha cadastrado recompensas com a mesma pontuação
                         if (pontosObjetivo > 0)
                         {
-                            Progresso = pontosCalculados / pontosObjetivo;
+                            double calc = pontosCalculados / pontosObjetivo;
+                            Progresso = Math.Clamp(calc, 0, 1);
                         }
                         else
                         {

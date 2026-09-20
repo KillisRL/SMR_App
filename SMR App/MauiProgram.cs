@@ -93,9 +93,9 @@ namespace SMR_App
             builder.Services.AddTransient<IndicacaoValidarQrCodeView>();
             builder.Services.AddTransient<HistIndicacoesView>();
             builder.Services.AddTransient<HistIndicacoesEmpresaView>();
+            builder.Services.AddTransient<HisIndicacoesResgateView>();
             builder.Services.AddTransient<RelatoriosCoBonifView>();
             builder.Services.AddTransient<RelatoriosRankingView>();
-            builder.Services.AddTransient<HisIndicacoesResgateView>();
             builder.Services.AddTransient<RelatoriosConversaoView>();
             builder.Services.AddTransient<MenuInferiorView>();
 
