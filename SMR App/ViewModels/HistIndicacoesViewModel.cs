@@ -3,21 +3,26 @@ using CommunityToolkit.Mvvm.Input;
 using SMR_App.Services;
 using SMR_App.Views;
 using SMRDominio.ClassePessoa;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SMR_App.ViewModels
 {
     public partial class HistIndicacoesViewModel : BaseViewModel
     {
         private readonly ApiServicesPessoa _apiServicesPessoa;
+        private readonly ApiServiceIndicacao _apiServiceIndicacao; // 1. Injeta o serviço de indicação
 
         [ObservableProperty] private string razaoSocial;
         [ObservableProperty] ObservableCollection<Empresa> listaEmpresa = new();
 
-
-        public HistIndicacoesViewModel(ApiServicesPessoa apiServicesPessoa)
+        public HistIndicacoesViewModel(ApiServicesPessoa apiServicesPessoa, ApiServiceIndicacao apiServiceIndicacao)
         {
             _apiServicesPessoa = apiServicesPessoa;
+            _apiServiceIndicacao = apiServiceIndicacao;
             _ = ConsultarEmpresa();
         }
 
@@ -29,7 +34,6 @@ namespace SMR_App.ViewModels
             var pessoaLogada = ApiServicesSessaoPessoa.PessoaLogada;
             string nomeUsuario = pessoaLogada != null ? pessoaLogada.nome : "Usuário";
 
-            // Trocado para Shell.Current (mais seguro para navegação e alertas)
             bool confirmacao = await Shell.Current.DisplayAlert(
                 $"Olá, {nomeUsuario}",
                 "O que deseja visualizar?",
@@ -40,9 +44,9 @@ namespace SMR_App.ViewModels
 
             var parametro = new Dictionary<string, object>
             {
-                {"EmpresaIndicacao", empresaSelecionada.id }
+                {"EmpresaIndicacao", empresaSelecionada.id },
+                {"NomeEmpresaSelecionada", empresaSelecionada.razao_social }
             };
-
             if (confirmacao)
             {
                 await Shell.Current.GoToAsync(nameof(HistIndicacoesEmpresaView), parametro);
@@ -53,7 +57,6 @@ namespace SMR_App.ViewModels
             }
         }
 
-
         [RelayCommand]
         public async Task ConsultarEmpresa()
         {
@@ -61,14 +64,36 @@ namespace SMR_App.ViewModels
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                var resultado = await _apiServicesPessoa.ConsultarEmpresa(token, RazaoSocial);
+                // 1. Busca a lista completa de empresas (ou filtrada por razão social)
+                var resultadoEmpresas = await _apiServicesPessoa.ConsultarEmpresa(token, RazaoSocial);
 
-                if (resultado.Sucesso && resultado.Dados != null)
+                // 2. Busca o histórico de indicações do promotor (janela ampla de datas)
+                DateTime dataInicial = DateTime.Now.AddYears(-5);
+                DateTime dataFinal = DateTime.Now.Date.AddHours(23).AddMinutes(59);
+                var resultadoHistorico = await _apiServiceIndicacao.ConsultarIndicacaoHistorico(dataInicial, dataFinal, token);
+
+                if (resultadoEmpresas.Sucesso && resultadoEmpresas.Dados != null)
                 {
+                    List<int> idsEmpresasComIndicacao = new();
+
+                    // Extrai apenas os IDs das empresas onde o promotor REALMENTE possui indicações
+                    if (resultadoHistorico.Sucesso && resultadoHistorico.Dados?.Indicacoes != null)
+                    {
+                        idsEmpresasComIndicacao = resultadoHistorico.Dados.Indicacoes
+                            .Select(i => i.IdEmpresa)
+                            .Distinct()
+                            .ToList();
+                    }
+
+                    // 3. REGRA DE NEGÓCIO: Mantém na lista APENAS as empresas com indicação
+                    var empresasFiltradas = resultadoEmpresas.Dados
+                        .Where(e => idsEmpresasComIndicacao.Contains(e.id))
+                        .ToList();
+
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         ListaEmpresa.Clear();
-                        foreach (var item in resultado.Dados)
+                        foreach (var item in empresasFiltradas)
                         {
                             ListaEmpresa.Add(item);
                         }
@@ -76,13 +101,13 @@ namespace SMR_App.ViewModels
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(resultado.Mensagem) && resultado.Mensagem.Contains("Não foi encontrado"))
+                    if (!string.IsNullOrEmpty(resultadoEmpresas.Mensagem) && resultadoEmpresas.Mensagem.Contains("Não foi encontrado"))
                     {
                         MainThread.BeginInvokeOnMainThread(() => ListaEmpresa.Clear());
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                        await Application.Current.MainPage.DisplayAlert("Atenção", resultadoEmpresas.Mensagem, "Ok");
                     }
                 }
             }

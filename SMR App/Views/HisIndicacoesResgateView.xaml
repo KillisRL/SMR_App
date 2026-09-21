@@ -6,6 +6,7 @@
              xmlns:classesRecompensa="clr-namespace:SMRDominio.ClasseRecompensa;assembly=SMRDominio"
              x:Class="SMR_App.Views.HisIndicacoesResgateView"
              x:DataType="viewmodels:HisIndicacoesResgateViewModel"
+             x:Name="MinhaPaginaResgate"
              BackgroundColor="{StaticResource FundoPrincipal}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False">
@@ -110,8 +111,8 @@
                                 Margin="0,0,10,0"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HisIndicacoesResgateViewModel}}, Path=ResgatarRecompensaCommand}"
-                                CommandParameter="{Binding .}">     
+                                Command="{Binding BindingContext.ResgatarRecompensaCommand, Source={x:Reference MinhaPaginaResgate}}"
+                                CommandParameter="{Binding .}">
                             <Button.Triggers>
                                 <!-- 1. BLOQUEADO: Não tem pontos suficientes -->
                                 <DataTrigger TargetType="Button" Binding="{Binding PodeResgatar}" Value="False">

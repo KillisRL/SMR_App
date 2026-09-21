@@ -15,11 +15,14 @@ using System.Threading.Tasks;
 namespace SMR_App.ViewModels
 {
     [QueryProperty(nameof(IdEmpresa), "EmpresaIndicacao")]
+    [QueryProperty(nameof(NomeDaEmpresaVindaDaTelaAnterior), "NomeEmpresaSelecionada")]
     public partial class HisIndicacoesResgateViewModel : BaseViewModel
     {
         private readonly ApiServiceRecompensa _apiServiceRecompensa;
         private readonly ApiServiceIndicacao _apiServiceIndicacao;
+
         [ObservableProperty] private int idEmpresa;
+        [ObservableProperty] private string nomeDaEmpresaVindaDaTelaAnterior;
 
         private ConsultaFinalResgate _respostaTotal;
         private List<IndicacaoRecompensaResgate> _todasRecompensas = new();
@@ -28,6 +31,10 @@ namespace SMR_App.ViewModels
         private List<int> _idsEmpresas = new();
         private int _indexEmpresaAtual = 0;
         private int id_promotor = 0;
+
+        // NOVO: Dicionário para salvar os nomes das empresas e não perdê-los nas setinhas
+        private Dictionary<int, string> _dicionarioNomesEmpresas = new();
+
         public bool JaResgatada = false;
         public string NomeBotao => JaResgatada == false ? "RESGATAR!" : "RESGATADA";
 
@@ -47,12 +54,11 @@ namespace SMR_App.ViewModels
         {
             try
             {
-                if(recompensa == null)
+                if (recompensa == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Não foi possível identificar a recompensa", "Ok");
                     return;
                 }
-
 
                 string? token = await SecureStorage.Default.GetAsync("jwt_token");
 
@@ -66,10 +72,10 @@ namespace SMR_App.ViewModels
 
                 var resultado = await _apiServiceRecompensa.RecompensaResgatar(token, novoResgate);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
-                    IndicacaoRecompensaResgate();
+                    await IndicacaoRecompensaResgate();
                     return;
                 }
                 else
@@ -86,11 +92,12 @@ namespace SMR_App.ViewModels
 
         partial void OnIdEmpresaChanged(int value)
         {
-            if (value > 0 && _todasRecompensas.Any())
+            if (value > 0 && _idsEmpresas.Any())
             {
                 FiltrarRecompensaPorEmpresas();
             }
         }
+
         [RelayCommand]
         public async Task IndicacaoRecompensaResgate()
         {
@@ -98,7 +105,13 @@ namespace SMR_App.ViewModels
             {
                 string? token = await SecureStorage.Default.GetAsync("jwt_token");
 
+                // 1. Busca os dados de resgate (pontos, recompensas)
                 var resultado = await _apiServiceIndicacao.ConsultarRecompensaResgate(token);
+
+                // 2. Busca o histórico APENAS para saber em quais empresas o promotor já atuou
+                DateTime dataInicial = DateTime.Now.AddYears(-5);
+                DateTime dataFinal = DateTime.Now.Date.AddHours(23).AddMinutes(59);
+                var resultadoHistorico = await _apiServiceIndicacao.ConsultarIndicacaoHistorico(dataInicial, dataFinal, token);
 
                 if (resultado.Sucesso && resultado.Dados != null)
                 {
@@ -108,17 +121,43 @@ namespace SMR_App.ViewModels
                     _todasRecompensas = _respostaTotal.ListaRecompensas ?? new();
                     _recompensasResgatadas = _respostaTotal.Resgatadas ?? new();
 
-                    _idsEmpresas = _todasRecompensas.Select(r => r.IDEmpresa).Distinct().ToList();
-
                     id_promotor = _promotorTodosPontos.Select(ptp => ptp.IDPromotor).FirstOrDefault();
 
+                    List<int> idsExtraidos = new();
+
+                    // ======================================================================
+                    // ALINHAMENTO COM A TELA DE HISTÓRICO
+                    // Extrai os IDs baseados nas INDICAÇÕES, não nos pontos.
+                    // ======================================================================
+                    if (resultadoHistorico.Sucesso && resultadoHistorico.Dados?.Indicacoes != null)
+                    {
+                        idsExtraidos = resultadoHistorico.Dados.Indicacoes.Select(i => i.IdEmpresa).Distinct().ToList();
+
+                        // Guarda os nomes no dicionário para a barra superior não perder a referência
+                        foreach (var ind in resultadoHistorico.Dados.Indicacoes)
+                        {
+                            if (!_dicionarioNomesEmpresas.ContainsKey(ind.IdEmpresa) && !string.IsNullOrEmpty(ind.RazaoSocial))
+                            {
+                                _dicionarioNomesEmpresas[ind.IdEmpresa] = ind.RazaoSocial;
+                            }
+                        }
+                    }
+
+                    // Mantém a exceção de segurança base
+                    if (IdEmpresa > 0 && !idsExtraidos.Contains(IdEmpresa))
+                    {
+                        idsExtraidos.Add(IdEmpresa);
+                    }
+
+                    _idsEmpresas = idsExtraidos;
+
+                    // Define o índice e prossegue
                     if (_idsEmpresas.Contains(IdEmpresa))
                     {
                         _indexEmpresaAtual = _idsEmpresas.IndexOf(IdEmpresa);
                     }
                     else if (_idsEmpresas.Any())
                     {
-                        // Se por acaso vier zerado, assume a primeira empresa da lista
                         IdEmpresa = _idsEmpresas.First();
                     }
 
@@ -138,11 +177,11 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         public void ProximaEmpresa()
         {
-            if (_idsEmpresas.Count == 0) return;
+            if (_idsEmpresas.Count <= 1) return;
 
             _indexEmpresaAtual++;
             if (_indexEmpresaAtual >= _idsEmpresas.Count)
-                _indexEmpresaAtual = 0; // Volta para a primeira
+                _indexEmpresaAtual = 0;
 
             IdEmpresa = _idsEmpresas[_indexEmpresaAtual];
         }
@@ -150,11 +189,11 @@ namespace SMR_App.ViewModels
         [RelayCommand]
         public void EmpresaAnterior()
         {
-            if (_idsEmpresas.Count == 0) return;
+            if (_idsEmpresas.Count <= 1) return;
 
             _indexEmpresaAtual--;
             if (_indexEmpresaAtual < 0)
-                _indexEmpresaAtual = _idsEmpresas.Count - 1; // Vai para a última
+                _indexEmpresaAtual = _idsEmpresas.Count - 1;
 
             IdEmpresa = _idsEmpresas[_indexEmpresaAtual];
         }
@@ -163,21 +202,29 @@ namespace SMR_App.ViewModels
         {
             var dadosPromotor = _promotorTodosPontos.FirstOrDefault(pontos => pontos.IDEmpresa == IdEmpresa);
             int pontosAtuais = dadosPromotor != null ? dadosPromotor.PontosAcumulados : 0;
-            var resgatadasEmpresa = _recompensasResgatadas.Where(resgatada => resgatada.IDEmpresa == IdEmpresa); 
+            var resgatadasEmpresa = _recompensasResgatadas.Where(resgatada => resgatada.IDEmpresa == IdEmpresa);
 
             PontosPromotor = pontosAtuais;
             PromotorRank = dadosPromotor != null ? dadosPromotor.IDPromotorRank ?? Recompensa_Rank.ND : Recompensa_Rank.ND;
+
             var filtradasAsc = _todasRecompensas
                     .Where(r => r.IDEmpresa == IdEmpresa)
                     .OrderBy(r => r.PontosNecessarios)
                     .ToList();
 
+            // 1º Prioridade: O nome que veio da própria lista de recompensas
             if (filtradasAsc.Any())
                 NomeEmpresaAtual = filtradasAsc.First().RazaoSocial;
+            // 2º Prioridade: O dicionário histórico (salva a Unifafibe nas setinhas!)
+            else if (_dicionarioNomesEmpresas.ContainsKey(IdEmpresa))
+                NomeEmpresaAtual = _dicionarioNomesEmpresas[IdEmpresa];
+            // 3º Prioridade: A empresa que veio selecionada do ecrã anterior
+            else if (!string.IsNullOrEmpty(NomeDaEmpresaVindaDaTelaAnterior))
+                NomeEmpresaAtual = NomeDaEmpresaVindaDaTelaAnterior;
             else
-                NomeEmpresaAtual = "Nenhuma empresa selecionada";
+                NomeEmpresaAtual = "Empresa sem registros";
 
-            int pontosAnteriores = 0; 
+            int pontosAnteriores = 0;
 
             foreach (var item in filtradasAsc)
             {
@@ -192,7 +239,6 @@ namespace SMR_App.ViewModels
                 }
 
                 int pontosDesteRank = item.PontosNecessarios - pontosAnteriores;
-
                 int pontosConquistadosNesteRank = Math.Max(0, pontosAtuais - pontosAnteriores);
 
                 double percentual = (double)pontosConquistadosNesteRank / pontosDesteRank;
@@ -202,17 +248,13 @@ namespace SMR_App.ViewModels
 
                 pontosAnteriores = item.PontosNecessarios;
             }
+
             var filtradasDesc = filtradasAsc.OrderByDescending(r => r.PontosNecessarios).ToList();
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                ListaRecompensa.Clear();
-                foreach (var item in filtradasDesc)
-                {
-                    ListaRecompensa.Add(item);
-                }
+                ListaRecompensa = new ObservableCollection<IndicacaoRecompensaResgate>(filtradasDesc);
             });
         }
-
     }
 }
