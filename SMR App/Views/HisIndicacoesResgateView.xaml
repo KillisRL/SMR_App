@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              xmlns:classesIndicacao="clr-namespace:SMRDominio.ClasseIndicacao;assembly=SMRDominio"
+             xmlns:classesRecompensa="clr-namespace:SMRDominio.ClasseRecompensa;assembly=SMRDominio"
              x:Class="SMR_App.Views.HisIndicacoesResgateView"
              x:DataType="viewmodels:HisIndicacoesResgateViewModel"
              BackgroundColor="{StaticResource FundoPrincipal}"
@@ -146,13 +147,16 @@
                             <!-- 1. BASE APAGADA (Fica fixa no fundo com opacidade baixa) -->
                             <Border StrokeThickness="1" Stroke="#222222" Opacity="0.15">
                                 <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="3">
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}"
+                                                 Value="{x:Static classesRecompensa:Recompensa_Rank.Ouro}">
                                         <Setter Property="Background" Value="{StaticResource OuroBrush}" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="2">
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}"
+                                                 Value="{x:Static classesRecompensa:Recompensa_Rank.Prata}">
                                         <Setter Property="Background" Value="{StaticResource PrataBrush}" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}" Value="1">
+                                    <DataTrigger TargetType="Border" Binding="{Binding IDRank}"
+                                                 Value="{x:Static classesRecompensa:Recompensa_Rank.Bronze}">
                                         <Setter Property="Background" Value="{StaticResource BronzeBrush}" />
                                     </DataTrigger>
                                 </Border.Triggers>

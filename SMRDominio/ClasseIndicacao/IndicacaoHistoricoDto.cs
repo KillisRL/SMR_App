@@ -1,10 +1,4 @@
 ﻿using SMRDominio.ClasseRecompensa;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMRDominio.ClasseIndicacao
 {
@@ -20,7 +14,15 @@ namespace SMRDominio.ClasseIndicacao
         public int IdEmpresa { get; set; }
         public string? RazaoSocial { get; set; }
         public IndicacaoStatus IDSituacaoIndicacao { get; set; }
+
+        // BLINDAGEM PARA O ANDROID
+        public string SituacaoTexto => IDSituacaoIndicacao.ToString();
+        public string DataIndicacaoFormatada => $"Data Indicação: {DataIndicacao:dd/MM/yyyy}";
+        public string DataValidacaoFormatada => DataValidacao.HasValue
+            ? $"Data Confirmação: {DataValidacao.Value:dd/MM/yyyy}"
+            : "Data Confirmação: Pendente";
     }
+
     public class PromotorPontosResponse
     {
         public int IDEmpresa { get; set; }

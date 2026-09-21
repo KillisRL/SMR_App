@@ -4,52 +4,23 @@
              xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              xmlns:classesIndicacao="clr-namespace:SMRDominio.ClasseIndicacao;assembly=SMRDominio"
              x:Class="SMR_App.Views.HistIndicacoesEmpresaView"
-             x:DataType="viewmodels:HistIndicacoesEmpresaViewModel"
              ControlTemplate="{StaticResource MainPageTemplate}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource FundoPrincipal}">
-
-    <ContentPage.Resources>
-        <!-- Estilos reaproveitados para manter o padrão visual do app -->
-        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#E0E0E0" />
-            <Setter Property="TextColor" Value="#121212" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="HeightRequest" Value="45" />
-        </Style>
-
-        <Style x:Key="BotaoSecundarioPopupStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="#AAAAAA" />
-            <Setter Property="BorderColor" Value="#555555" />
-            <Setter Property="BorderWidth" Value="1" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="HeightRequest" Value="45" />
-        </Style>
-    </ContentPage.Resources>
-
-    <!-- Grid mestre para permitir a sobreposição do Pop-up -->
+             BackgroundColor="{StaticResource FundoPrincipal}"
+             x:Name="MinhaPagina">
     <Grid>
 
-        <!-- Conteúdo Principal da Tela -->
         <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="20">
 
-            <!-- LINHA 0: CARROSSEL DE EMPRESAS -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,10,0,15" VerticalOptions="Center">
                 <ImageButton Grid.Column="0" Source="setaesquerda.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Command="{Binding EmpresaAnteriorCommand}" HorizontalOptions="Start" />
                 <Label Grid.Column="1" Text="{Binding NomeEmpresaAtual}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1" />
                 <ImageButton Grid.Column="2" Source="setadireita.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Command="{Binding ProximaEmpresaCommand}" HorizontalOptions="End" />
             </Grid>
 
-            <!-- LINHA 1: CONTADOR E BARRA DE PROGRESSO -->
             <VerticalStackLayout Grid.Row="1" Spacing="12" Margin="0,0,0,15">
 
-                <!-- Textos e Indicadores -->
                 <Grid ColumnDefinitions="*, Auto" VerticalOptions="End">
 
                     <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
@@ -59,47 +30,42 @@
 
                     <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Spacing="0">
                         <Label Text="{Binding PontosPromotor, StringFormat='Total: {0}'}" 
-                   FontAttributes="Bold" 
-                   FontSize="16" 
-                   TextColor="{StaticResource TextoPrincipal}" 
-                   HorizontalOptions="End" />
+                               FontAttributes="Bold" 
+                               FontSize="16" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               HorizontalOptions="End" />
 
                         <Label Text="{Binding Progresso, StringFormat='{0:P0}'}" 
-                   FontAttributes="Bold" 
-                   FontSize="12" 
-                   TextColor="#4CAF50" 
-                   HorizontalOptions="End" />
+                               FontAttributes="Bold" 
+                               FontSize="12" 
+                               TextColor="#4CAF50" 
+                               HorizontalOptions="End" />
                     </VerticalStackLayout>
                 </Grid>
 
-                <!-- BARRA DE PROGRESSO CUSTOMIZADA (Estilo da Imagem) -->
-
-                <!-- 1. Borda Externa (O contorno do componente) -->
                 <Border Stroke="#4CAF50" 
-            StrokeThickness="2" 
-            BackgroundColor="Transparent" 
-            StrokeShape="RoundRectangle 18" 
-            HeightRequest="27" 
-            Padding="3" 
-            Margin="0,5,0,0">
+                        StrokeThickness="2" 
+                        BackgroundColor="Transparent" 
+                        StrokeShape="RoundRectangle 12" 
+                        HeightRequest="24" 
+                        Padding="2" 
+                        Margin="0,5,0,0">
+                    
+                    <Border StrokeShape="RoundRectangle 10" 
+                            StrokeThickness="0" 
+                            BackgroundColor="Transparent">
+                        
 
-                    <!-- 2. Borda Interna (Garante que a barra não vaze do padding e fique redondinha) -->
-                    <Border StrokeShape="RoundRectangle 14" 
-                StrokeThickness="0" 
-                BackgroundColor="Transparent">
-
-                        <!-- 3. Barra com ScaleY (Força o Android a engrossar a linha) -->
                         <ProgressBar Progress="{Binding Progresso}" 
-                         ProgressColor="#4CAF50" 
-                         BackgroundColor="Transparent" 
-                         VerticalOptions="Center" 
-                         ScaleY="10" />
+                                     ProgressColor="#4CAF50" 
+                                     BackgroundColor="Transparent" 
+                                     VerticalOptions="Center" 
+                                     ScaleY="3" />
                     </Border>
                 </Border>
 
             </VerticalStackLayout>
 
-            <!-- LINHA 2: CABEÇALHO DO HISTÓRICO, NÍVEL E ÍCONE DE FILTRO -->
             <Grid Grid.Row="2" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15" Margin="0,0,0,10" VerticalOptions="Center">
                 <Label Grid.Column="0" Text="Histórico" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextoPrincipal}" VerticalOptions="Center" />
 
@@ -113,17 +79,8 @@
                         <TapGestureRecognizer Command="{Binding AbrirFiltroCommand}"/>
                     </Image.GestureRecognizers>
                 </Image>
-                <!-- Ícone de Filtro -->
-                <!--<ImageButton Grid.Column="2" 
-                             Source="filtrohisindicacao.png" 
-                             BackgroundColor="Transparent" 
-                             HeightRequest="10" 
-                             WidthRequest="10" 
-                             VerticalOptions="Center"
-                             Command="{Binding AbrirFiltroCommand}" />-->
             </Grid>
 
-            <!-- LINHA 3: LISTA DE HISTÓRICO (COLLECTIONVIEW) -->
             <CollectionView Grid.Row="3" ItemsSource="{Binding ListaIndicacao}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="12" />
@@ -137,61 +94,57 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="classesIndicacao:IndicacaoHistoricoDto">
-                        <!-- Card de Histórico -->
+
                         <Border BackgroundColor="{StaticResource FundoMenu}" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="12">
 
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistIndicacoesEmpresaViewModel}}, Path=AbrirDetalhesIndicacaoCommand}"
+                                <TapGestureRecognizer Command="{Binding BindingContext.AbrirDetalhesIndicacaoCommand,
+                                    Source={x:Reference MinhaPagina}}"
                                     CommandParameter="{Binding .}"/>
                             </Border.GestureRecognizers>
 
                             <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
                                 <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="5">
-                                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
 
-                                        <Label FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" VerticalOptions="Center">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding IDIndicacao}" />
-                                                    <Span Text=" - " />
-                                                    <Span Text="{Binding NomeIndicado}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
+                                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                            <Label Text="{Binding IDIndicacao}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                            <Label Text="-" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                            <Label Text="{Binding NomeIndicado}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextoPrincipal}" />
+                                        </HorizontalStackLayout>
 
                                         <Border StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="6,2" VerticalOptions="Center">
                                             <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Pendente">
+                                                <DataTrigger TargetType="Border" Binding="{Binding SituacaoTexto}" Value="Pendente">
                                                     <Setter Property="BackgroundColor" Value="#1AFFFFFF" />
                                                     <Setter Property="Stroke" Value="#FFFFFF" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Enviada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding SituacaoTexto}" Value="Enviada">
                                                     <Setter Property="BackgroundColor" Value="#1A2196F3" />
                                                     <Setter Property="Stroke" Value="#2196F3" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Cancelada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding SituacaoTexto}" Value="Cancelada">
                                                     <Setter Property="BackgroundColor" Value="#1AE63946" />
                                                     <Setter Property="Stroke" Value="#E63946" />
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IDSituacaoIndicacao}" Value="Validada">
+                                                <DataTrigger TargetType="Border" Binding="{Binding SituacaoTexto}" Value="Validada">
                                                     <Setter Property="BackgroundColor" Value="#1A4CAF50" />
                                                     <Setter Property="Stroke" Value="#4CAF50" />
                                                 </DataTrigger>
                                             </Border.Triggers>
 
-                                            <Label Text="{Binding IDSituacaoIndicacao}" FontSize="10" FontAttributes="Bold">
+                                            <Label Text="{Binding SituacaoTexto}" FontSize="10" FontAttributes="Bold">
                                                 <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Pendente">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SituacaoTexto}" Value="Pendente">
                                                         <Setter Property="TextColor" Value="#FFFFFF" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Enviada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SituacaoTexto}" Value="Enviada">
                                                         <Setter Property="TextColor" Value="#2196F3" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Cancelada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SituacaoTexto}" Value="Cancelada">
                                                         <Setter Property="TextColor" Value="#E63946" />
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IDSituacaoIndicacao}" Value="Validada">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SituacaoTexto}" Value="Validada">
                                                         <Setter Property="TextColor" Value="#4CAF50" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
@@ -200,12 +153,13 @@
                                     </HorizontalStackLayout>
 
                                     <VerticalStackLayout Spacing="1">
-                                        <Label Text="{Binding DataIndicacao, StringFormat='Data Indicação: {0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray" />
-                                        <Label Text="{Binding DataValidacao, StringFormat='Data Confirmação: {0:dd/MM/yyyy}', TargetNullValue='Data Confirmação: Pendente'}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding DataIndicacaoFormatada}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding DataValidacaoFormatada}" FontSize="12" TextColor="Gray" />
                                     </VerticalStackLayout>
+
                                 </VerticalStackLayout>
 
-                                <Image Grid.Column="1" Source="user_icon.png" HeightRequest="40" WidthRequest="40" VerticalOptions="Center" />
+                                <Image Grid.Column="1" Source="userbarra.png" HeightRequest="40" WidthRequest="40" VerticalOptions="Center" />
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -213,88 +167,86 @@
             </CollectionView>
         </Grid>
 
-        <!-- ========================================== -->
-        <!-- POP-UP DE FILTRO DE DATAS                  -->
-        <!-- ========================================== -->
         <Grid IsVisible="{Binding IsFiltroAberto}" ZIndex="100">
 
-            <!-- Fundo escuro com transição suave/sistema -->
             <BoxView BackgroundColor="#80000000">
                 <BoxView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding FecharFiltroCommand}" />
                 </BoxView.GestureRecognizers>
             </BoxView>
 
-            <!-- Conteúdo do Pop-up Alinhado ao Padrão Material/MAUI -->
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
-            Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray800}}" 
-            StrokeThickness="1" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            Margin="24"
-            WidthRequest="320"
-            Padding="24" 
-            StrokeShape="RoundRectangle 16">
+            <Border BackgroundColor="{StaticResource FundoPrincipal}"
+                    Stroke="{StaticResource FundoMenu}" 
+                    StrokeThickness="2" 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" 
+                    Margin="24"
+                    WidthRequest="320"
+                    Padding="24" 
+                    StrokeShape="RoundRectangle 16">
 
                 <VerticalStackLayout Spacing="16">
 
-                    <!-- Título -->
                     <Label Text="Filtrar Histórico" 
-                   FontSize="18" 
-                   FontAttributes="Bold" 
-                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" 
-                   HorizontalOptions="Start" />
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextoPrincipal}" 
+                           HorizontalOptions="Start" />
 
-                    <!-- Campos de Data -->
                     <VerticalStackLayout Spacing="12">
                         <VerticalStackLayout Spacing="4">
                             <Label Text="Data Inicial" 
-                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" 
-                           FontSize="13" />
-                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" 
-                            Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray800}}"
-                            StrokeThickness="1" 
-                            StrokeShape="RoundRectangle 8" 
-                            HeightRequest="48"
-                            Padding="8,0">
+                                   TextColor="Gray" 
+                                   FontSize="13" />
+                            <Border BackgroundColor="{StaticResource FundoMenu}" 
+                                    StrokeThickness="0" 
+                                    StrokeShape="RoundRectangle 8" 
+                                    HeightRequest="48"
+                                    Padding="8,0">
                                 <DatePicker Date="{Binding DataInicial}" 
-                                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" 
-                                    BackgroundColor="Transparent" 
-                                    VerticalOptions="Center" />
+                                            TextColor="{StaticResource TextoPrincipal}" 
+                                            BackgroundColor="Transparent" 
+                                            VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="4">
                             <Label Text="Data Final" 
-                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" 
-                           FontSize="13" />
-                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" 
-                            Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray800}}"
-                            StrokeThickness="1" 
-                            StrokeShape="RoundRectangle 8" 
-                            HeightRequest="48"
-                            Padding="8,0">
+                                   TextColor="Gray" 
+                                   FontSize="13" />
+                            <Border BackgroundColor="{StaticResource FundoMenu}" 
+                                    StrokeThickness="0" 
+                                    StrokeShape="RoundRectangle 8" 
+                                    HeightRequest="48"
+                                    Padding="8,0">
                                 <DatePicker Date="{Binding DataFinal}" 
-                                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" 
-                                    BackgroundColor="Transparent" 
-                                    VerticalOptions="Center" />
+                                            TextColor="{StaticResource TextoPrincipal}" 
+                                            BackgroundColor="Transparent" 
+                                            VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
 
-                    <!-- Botões de Ação (Padrão: Ação principal à direita/destacada) -->
+                    <!-- Botões de Ação -->
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,8,0,0">
-                        <Button Grid.Column="0" 
-                        Text="Cancelar" 
-                        Style="{StaticResource BotaoSecundarioPopupStyle}" 
-                        Command="{Binding FecharFiltroCommand}" 
-                        HeightRequest="44" />
 
+                        <!-- Botão Cancelar (Sem borda, texto cinza/branco) -->
+                        <Button Grid.Column="0" 
+                                Text="Cancelar" 
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource TextoPrincipal}"
+                                BorderColor="Gray"
+                                BorderWidth="1"
+                                Command="{Binding FecharFiltroCommand}" 
+                                HeightRequest="44" />
+
+                        <!-- Botão Filtrar (Verde padrão do seu app) -->
                         <Button Grid.Column="1" 
-                        Text="Filtrar" 
-                        Style="{StaticResource BotaoCinzaStyle}" 
-                        Command="{Binding SalvarFiltroCommand}" 
-                        HeightRequest="44" />
+                                Text="Filtrar" 
+                                BackgroundColor="#4CAF50"
+                                TextColor="White"
+                                Command="{Binding SalvarFiltroCommand}" 
+                                HeightRequest="44" />
                     </Grid>
 
                 </VerticalStackLayout>
