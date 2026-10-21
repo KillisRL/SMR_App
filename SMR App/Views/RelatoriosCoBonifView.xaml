@@ -6,21 +6,42 @@
              ControlTemplate="{StaticResource MainPageTemplate}"
              BackgroundColor="{StaticResource FundoPrincipal}">
 
-    <!-- Ajustei as linhas para acomodar a barra de botões de exportação -->
     <Grid RowDefinitions="Auto, Auto, *, Auto, 80" Padding="15">
 
-        <!-- Navegação do Relatório -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0, 0, 0, 15">
-            <ImageButton Grid.Column="0" Source="arrow_left.png" WidthRequest="30" Command="{Binding RelatorioAnteriorCommand}"/>
+        <!-- LINHA 0: SETAS DE NAVEGAÇÃO ENTRE RELATÓRIOS (Nas extremidades) -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,5,0,15" VerticalOptions="Center">
 
-            <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 8" HorizontalOptions="Center">
-                <Label Text="CONTROLE&#10;BONIFICAÇÃO" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
-            </Border>
+            <!-- Seta Esquerda (Encostada na esquerda) -->
+            <ImageButton Grid.Column="0" 
+                         Source="setaesquerda.png" 
+                         BackgroundColor="Transparent" 
+                         HeightRequest="40" 
+                         WidthRequest="40" 
+                         Command="{Binding EmpresaAnteriorCommand}" 
+                         HorizontalOptions="Start" 
+                         VerticalOptions="Center" />
 
-            <ImageButton Grid.Column="2" Source="arrow_right.png" WidthRequest="30" Command="{Binding ProximoRelatorioCommand}"/>
+            <!-- Espaço Central (Pode colocar o título do relatório atual ou deixar vazio se o template já cobrir) -->
+            <Label Grid.Column="1" 
+                   Text="CONTROLE DE BONIFICAÇÃO" 
+                   FontSize="16" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoPrincipal}" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" />
+
+            <!-- Seta Direita (Encostada na direita) -->
+            <ImageButton Grid.Column="2" 
+                         Source="setadireita.png" 
+                         BackgroundColor="Transparent" 
+                         HeightRequest="40" 
+                         WidthRequest="40" 
+                         Command="{Binding ProximaEmpresaCommand}" 
+                         HorizontalOptions="End" 
+                         VerticalOptions="Center" />
         </Grid>
 
-        <!-- Filtros de Data -->
+        <!-- Filtros de Data (Linha 1) -->
         <HorizontalStackLayout Grid.Row="1" Spacing="15" HorizontalOptions="Center" Margin="0, 0, 0, 15">
             <Image Source="calendar_icon.png" WidthRequest="22" VerticalOptions="Center"/>
 
@@ -33,7 +54,7 @@
             </Border>
         </HorizontalStackLayout>
 
-        <!-- Container do Gráfico -->
+        <!-- Container do Gráfico (Linha 2) -->
         <Border Grid.Row="2" BackgroundColor="{StaticResource FundoMenu}" Stroke="{StaticResource TextoSecundario}" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10">
             <Grid RowDefinitions="Auto, Auto, *">
                 <Label Grid.Row="0" Text="Controle Bonificação" HorizontalOptions="Center" FontSize="15" TextColor="{StaticResource TextoPrincipal}"/>
@@ -47,7 +68,7 @@
             </Grid>
         </Border>
 
-        <!-- BOTÕES DE EXPORTAÇÃO (Excel e PDF) -->
+        <!-- BOTÕES DE EXPORTAÇÃO - Excel e PDF (Linha 3) -->
         <Grid Grid.Row="3" ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0, 15, 0, 0">
             <!-- Botão Excel -->
             <Button Grid.Column="0" 
@@ -56,7 +77,7 @@
                     BackgroundColor="#107C41" 
                     TextColor="White"
                     FontAttributes="Bold"
-                    CornerRadius="10"
+                    CornerRadius="15"
                     HeightRequest="45"/>
 
             <!-- Botão PDF -->
@@ -66,7 +87,7 @@
                     BackgroundColor="#D32F2F" 
                     TextColor="White"
                     FontAttributes="Bold"
-                    CornerRadius="10"
+                    CornerRadius="15"
                     HeightRequest="45"/>
         </Grid>
     </Grid>

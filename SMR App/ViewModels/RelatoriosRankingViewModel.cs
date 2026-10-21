@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace SMR_App.ViewModels
 {
-    public partial class RelatoriosRankingViewModel : BaseViewModel
+    public partial class RelatoriosRankingViewModel : BaseEmpresaViewModel
     {
         private readonly RelatorioApiService _apiService;
 

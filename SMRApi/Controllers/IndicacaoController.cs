@@ -336,9 +336,6 @@ namespace SMRApi.Controllers
 
                         // 4. Marca o objeto como modificado no Entity Framework
                         _dbContext.PromotorPontos.Update(promotorPontos);
-
-                        // Obs: Não se esqueça de chamar await _dbContext.SaveChangesAsync(); 
-                        // no final do seu método principal para efetivar a transação no banco.
                     }
                     else
                     {
@@ -449,6 +446,31 @@ namespace SMRApi.Controllers
 
                 var pessoa = await _dbContext.Promotor.Where(p => p.id_pessoa == idPessoaLogada).FirstOrDefaultAsync();
 
+                var bonificacao = await _dbContext.Bonificacoes.Where(b => b.Id == indicacaoCadastro.Id_Bonificacao).FirstOrDefaultAsync();
+
+                if (bonificacao != null && bonificacao.Mgm == true)
+                {
+                    var ClienteIndicado = await _dbContext.Indicacao
+                        .Where(i => i.CPF == indicacaoCadastro.CPF && i.Id_Empresa == indicacaoCadastro.Id_Empresa
+                        && i.Status_Indicacao != IndicacaoStatus.Cancelada)
+                        .AnyAsync();
+                    
+                    if (ClienteIndicado)
+                    {
+                        return BadRequest(new { Mensagem = "Esta pessoa já recebeu uma indicação" });
+                    }
+
+                    var clienteImportado = await _dbContext.ClientesImportados
+                        .Where(c => c.Documento == indicacaoCadastro.CPF)
+                        .AnyAsync();
+
+                    if (clienteImportado)
+                    {
+                        return BadRequest(new { Mensagem = "Esta pessoa já é cliente do estabelecimento." });
+                    }
+                }
+
+
                 var indicacaoNova = new Indicacao
                 {
                     Data_Indicacao = indicacaoCadastro.Data_Indicacao,
@@ -458,7 +480,8 @@ namespace SMRApi.Controllers
                     Telefone_Indicado = indicacaoCadastro.Telefone_Indicado,
                     Status_Indicacao = indicacaoCadastro.Status_Indicacao,
                     Id_Bonificacao = indicacaoCadastro.Id_Bonificacao,
-                    CPF = indicacaoCadastro.CPF
+                    CPF = indicacaoCadastro.CPF,
+                    Id_Empresa = indicacaoCadastro.Id_Empresa
                 };
 
                 await _dbContext.Indicacao.AddAsync(indicacaoNova);

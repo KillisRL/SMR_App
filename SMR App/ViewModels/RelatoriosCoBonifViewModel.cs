@@ -9,7 +9,7 @@ using SMRDominio.DTOs;
 
 namespace SMR_App.ViewModels
 {
-    public partial class RelatoriosCoBonifViewModel : BaseViewModel
+    public partial class RelatoriosCoBonifViewModel : BaseEmpresaViewModel
     {
         private readonly RelatorioApiService _apiService;
 
@@ -157,7 +157,6 @@ namespace SMR_App.ViewModels
 
                 if (dados == null || !dados.Any())
                 {
-                    await Application.Current.MainPage.DisplayAlert("Sem Dados", "Nenhuma bonificação encontrada neste período.", "OK");
 
                     SeriesGrafico = Array.Empty<ISeries>();
                     EixosX = Array.Empty<Axis>();

@@ -19,6 +19,7 @@ namespace SMRDominio.ClasseIndicacao
         public string? Telefone_Indicado { get; set; }
 
         public string? Codigo_Validacao { get; set; }
+        public int Id_Empresa { get; set; }
 
         public IndicacaoStatus? Status_Indicacao { get; set; }
 

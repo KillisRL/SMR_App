@@ -223,7 +223,7 @@
                             IsVisible="{Binding IsBotaoSenhaVisivel}" 
                             BackgroundColor="{StaticResource FundoMenu}" 
                             TextColor="{StaticResource TextoPrincipal}" 
-                            FontAttributes="Bold" HeightRequest="50" CornerRadius="10" />
+                            FontAttributes="Bold" HeightRequest="50" CornerRadius="15" />
                 </Grid>
             </VerticalStackLayout>
 
@@ -237,15 +237,15 @@
                     BackgroundColor="#121212"
                     BorderWidth="5"
                     BorderColor="#D4AF37"
-                    TextColor="#D4AF37" CornerRadius="10" HeightRequest="55" 
+                    TextColor="#D4AF37" CornerRadius="15" HeightRequest="55" 
                     FontAttributes="Bold" FontSize="16"/>
                 
                 <!-- BOTÃO SALVAR -->
                 <Button Text="{Binding NomeBotaoAcao}"
                         Grid.Column="1"
                     Command="{Binding SalvarCommand}" 
-                    BackgroundColor="{StaticResource CorPrimaria}" 
-                    TextColor="#FFFFFF" CornerRadius="10" HeightRequest="55" 
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" CornerRadius="15" HeightRequest="55" 
                     FontAttributes="Bold" FontSize="16"/>
             </Grid>
 

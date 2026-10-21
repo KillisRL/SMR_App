@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace SMR_App.ViewModels
 {
-    public partial class RelatoriosConversaoViewModel : BaseViewModel
+    public partial class RelatoriosConversaoViewModel : BaseEmpresaViewModel
     {
         private readonly RelatorioApiService _apiService;
 

@@ -54,7 +54,8 @@ namespace SMR_App.ViewModels
                     Nome_Indicado = Nome_Indicado,
                     Telefone_Indicado = Telefone_Indicado,
                     Id_Bonificacao = BonificacaoRecebida.Id,
-                    Status_Indicacao = IndicacaoStatus.Pendente
+                    Status_Indicacao = IndicacaoStatus.Pendente,
+                    Id_Empresa = BonificacaoRecebida.Id_Empresa
                 };
 
                 var resultado = await _apiServiceIndicacao.CadastrarIndicacao(token, novaIndicacao);

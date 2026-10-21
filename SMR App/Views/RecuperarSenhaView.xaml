@@ -64,7 +64,7 @@
                     TextColor="#121212"
                     FontAttributes="Bold"
                     HeightRequest="55"
-                    CornerRadius="10"
+                    CornerRadius="15"
                     Margin="0,15,0,0"/>
 
             <Label Text="Voltar ao Login"

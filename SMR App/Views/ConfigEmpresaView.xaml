@@ -92,7 +92,7 @@
                             BackgroundColor="#333333"
                             TextColor="#D4AF37"
                             FontAttributes="Bold"
-                            CornerRadius="10"
+                            CornerRadius="15"
                             HeightRequest="45"
                             VerticalOptions="Center"/>
                 </HorizontalStackLayout>

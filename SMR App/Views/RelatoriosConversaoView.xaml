@@ -8,17 +8,38 @@
 
     <Grid RowDefinitions="Auto, Auto, *, Auto, 80" Padding="15">
 
-        <!-- Navegação do Relatório -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0, 0, 0, 15">
-            <ImageButton Grid.Column="0" Source="arrow_left.png" WidthRequest="30" Command="{Binding RelatorioAnteriorCommand}"/>
+        <!-- LINHA 0: SETAS DE NAVEGAÇÃO ENTRE RELATÓRIOS (Nas extremidades) -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,5,0,15" VerticalOptions="Center">
 
-            <Border Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource FundoMenu}" StrokeThickness="0" Padding="15, 8" HorizontalOptions="Center">
-                <Label Text="MÉTRICAS DE&#10;CONVERSÃO" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextoPrincipal}"/>
-            </Border>
+            <!-- Seta Esquerda (Encostada na esquerda) -->
+            <ImageButton Grid.Column="0" 
+                  Source="setaesquerda.png" 
+                  BackgroundColor="Transparent" 
+                  HeightRequest="40" 
+                  WidthRequest="40" 
+                  Command="{Binding EmpresaAnteriorCommand}" 
+                  HorizontalOptions="Start" 
+                  VerticalOptions="Center" />
 
-            <ImageButton Grid.Column="2" Source="arrow_right.png" WidthRequest="30" Command="{Binding ProximoRelatorioCommand}"/>
+            <!-- Espaço Central (Pode colocar o título do relatório atual ou deixar vazio se o template já cobrir) -->
+            <Label Grid.Column="1" 
+            Text="CONTROLE DE BONIFICAÇÃO" 
+            FontSize="16" 
+            FontAttributes="Bold" 
+            TextColor="{StaticResource TextoPrincipal}" 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center" />
+
+            <!-- Seta Direita (Encostada na direita) -->
+            <ImageButton Grid.Column="2" 
+                  Source="setadireita.png" 
+                  BackgroundColor="Transparent" 
+                  HeightRequest="40" 
+                  WidthRequest="40" 
+                  Command="{Binding ProximaEmpresaCommand}" 
+                  HorizontalOptions="End" 
+                  VerticalOptions="Center" />
         </Grid>
-
         <!-- Filtros de Data -->
         <HorizontalStackLayout Grid.Row="1" Spacing="15" HorizontalOptions="Center" Margin="0, 0, 0, 15">
             <Image Source="calendar_icon.png" WidthRequest="22" VerticalOptions="Center"/>
@@ -48,8 +69,8 @@
 
         <!-- BOTÕES DE EXPORTAÇÃO (Excel e PDF) -->
         <Grid Grid.Row="3" ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0, 15, 0, 0">
-            <Button Grid.Column="0" Text="Exportar Excel" Command="{Binding ExportarExcelCommand}" BackgroundColor="#107C41" TextColor="White" FontAttributes="Bold" CornerRadius="10" HeightRequest="45"/>
-            <Button Grid.Column="1" Text="Exportar PDF" Command="{Binding ExportarPdfCommand}" BackgroundColor="#D32F2F" TextColor="White" FontAttributes="Bold" CornerRadius="10" HeightRequest="45"/>
+            <Button Grid.Column="0" Text="Exportar Excel" Command="{Binding ExportarExcelCommand}" BackgroundColor="#107C41" TextColor="White" FontAttributes="Bold" CornerRadius="15" HeightRequest="45"/>
+            <Button Grid.Column="1" Text="Exportar PDF" Command="{Binding ExportarPdfCommand}" BackgroundColor="#D32F2F" TextColor="White" FontAttributes="Bold" CornerRadius="15" HeightRequest="45"/>
         </Grid>
 
 
