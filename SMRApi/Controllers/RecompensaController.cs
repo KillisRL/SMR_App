@@ -368,5 +368,58 @@ namespace SMRApi.Controllers
                 return BadRequest(new { Message = "Erro ao cadastrar a recompensa", Detalhe = ex.InnerException?.Message ?? ex.Message });
             }
         }
+
+        // Coloque este DTO no final do arquivo ou na sua pasta SMRDominio.DTOs
+        public class RecompensaDistribuidaDto
+        {
+            public int IdResgate { get; set; }
+            public string TituloRecompensa { get; set; }
+            public string NomePromotor { get; set; }
+            public DateTime DataResgate { get; set; }
+        }
+
+        // Adicione este Endpoint dentro da classe RecompensaController
+        [HttpGet("historico-entregues")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarRecompensasEntregues([FromQuery] string? nomePromotor)
+        {
+            try
+            {
+                var pessoa = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id_pessoa")?.Value;
+                int idPessoa = int.Parse(pessoa);
+                var empresa = await _dbContext.Empresa.Where(e => e.id_pessoa == idPessoa).FirstOrDefaultAsync();
+
+                if (empresa == null)
+                    return BadRequest(new { Mensagem = "Empresa não encontrada para este usuário." });
+
+                int idEmpresa = empresa.id;
+
+                var query = from resgate in _dbContext.RecompensaResgates
+                            join recompensa in _dbContext.Recompensas on resgate.id_recompensa equals recompensa.id
+                            join promotor in _dbContext.Promotor on resgate.id_promotor equals promotor.id
+                            join p_pessoa in _dbContext.Pessoa on promotor.id_pessoa equals p_pessoa.id_pessoa
+                            where resgate.id_empresa == idEmpresa
+                            select new RecompensaDistribuidaDto
+                            {
+                                IdResgate = resgate.id_recompensa_resgate,
+                                TituloRecompensa = recompensa.titulo,
+                                NomePromotor = p_pessoa.nome,
+                                DataResgate = resgate.data_resgate
+                            };
+
+                if (!string.IsNullOrEmpty(nomePromotor))
+                {
+                    query = query.Where(q => q.NomePromotor.Contains(nomePromotor));
+                }
+
+                var lista = await query.OrderByDescending(q => q.DataResgate).ToListAsync();
+
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao buscar histórico.", Erro = ex.Message });
+            }
+        }
     }
 }

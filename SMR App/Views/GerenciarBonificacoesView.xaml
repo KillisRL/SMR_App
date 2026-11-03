@@ -1,12 +1,219 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMR_App.ViewModels"
              x:Class="SMR_App.Views.GerenciarBonificacoesView"
-             Title="GerenciarBonificacoesView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             ControlTemplate="{StaticResource MainPageTemplate}"
+             BackgroundColor="{StaticResource FundoPrincipal}">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="0,0,0,20">
+
+        <!-- LINHA 0: TÍTULO E FILTROS -->
+        <VerticalStackLayout Grid.Row="0" Margin="20,20,20,10" Spacing="15">
+            <Label Text="BONIFICAÇÕES" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextoPrincipal}" 
+                   HorizontalOptions="Center" />
+
+            <!-- Filtros -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                <!-- Busca por Nome -->
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="Nome:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            HeightRequest="45" 
+                            Padding="5,0">
+                        <Entry Text="{Binding Nome}" 
+                               Placeholder="Buscar por nome..." 
+                               PlaceholderColor="Gray" 
+                               TextColor="{StaticResource TextoPrincipal}" 
+                               VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Filtro de Status -->
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="Status:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" />
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            Stroke="#D4AF37"
+                            StrokeThickness="1" 
+                            HeightRequest="45" 
+                            Padding="5,0">
+                        <Picker ItemsSource="{Binding OpcoesStatus}" 
+                                SelectedItem="{Binding StatusSelecionado}" 
+                                TextColor="{StaticResource TextoPrincipal}" 
+                                TitleColor="Gray" />
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Botão de Pesquisar -->
+            <Button Text="PESQUISAR" 
+                    Command="{Binding ConsultarBonificacaoCommand}" 
+                    BackgroundColor="#404040" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8" 
+                    HeightRequest="40" />
+        </VerticalStackLayout>
+
+        <!-- LINHA 1: LISTA DE BONIFICAÇÕES -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaBonificacao}" 
+                        SelectionMode="Single"
+                        Margin="20,0">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,30,0,0">
+                    <Label Text="Nenhuma bonificação encontrada." 
+                           TextColor="Gray" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Card Escuro -->
+                    <Border BackgroundColor="{StaticResource FundoMenu}" 
+                            StrokeShape="RoundRectangle 8" 
+                            StrokeThickness="0" 
+                            Margin="0,0,0,15"
+                            Padding="15">
+
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                            <!-- DADOS (Esquerda) -->
+                            <Grid Grid.Column="0" ColumnDefinitions="Auto, *">
+                                <!-- ID em Dourado -->
+                                <Label Grid.Column="0" 
+                                       Text="{Binding Id}" 
+                                       FontSize="36" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#D4AF37" 
+                                       VerticalOptions="Center" 
+                                       Margin="0,0,15,0">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <!-- Informações -->
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="8">
+                                    <!-- Nome -->
+                                    <Label Text="{Binding Nome, StringFormat='NOME: {0}'}" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold" 
+                                           TextColor="{StaticResource TextoPrincipal}" 
+                                           LineBreakMode="WordWrap">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}" CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <!-- Tipo -->
+                                    <Label Text="{Binding Tipo, StringFormat='Tipo: {0}'}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="Gray">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}" CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <!-- MGM e ATIVO -->
+                                    <HorizontalStackLayout Spacing="25" Margin="0,5,0,0">
+                                        <!-- MGM -->
+                                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                            <Label Text="MGM:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" VerticalOptions="Center" />
+                                            <Border StrokeShape="RoundRectangle 4" Stroke="Transparent" HeightRequest="20" WidthRequest="20" VerticalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsMgm}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsMgm}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#404040" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Mgm}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Mgm}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#404040" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}" CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                            </Border>
+                                        </HorizontalStackLayout>
+
+                                        <!-- ATIVO -->
+                                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                            <Label Text="ATIVO:" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoPrincipal}" VerticalOptions="Center" />
+                                            <Border StrokeShape="RoundRectangle 4" Stroke="Transparent" HeightRequest="20" WidthRequest="20" VerticalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsAtivo}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsAtivo}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#404040" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#D4AF37" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#404040" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoCommand}" CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                            </Border>
+                                        </HorizontalStackLayout>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- LIXEIRA (Direita) -->
+                            <ImageButton Grid.Column="1"
+                                         Source="lixeirarecompensa.png" 
+                                         BackgroundColor="Transparent"
+                                         WidthRequest="28" 
+                                         HeightRequest="28" 
+                                         Padding="2"
+                                         HorizontalOptions="End" 
+                                         VerticalOptions="Center"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirBonificacaoCommand}"
+                                         CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- LINHA 2: BOTÕES INFERIORES -->
+        <Grid Grid.Row="2" ColumnDefinitions="*, *" Margin="20,10,20,0" ColumnSpacing="20">
+            <Button Grid.Column="0" 
+                    Text="VOLTAR" 
+                    Command="{Binding VoltarTelaCommand}"
+                    BorderColor="#D4AF37"
+                    BorderWidth="3"
+                    BackgroundColor="{StaticResource FundoPrincipal}" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20" 
+                    HeightRequest="50" />
+
+            <Button Grid.Column="1" 
+                    Text="CADASTRAR" 
+                    Command="{Binding AbrirCadastroCommand}" 
+                    BackgroundColor="#D4AF37" 
+                    TextColor="Black" 
+                    FontAttributes="Bold" 
+                    CornerRadius="20"/>
+        </Grid>
+    </Grid>
 </ContentPage>

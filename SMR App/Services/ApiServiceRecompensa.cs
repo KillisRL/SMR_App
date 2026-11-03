@@ -55,6 +55,38 @@ namespace SMR_App.Services
             }
 
         }
+
+        public async Task<(bool Sucesso, List<RecompensaDistribuidaDto> Dados, string Mensagem)> ConsultarHistoricoEntregues(string token, string? nomePromotor)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                string url = "recompensas/historico-entregues";
+                if (!string.IsNullOrWhiteSpace(nomePromotor))
+                {
+                    url += $"?nomePromotor={Uri.EscapeDataString(nomePromotor)}";
+                }
+
+                var resultado = await _httpClient.GetAsync(url);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<RecompensaDistribuidaDto>>(options);
+                    return (true, dados ?? new List<RecompensaDistribuidaDto>(), string.Empty);
+                }
+                else
+                {
+                    var apiResposta = await resultado.Content.ReadFromJsonAsync<ApiRetornoMensagem>(options);
+                    return (false, null, apiResposta?.Mensagem ?? "Falha ao consultar histórico.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, null, "Falha de comunicação com o servidor.");
+            }
+        }
         public async Task<(bool Sucesso, string Mensagem)> ExcluirRecompensa(string token, int codigoRecompensa)
         {
             try
